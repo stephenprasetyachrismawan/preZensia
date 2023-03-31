@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('listpresensi_id');
             $table->foreignId('presensi_id')->constrained('presensi', 'presensi_id');
             $table->foreignId('ket_id')->constrained('ket', 'ket_id');
+            $table->string('murid');
             $table->dateTime('time');
         });
     }
