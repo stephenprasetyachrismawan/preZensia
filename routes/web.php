@@ -24,8 +24,8 @@ Route::get('/classes', function () {
     return view('class');
 })->middleware(['auth', 'verified'])->name('classes');
 
-Route::middleware('auth')->group(function(){
-    Route::controller(ClassController::class)->prefix('classes')->group(function(){
+Route::middleware('auth')->group(function () {
+    Route::controller(ClassController::class)->prefix('classes')->group(function () {
         Route::get('create', 'create')->name('classes.create');
         Route::post('create', 'store')->name('classes.create.store');
     });
