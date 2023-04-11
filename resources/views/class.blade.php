@@ -2,7 +2,7 @@
 
     <div class="container m-auto my-7">
         <div class="mx-3 px-1">
-
+            <a href="{{route('classes.create')}}" class="btn btn-primary">Tambah Kelas</a>
             <div class="{{-- columns-3 sm:columns-1 md:columns-2 lg:columns-3 --}}grid lg:grid-cols-3 gap-4 md:grid-cols-2 sm:grid-cols-1 ">
                 <div class="container justify-self-center">
                     <div class="">

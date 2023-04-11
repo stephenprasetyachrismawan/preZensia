@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\FormPresensi;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FormPresensi;
+use App\Http\Controllers\ClassController;
 use App\Http\Controllers\RealtimeLaporan;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ProfileController;
@@ -22,6 +23,13 @@ use App\Http\Controllers\ProfileController;
 Route::get('/classes', function () {
     return view('class');
 })->middleware(['auth', 'verified'])->name('classes');
+
+Route::middleware('auth')->group(function(){
+    Route::controller(ClassController::class)->prefix('classes')->group(function(){
+        Route::get('create', 'create')->name('classes.create');
+        Route::post('create', 'store')->name('classes.create.store');
+    });
+});
 
 //Pusher
 Route::post('presensi', [FormPresensi::class, 'simpan'])->middleware(['auth', 'verified']);  //kirim
