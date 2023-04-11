@@ -7,7 +7,7 @@
             <label for="namaSubject" class="">Subjek Kelas</label>
             <input type="text" name="namaSubject" placeholder="Subjek Kelas"><br>
             <label for="descKelas" class="">Deskripsi Kelas</label>
-            <input type="text" name="descKelas" placeholder="Deskripsi Kelas"><br>
+            <textarea name="descKelas" cols="30" rows="10" placeholder="Deskripsi Kelas"></textarea><br>
             <button type="submit" class="btn btn-info">Tambah</button>
         </form>
     </div>
