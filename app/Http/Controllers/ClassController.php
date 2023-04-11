@@ -40,4 +40,19 @@ class ClassController extends Controller
 
         return redirect()->route('classes');
     }
+
+    public function join()
+    {
+        return view('kelas.join');
+    }
+
+    public function check(Request $request)
+    {
+        $kode = $request->kodeKelas;
+        $cek = Kelas::cekJoin($kode);
+
+        if(!$cek) return redirect()->route('classes.join', $cek);
+        if($cek) return redirect()->route('classes.join', $cek);
+
+    }
 }

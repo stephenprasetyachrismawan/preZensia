@@ -17,6 +17,16 @@ class Kelas extends Model
 
     protected $fillable = ['class_name', 'class_code', 'class_subject', 'class_desc'];
 
+    public function listrole()
+    {
+        $this->hasMany(ListRole::class, 'class_id');
+    }
+
+    public function presensi()
+    {
+        $this->hasMany(Presensi::class, 'class_id');
+    }
+
     protected static function booted()
     {   
         static::created(function (){
@@ -38,6 +48,13 @@ class Kelas extends Model
             $kode = substr(str_shuffle(str_repeat('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', 6)), 0, 6);
             $cek = DB::table('class')->where('class_code', $kode)->count();
         }while($cek);
+        return $kode;
+    }
+
+    protected static function cekJoin($kode)
+    {
+        $cek = DB::table('class')->where('class_code', $kode)->count();
+        if(!$cek) return 'noclass';
         return $kode;
     }
 }
