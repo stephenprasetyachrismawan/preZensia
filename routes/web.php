@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\FormPresensi;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RealtimeLaporan;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ProfileController;
 
@@ -21,6 +23,19 @@ Route::get('/classes', function () {
     return view('class');
 })->middleware(['auth', 'verified'])->name('classes');
 
+//Pusher
+Route::post('presensi', [FormPresensi::class, 'simpan'])->middleware(['auth', 'verified']);  //kirim
+Route::get('laporan-realtime', function () {
+    return view('laporan_presensi');
+})->middleware(['auth', 'verified']);  //terima
+
+//View Isi Presensi
+Route::get(
+    'isi-presensi',
+    function () {
+        return view('isi_presensi');
+    }
+)->middleware(['auth', 'verified']);
 
 
 
