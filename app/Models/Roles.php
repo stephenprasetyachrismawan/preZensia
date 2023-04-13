@@ -15,6 +15,6 @@ class Roles extends Model
 
     public function listrole()
     {
-        $this->hasMany(ListRole::class, 'role_id');
-    }    
+        return $this->hasMany(ListRole::class, 'role_id');
+    }
 }

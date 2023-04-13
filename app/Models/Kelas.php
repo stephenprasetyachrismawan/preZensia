@@ -19,17 +19,17 @@ class Kelas extends Model
 
     public function listrole()
     {
-        $this->hasMany(ListRole::class, 'class_id');
+        return $this->hasMany(ListRole::class, 'class_id');
     }
 
     public function presensi()
     {
-        $this->hasMany(Presensi::class, 'class_id');
+        return $this->hasMany(Presensi::class, 'class_id');
     }
 
     protected static function booted()
-    {   
-        static::created(function (){
+    {
+        static::created(function () {
             $kls = DB::table('class')->orderByDesc('class_id')->first();
             $role = DB::table('roles')->where('role', 'teacher')->first();
             $baru = [
@@ -44,17 +44,17 @@ class Kelas extends Model
     protected static function getCode()
     {
         $kode = '';
-        do{
+        do {
             $kode = substr(str_shuffle(str_repeat('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', 6)), 0, 6);
             $cek = DB::table('class')->where('class_code', $kode)->count();
-        }while($cek);
+        } while ($cek);
         return $kode;
     }
 
     protected static function cekJoin($kode)
     {
         $cek = DB::table('class')->where('class_code', $kode)->count();
-        if(!$cek) return 'noclass';
+        if (!$cek) return 'noclass';
         return $kode;
     }
 }

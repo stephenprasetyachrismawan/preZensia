@@ -15,11 +15,11 @@ class Presensi extends Model
 
     public function class()
     {
-        $this->belongsTo(Kelas::class, 'class_id');
+        return $this->belongsTo(Kelas::class, 'class_id');
     }
 
     public function listpresensi()
     {
-        $this->hasMany(ListPresensi::class, 'presensi_id');
+        return $this->hasMany(ListPresensi::class, 'presensi_id');
     }
 }
