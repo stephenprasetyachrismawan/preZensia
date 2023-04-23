@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kelas;
+use App\Models\ListRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,9 +12,10 @@ class ClassController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id)
     {
-        //
+        
+        return view('kelas.home', ['id' => $id]);
     }
 
     /**
@@ -49,10 +51,16 @@ class ClassController extends Controller
     public function check(Request $request)
     {
         $kode = $request->kodeKelas;
-        $cek = Kelas::cekJoin($kode);
+        $cek = Kelas::cekJoin($kode, Auth::id());
 
-        if(!$cek) return redirect()->route('classes.join', $cek);
-        if($cek) return redirect()->route('classes.join', $cek);
+        if($cek == 'ajoin') return redirect()->route('classes.home', $kode);
+        else if($cek == 'noclass') return;
+        else if($cek){
+            $data = [
 
+            ];
+            $join = ListRole::create($data);
+            return redirect()->route('classes.home'.$cek);
+        } 
     }
 }

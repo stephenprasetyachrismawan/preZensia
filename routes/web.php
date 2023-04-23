@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function(){
         Route::post('create', 'store')->name('classes.create.store');
         Route::get('join', 'join')->name('classes.join');
         Route::post('join', 'check')->name('classes.join.check');
+        Route::get('{id}', 'index')->name('classes.home');
     });
 });
 

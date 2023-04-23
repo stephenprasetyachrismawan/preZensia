@@ -51,10 +51,13 @@ class Kelas extends Model
         return $kode;
     }
 
-    protected static function cekJoin($kode)
+    protected static function cekJoin($kode, $id)
     {
         $cek = DB::table('class')->where('class_code', $kode)->count();
         if(!$cek) return 'noclass';
+        $class = DB::table('class')->where('class_code', $kode)->value('class_id');
+        $cek2 = DB::table('listrole')->where('class_id', $class)->where('user_id', $id)->count();
+        if($cek2) return 'ajoin';
         return $kode;
     }
 }
