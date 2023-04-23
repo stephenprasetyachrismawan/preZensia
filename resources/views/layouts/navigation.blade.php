@@ -31,7 +31,14 @@
                     <x-slot name="trigger">
                         <button
                             class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div><span class="text-2xl">👋</span> {{ Auth::user()->name }}
+                            </div>
+                            <div class="avatar mx-3">
+                                <div class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                    <img src="{{ Auth::user()->url_photo }}" />
+                                </div>
+                            </div>
+
 
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"

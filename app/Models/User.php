@@ -23,7 +23,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'google_id'
+        'google_id',
+        'url_photo'
     ];
 
     /**
@@ -47,6 +48,6 @@ class User extends Authenticatable
 
     public function listrole()
     {
-        $this->hasMany(ListRole::class, 'id', 'user_id');
+        return $this->hasMany(ListRole::class, 'id', 'user_id');
     }
 }

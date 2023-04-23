@@ -51,7 +51,7 @@
     <a href="{{ url('auth/google') }}">
         <div class="justify-center">
             <x-primary-button class="justify-center">
-                {{ __('Sign in with Google') }}
+                {{ __('Sign Up or In with Google') }}
             </x-primary-button>
         </div>
     </a>

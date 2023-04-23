@@ -21,6 +21,7 @@ class GoogleController extends Controller
         try {
 
             $user = Socialite::driver('google')->user();
+            $foto = $user->getAvatar();
             $finduser = User::where('google_id', $user->id)->first();
             if ($finduser) {
                 Auth::login($finduser);
@@ -30,7 +31,8 @@ class GoogleController extends Controller
                     'name' => $user->name,
                     'email' => $user->email,
                     'google_id' => $user->id,
-                    'password' => encrypt('123456dummy')
+                    'password' => encrypt('123456dummy'),
+                    'url_photo' => $foto
                 ]);
 
                 Auth::login($newUser);

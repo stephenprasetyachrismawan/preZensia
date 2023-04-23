@@ -15,6 +15,6 @@ class Ket extends Model
 
     public function listpresensi()
     {
-        $this->hasMany(ListPresensi::class, 'ket_id');
+        return $this->hasMany(ListPresensi::class, 'ket_id');
     }
 }

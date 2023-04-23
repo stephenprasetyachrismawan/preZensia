@@ -15,16 +15,16 @@ class ListRole extends Model
 
     public function kelas()
     {
-        $this->belongsTo(Kelas::class, 'class_id');
+        return $this->belongsTo(Kelas::class, 'class_id');
     }
 
     public function user()
     {
-        $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function roles()
     {
-        $this->belongsTo(Roles::class, 'role_id');
+        return $this->belongsTo(Roles::class, 'role_id');
     }
 }
