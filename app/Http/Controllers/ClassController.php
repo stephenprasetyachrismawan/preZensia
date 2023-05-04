@@ -44,13 +44,13 @@ class ClassController extends Controller
             $rolekelas[] = $li->role_id;
         }
 
-        
+
         // dd($userkelas);
         $data = [];
         for ($i = 0; $i < count($nama_kelas); $i++) {
             $data[] = [$nama_kelas[$i], $rolekelas[$i], $guru[$i]];
         }
-        
+
         return view('class', compact('data'));
     }
     /**
@@ -97,9 +97,5 @@ class ClassController extends Controller
             $join = ListRole::create($data);
             return redirect()->route('classes.home' . $cek);
         }
-    }
-
-    public function test(){
-        
     }
 }
