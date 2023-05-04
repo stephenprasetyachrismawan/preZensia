@@ -59,9 +59,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('class');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [ClassController::class, 'getkelas'])->middleware(['auth', 'verified'])->name('dashboard');
 
 
 

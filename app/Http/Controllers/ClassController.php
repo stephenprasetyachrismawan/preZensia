@@ -7,17 +7,13 @@ use App\Models\Kelas;
 use App\Models\ListRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ClassController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index($id)
-    {
-        
-        return view('kelas.home', ['id' => $id]);
-    }
     // getkelas is for dashboard classes / home
     public function getkelas()
     {
@@ -43,14 +39,20 @@ class ClassController extends Controller
             $rolekelas[] = $li->role_id;
         }
 
-
+        
         // dd($userkelas);
         $data = [];
         for ($i = 0; $i < count($nama_kelas); $i++) {
             $data[] = [$nama_kelas[$i], $rolekelas[$i], $guru[$i]];
         }
-
+        
         return view('class', compact('data'));
+    }
+
+    public function index($id)
+    {
+        
+        return view('kelas.home', ['id' => $id]);
     }
     /**
      * Show the form for creating a new resource.
@@ -65,9 +67,11 @@ class ClassController extends Controller
      */
     public function store(Request $request)
     {
+        $kode = Kelas::getCode();
         $data = [
             'class_name' => $request->namaKelas,
-            'class_code' => Kelas::getCode(),
+            'hashcode' => base64_encode(Kelas::strToNum($kode)),
+            'class_code' => $kode,
             'class_subject' => $request->namaSubject,
             'class_desc' => $request->descKelas
         ];

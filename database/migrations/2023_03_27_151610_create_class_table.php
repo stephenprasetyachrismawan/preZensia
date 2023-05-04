@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('class', function (Blueprint $table) {
             $table->id('class_id');
             $table->string('class_name');
+            $table->string('hashcode')->nullable();
             $table->string('class_code')->unique();
             $table->string('class_subject')->nullable();
             $table->string('class_desc')->nullable();

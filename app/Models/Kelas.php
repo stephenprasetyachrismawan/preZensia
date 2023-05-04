@@ -15,7 +15,7 @@ class Kelas extends Model
 
     protected $table = 'class';
 
-    protected $fillable = ['class_name', 'class_code', 'class_subject', 'class_desc'];
+    protected $fillable = ['class_name', 'class_code', 'hashcode', 'class_subject', 'class_desc'];
 
     public function listrole()
     {
@@ -49,6 +49,29 @@ class Kelas extends Model
             $cek = DB::table('class')->where('class_code', $kode)->count();
         } while ($cek);
         return $kode;
+    }
+
+    protected static function strToNum($str)
+    {
+        $numeric_code = '';
+  
+        for ($i = 0; $i < strlen($str); $i++) {
+            $char_code = sprintf('%03d', ord($str[$i]));
+            $numeric_code .= strlen($char_code) === 2 ? '0'.$char_code : $char_code;
+        }
+        
+        return $numeric_code;
+    }
+
+    protected static function numToStr($num){
+        $string = '';
+  
+        for ($i = 0; $i < strlen($num); $i += 3) {
+            $char_code = substr($num, $i, 3);
+            $string .= chr($char_code);
+        }
+        
+        return $string;
     }
 
     protected static function cekJoin($kode, $id)
