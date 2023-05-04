@@ -98,4 +98,8 @@ class ClassController extends Controller
             return redirect()->route('classes.home' . $cek);
         }
     }
+
+    public function test(){
+        
+    }
 }
