@@ -53,12 +53,6 @@ class ClassController extends Controller
         
         return view('class', compact('data'));
     }
-
-    public function index($id)
-    {
-        
-        return view('kelas.home', ['id' => $id]);
-    }
     /**
      * Show the form for creating a new resource.
      */
