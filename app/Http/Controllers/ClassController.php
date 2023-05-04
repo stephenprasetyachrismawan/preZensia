@@ -14,6 +14,11 @@ class ClassController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function index($id)
+    {
+
+        return view('kelas.home', ['id' => $id]);
+    }
     // getkelas is for dashboard classes / home
     public function getkelas()
     {
@@ -93,11 +98,10 @@ class ClassController extends Controller
 
         if ($cek == 'ajoin') return redirect()->route('classes.home', $kode);
         else if ($cek == 'noclass') return;
-        else if($cek){
-            $data = [
-            ];
+        else if ($cek) {
+            $data = [];
             $join = ListRole::create($data);
-            return redirect()->route('classes.home'.$cek);
-        } 
+            return redirect()->route('classes.home' . $cek);
+        }
     }
 }
