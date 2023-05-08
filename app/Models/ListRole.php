@@ -13,6 +13,8 @@ class ListRole extends Model
 
     protected $table = 'listrole';
 
+    protected $fillable = ['class_id', 'role_id', 'user_id'];
+
     public function kelas()
     {
         return $this->belongsTo(Kelas::class, 'class_id');

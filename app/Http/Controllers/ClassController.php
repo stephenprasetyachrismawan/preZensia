@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Kelas;
 use App\Models\ListRole;
+use App\Models\Roles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -16,8 +17,9 @@ class ClassController extends Controller
      */
     public function index($id)
     {
-
-        return view('kelas.home', ['id' => $id]);
+        $kls = Kelas::where('hashcode', $id)->get();
+        if(count($kls)>0) return view('kelas.home', ['id' => $id]);
+        return redirect()->route('classes');
     }
     // getkelas is for dashboard classes / home
     public function getkelas()
@@ -32,11 +34,13 @@ class ClassController extends Controller
 
         $nama_kelas = [];
         $guru = [];
+        $hashcode = [];
         foreach ($kelas as $ke) {
             $nama_kelas[] = $ke[0]->class_name;
             $listguru = ListRole::with('user')->whereIn('role_id', ['1'])->whereIn('class_id', [$ke[0]->class_id])->get();
             $guru0 = User::find($listguru[0]->user_id)->get();
             $guru[] = $guru0[0]->name;
+            $hashcode[] = $ke[0]->hashcode;
         }
         // 
         $rolekelas = [];
@@ -44,11 +48,10 @@ class ClassController extends Controller
             $rolekelas[] = $li->role_id;
         }
 
-
         // dd($userkelas);
         $data = [];
         for ($i = 0; $i < count($nama_kelas); $i++) {
-            $data[] = [$nama_kelas[$i], $rolekelas[$i], $guru[$i]];
+            $data[] = [$nama_kelas[$i], $rolekelas[$i], $guru[$i], $hashcode[$i]];
         }
 
         return view('class', compact('data'));
@@ -88,14 +91,24 @@ class ClassController extends Controller
     public function check(Request $request)
     {
         $kode = $request->kodeKelas;
+        $hash = Kelas::where('class_code', $kode)->value('hashcode');
         $cek = Kelas::cekJoin($kode, Auth::id());
 
-        if ($cek == 'ajoin') return redirect()->route('classes.home', $kode);
-        else if ($cek == 'noclass') return;
+        if ($cek == 'noclass') return redirect()->route('classes.join');
+        else if ($cek == 'ajoin') {
+            return redirect()->route('classes.home', $hash);
+        }
         else if ($cek) {
-            $data = [];
+            $clid = Kelas::where('class_code', $kode)->value('class_id');
+            $rid = Roles::where('role', 'student')->value('role_id');
+            $uid = Auth::id();
+            $data = [
+                'class_id' => $clid,
+                'role_id' => $rid,
+                'user_id' => $uid
+            ];
             $join = ListRole::create($data);
-            return redirect()->route('classes.home' . $cek);
+            return redirect()->route('classes.home', $hash);
         }
     }
 }
