@@ -30,14 +30,14 @@ class Kelas extends Model
     protected static function booted()
     {
         static::created(function () {
-            $kls = DB::table('class')->orderByDesc('class_id')->first();
-            $role = DB::table('roles')->where('role', 'teacher')->first();
+            $kls = Kelas::orderByDesc('id')->first();
+            $role = Roles::where('role', 'teacher')->first();
             $baru = [
-                'class_id' => $kls->class_id,
-                'role_id' => $role->role_id,
+                'class_id' => $kls->id,
+                'role_id' => $role->id,
                 'user_id' => Auth::id()
             ];
-            DB::table('listrole')->insert($baru);
+            ListRole::insert($baru);
         });
     }
 
@@ -46,7 +46,7 @@ class Kelas extends Model
         $kode = '';
         do {
             $kode = substr(str_shuffle(str_repeat('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', 6)), 0, 6);
-            $cek = DB::table('class')->where('class_code', $kode)->count();
+            $cek = Kelas::where('class_code', $kode)->count();
         } while ($cek);
         return $kode;
     }
@@ -78,7 +78,7 @@ class Kelas extends Model
     {
         $cek = Kelas::where('class_code', $kode)->count();
         if (!$cek) return 'noclass';
-        $class = Kelas::where('class_code', $kode)->value('class_id');
+        $class = Kelas::where('class_code', $kode)->value('id');
         $cek2 = Listrole::where('class_id', $class)->where('user_id', $id)->count();
         if ($cek2) return 'ajoin';
         return $kode;

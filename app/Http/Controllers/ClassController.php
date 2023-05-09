@@ -100,8 +100,8 @@ class ClassController extends Controller
         else if ($cek == 'ajoin') {
             return redirect()->route('classes.home', $hash);
         } else if ($cek) {
-            $clid = Kelas::where('class_code', $kode)->value('class_id');
-            $rid = Roles::where('role', 'student')->value('role_id');
+            $clid = Kelas::where('class_code', $kode)->value('id');
+            $rid = Roles::where('role', 'student')->value('id');
             $uid = Auth::id();
             $data = [
                 'class_id' => $clid,
