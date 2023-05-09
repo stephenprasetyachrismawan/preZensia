@@ -17,19 +17,17 @@ class ClassController extends Controller
      */
     public function index($id)
     {
-        $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function ($query) {
-            $query->where('user_id', Auth::id());
-        })->get();
-        if ($kls) return view('kelas.home', ['id' => $kls]);
+        $kls = Kelas::where('hashcode', $id)->get();
+        if (count($kls) > 0) return view('kelas.home', ['id' => $id]);
         return redirect()->route('classes');
     }
     // getkelas is for dashboard classes / home
     public function getkelas()
     {
-        $list = ListRole::whereIn('user_id', [Auth::user()->id])->get();
+        $list = ListRole::with('user')->whereIn('user_id', [Auth::user()->id])->get();
         $kelas = [];
         foreach ($list as $li) {
-            $kelas[] = Kelas::whereIn('id', [$li->class_id])->get();
+            $kelas[] = Kelas::whereIn('class_id', [$li->class_id])->get();
         }
         // $kelas = Kelas::whereIn('class_id', [$list[0]->class_id])->get();
 
