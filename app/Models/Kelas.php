@@ -19,7 +19,7 @@ class Kelas extends Model
 
     public function listrole()
     {
-        return $this->hasMany(ListRole::class, 'class_id', 'class_id');
+        return $this->hasMany(ListRole::class, 'class_id', 'id');
     }
 
     public function presensi()
