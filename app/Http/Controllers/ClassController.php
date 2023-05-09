@@ -17,19 +17,19 @@ class ClassController extends Controller
      */
     public function index($id)
     {
-        $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function($query) {
+        $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function ($query) {
             $query->where('user_id', Auth::id());
-       })->get();
-        if($kls) return view('kelas.home', ['id' => $kls]);
+        })->get();
+        if ($kls) return view('kelas.home', ['id' => $kls]);
         return redirect()->route('classes');
     }
     // getkelas is for dashboard classes / home
     public function getkelas()
     {
-        $list = ListRole::with('user')->whereIn('user_id', [Auth::user()->id])->get();
+        $list = ListRole::whereIn('user_id', [Auth::user()->id])->get();
         $kelas = [];
         foreach ($list as $li) {
-            $kelas[] = Kelas::whereIn('class_id', [$li->class_id])->get();
+            $kelas[] = Kelas::whereIn('id', [$li->class_id])->get();
         }
         // $kelas = Kelas::whereIn('class_id', [$list[0]->class_id])->get();
 
@@ -99,8 +99,7 @@ class ClassController extends Controller
         if ($cek == 'noclass') return redirect()->route('classes.join');
         else if ($cek == 'ajoin') {
             return redirect()->route('classes.home', $hash);
-        }
-        else if ($cek) {
+        } else if ($cek) {
             $clid = Kelas::where('class_code', $kode)->value('class_id');
             $rid = Roles::where('role', 'student')->value('role_id');
             $uid = Auth::id();
