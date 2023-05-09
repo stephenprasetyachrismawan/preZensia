@@ -39,7 +39,7 @@ class ClassController extends Controller
         $hashcode = [];
         foreach ($kelas as $ke) {
             $nama_kelas[] = $ke[0]->class_name;
-            $listguru = ListRole::with('user')->whereIn('role_id', ['1'])->whereIn('class_id', [$ke[0]->class_id])->get();
+            $listguru = ListRole::with('user')->whereIn('id', ['1'])->whereIn('class_id', [$ke[0]->class_id])->get();
             $guru0 = User::find($listguru[0]->user_id)->get();
             $guru[] = $guru0[0]->name;
             $hashcode[] = $ke[0]->hashcode;
@@ -47,7 +47,7 @@ class ClassController extends Controller
         // 
         $rolekelas = [];
         foreach ($list as $li) {
-            $rolekelas[] = $li->role_id;
+            $rolekelas[] = $li->id;
         }
 
         // dd($userkelas);
