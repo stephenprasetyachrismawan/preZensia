@@ -17,7 +17,7 @@ class ListRole extends Model
 
     public function kelas()
     {
-        return $this->belongsTo(Kelas::class, 'class_id');
+        return $this->belongsTo(Kelas::class, 'class_id', 'class_id');
     }
 
     public function user()
