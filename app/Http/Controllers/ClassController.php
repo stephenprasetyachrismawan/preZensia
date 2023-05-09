@@ -27,8 +27,10 @@ class ClassController extends Controller
     public function getkelas()
     {
         $list = ListRole::whereIn('user_id', [Auth::user()->id])->get();
+        
         $kelas = [];
         foreach ($list as $li) {
+            
             $kelas[] = Kelas::whereIn('id', [$li->class_id])->get();
         }
         // $kelas = Kelas::whereIn('class_id', [$list[0]->class_id])->get();
@@ -38,8 +40,9 @@ class ClassController extends Controller
         $guru = [];
         $hashcode = [];
         foreach ($kelas as $ke) {
+            
             $nama_kelas[] = $ke[0]->class_name;
-            $listguru = ListRole::with('user')->whereIn('id', ['1'])->whereIn('class_id', [$ke[0]->class_id])->get();
+            $listguru = ListRole::with('user')->whereIn('id', ['1'])->whereIn('class_id', [$ke[0]->id])->get();
             $guru0 = User::find($listguru[0]->user_id)->get();
             $guru[] = $guru0[0]->name;
             $hashcode[] = $ke[0]->hashcode;
