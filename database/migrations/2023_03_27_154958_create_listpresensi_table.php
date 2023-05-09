@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('listpresensi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('presensi_id')->constrained('presensi', 'presensi_id');
-            $table->foreignId('ket_id')->constrained('ket', 'ket_id');
+            $table->foreignId('presensi_id')->constrained('presensi');
+            $table->foreignId('ket_id')->constrained('ket');
             $table->string('murid');
             $table->dateTime('time');
         });

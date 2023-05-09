@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('listrole', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('class_id')->constrained('class', 'class_id');
-            $table->foreignId('role_id')->constrained('roles', 'role_id');
+            $table->foreignId('class_id')->constrained('class');
+            $table->foreignId('role_id')->constrained('roles');
             $table->foreignId('user_id')->constrained('users');
         });
     }
