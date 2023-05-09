@@ -17,17 +17,19 @@ class ClassController extends Controller
      */
     public function index($id)
     {
-        $kls = Kelas::where('hashcode', $id)->get();
-        if (count($kls) > 0) return view('kelas.home', ['id' => $id]);
+        $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->get();
+        if ($kls) return view('kelas.home', ['id' => $kls]);
         return redirect()->route('classes');
     }
     // getkelas is for dashboard classes / home
     public function getkelas()
     {
-        $list = ListRole::with('user')->whereIn('user_id', [Auth::user()->id])->get();
+        $list = ListRole::whereIn('user_id', [Auth::user()->id])->get();
         $kelas = [];
         foreach ($list as $li) {
-            $kelas[] = Kelas::whereIn('class_id', [$li->class_id])->get();
+            $kelas[] = Kelas::whereIn('id', [$li->class_id])->get();
         }
         // $kelas = Kelas::whereIn('class_id', [$list[0]->class_id])->get();
 
@@ -37,7 +39,7 @@ class ClassController extends Controller
         $hashcode = [];
         foreach ($kelas as $ke) {
             $nama_kelas[] = $ke[0]->class_name;
-            $listguru = ListRole::with('user')->whereIn('role_id', ['1'])->whereIn('class_id', [$ke[0]->class_id])->get();
+            $listguru = ListRole::with('user')->whereIn('id', ['1'])->whereIn('class_id', [$ke[0]->class_id])->get();
             $guru0 = User::find($listguru[0]->user_id)->get();
             $guru[] = $guru0[0]->name;
             $hashcode[] = $ke[0]->hashcode;
@@ -45,7 +47,7 @@ class ClassController extends Controller
         // 
         $rolekelas = [];
         foreach ($list as $li) {
-            $rolekelas[] = $li->role_id;
+            $rolekelas[] = $li->id;
         }
 
         // dd($userkelas);
