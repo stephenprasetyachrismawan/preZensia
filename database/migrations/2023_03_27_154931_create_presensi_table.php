@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('presensi', function (Blueprint $table) {
-            $table->id('presensi_id');
+            $table->id();
             $table->foreignId('class_id')->constrained('class', 'class_id');
             $table->dateTime('timestart');
             $table->dateTime('timeend');

@@ -17,8 +17,10 @@ class ClassController extends Controller
      */
     public function index($id)
     {
-        $kls = Kelas::where('hashcode', $id)->get();
-        if(count($kls)>0) return view('kelas.home', ['id' => $id]);
+        $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function($query) {
+            $query->where('user_id', Auth::id());
+       })->get();
+        if($kls) return view('kelas.home', ['id' => $kls]);
         return redirect()->route('classes');
     }
     // getkelas is for dashboard classes / home
