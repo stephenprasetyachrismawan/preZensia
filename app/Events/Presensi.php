@@ -23,7 +23,7 @@ class Presensi implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        $penerima = '10';
+        $penerima = '1';
         return [
             // new PrivateChannel('privat-presensi' . $penerima)
             'privat-presensi' . $penerima
