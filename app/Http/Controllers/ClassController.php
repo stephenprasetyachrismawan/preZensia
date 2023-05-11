@@ -27,6 +27,7 @@ class ClassController extends Controller
     public function getkelas()
     {
         $list = ListRole::whereIn('user_id', [Auth::user()->id])->get();
+        dd($list);
         $kelas = [];
         foreach ($list as $li) {
             $kelas[] = Kelas::whereIn('id', [$li->class_id])->get();
