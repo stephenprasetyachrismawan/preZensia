@@ -3,7 +3,8 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
-        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php', './storage/framework/views/*.php', './resources/views/**/*.blade.php', './node_modules/flowbite/**/*.js'
+        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php', './storage/framework/views/*.php', './resources/views/**/*.blade.php', './node_modules/flowbite/**/*.js', "./src/**/*.{html,js}",
+        "./node_modules/tw-elements/dist/js/**/*.js"
 
     ],
 
@@ -37,7 +38,7 @@ module.exports = {
         }
     },
 
-    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography'), require('daisyui'), require('flowbite/plugin')]
+    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography'), require('daisyui'), require('flowbite/plugin'), require("tw-elements/dist/plugin.cjs")]
 
 
 };

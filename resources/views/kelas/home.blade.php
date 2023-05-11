@@ -1,63 +1,67 @@
 <x-app-layout>
 
-    <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
-        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400" id="tabExample"
-            role="tablist">
-            <li class="mr-2" role="presentation">
-                <button
-                    class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                    id="profile-tab-example" type="button" role="tab" aria-controls="profile-example"
-                    aria-selected="false">Profile</button>
-            </li>
-            <li class="mr-2" role="presentation">
-                <button
-                    class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                    id="dashboard-tab-example" type="button" role="tab" aria-controls="dashboard-example"
-                    aria-selected="false">Dashboard</button>
-            </li>
-            <li class="mr-2" role="presentation">
-                <button
-                    class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                    id="settings-tab-example" type="button" role="tab" aria-controls="settings-example"
-                    aria-selected="false">Settings</button>
-            </li>
-            <li role="presentation">
-                <button
-                    class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                    id="contacts-tab-example" type="button" role="tab" aria-controls="contacts-example"
-                    aria-selected="false">Contacts</button>
-            </li>
-        </ul>
-    </div>
-    <div id="tabContentExample">
-        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="profile-example" role="tabpanel"
-            aria-labelledby="profile-tab-example">
-            <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong
-                    class="font-medium text-gray-800 dark:text-white">Profile tab's associated content</strong>.
-                Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps
-                classes to control the content visibility and styling.</p>
-        </div>
-        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="dashboard-example" role="tabpanel"
-            aria-labelledby="dashboard-tab-example">
-            <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong
-                    class="font-medium text-gray-800 dark:text-white">Dashboard tab's associated content</strong>.
-                Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps
-                classes to control the content visibility and styling.</p>
-        </div>
-        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="settings-example" role="tabpanel"
-            aria-labelledby="settings-tab-example">
-            <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong
-                    class="font-medium text-gray-800 dark:text-white">Settings tab's associated content</strong>.
-                Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps
-                classes to control the content visibility and styling.</p>
-        </div>
-        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="contacts-example" role="tabpanel"
-            aria-labelledby="contacts-tab-example">
-            <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong
-                    class="font-medium text-gray-800 dark:text-white">Contacts tab's associated content</strong>.
-                Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps
-                classes to control the content visibility and styling.</p>
+    <div class="container">
+        <div class="rounded border grid w-3/4 mx-auto mt-4">
+            <!-- Tabs -->
+            <div class="justify-self-center ">
+                <ul id="tabs" class="inline-flex pt-2 px-1 w-full border-b">
+                    <li
+                        class="bg-white px-4 text-gray-800 font-semibold py-2 rounded-t border-t border-r border-l -mb-px">
+                        <a id="default-tab" href="#first">Tab 1</a></li>
+                    <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#second">Tab 2</a></li>
+                    <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#third">Tab 3</a></li>
+                    <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#fourth">Tab 4</a></li>
+                </ul>
+            </div>
+
+            <!-- Tab Contents -->
+            <div id="tab-contents">
+                <div id="first" class="p-4">
+                    First tab
+                </div>
+                <div id="second" class="hidden p-4">
+                    Second tab
+                </div>
+                <div id="third" class="hidden p-4">
+                    Third tab
+                </div>
+                <div id="fourth" class="hidden p-4">
+                    Fourth tab
+                </div>
+            </div>
         </div>
     </div>
+
 </x-app-layout>
-<script></script>
+
+<script>
+    let tabsContainer = document.querySelector("#tabs");
+
+    let tabTogglers = tabsContainer.querySelectorAll("#tabs a");
+
+    console.log(tabTogglers);
+
+    tabTogglers.forEach(function(toggler) {
+        toggler.addEventListener("click", function(e) {
+            e.preventDefault();
+
+            let tabName = this.getAttribute("href");
+
+            let tabContents = document.querySelector("#tab-contents");
+
+            for (let i = 0; i < tabContents.children.length; i++) {
+
+                tabTogglers[i].parentElement.classList.remove("border-t", "border-r", "border-l",
+                    "-mb-px", "bg-white");
+                tabContents.children[i].classList.remove("hidden");
+                if ("#" + tabContents.children[i].id === tabName) {
+                    continue;
+                }
+                tabContents.children[i].classList.add("hidden");
+
+            }
+            e.target.parentElement.classList.add("border-t", "border-r", "border-l", "-mb-px",
+                "bg-white");
+        });
+    });
+</script>
