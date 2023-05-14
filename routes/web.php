@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
         Route::post('join', 'check')->name('classes.join.check');
         Route::get('{id}', 'index')->name('classes.home');
     });
+    Route::resource('/buatpresensi', App\Http\Controllers\PresensiController::class);
 });
 
 //Pusher
