@@ -20,7 +20,7 @@
                         <article class="flex flex-col items-center justify-center prose my-3">
                             <h2 class="h1">Daftar Presensi Anda ..⏳</h2>
                         </article>
-                        @forEach($list as $li)
+                        
                         <div class="relative overflow-x-auto flex my-3">
                             <div class=" overflow-x">
                                 <table class="table table-auto overflow-scroll table-zebra w-full block">
@@ -35,74 +35,71 @@
                                     </thead>
                                     <tbody>
                                         <!-- row 1 -->
+                                        @forEach($list as $li)
+                                        @forEach($status as $st)
                                         <tr>
-                                            <th>1</th>
+                                            @php $no = 1
+                                            @endphp
+                                            <th>{{$no++}}</th>
+                                            @if($li->id == $st->presensi_id)
                                             <td>
-                                                    <button class="btn btn-secondary">Terlambat</button>
-                                            </td>
-                                            <td>{{$li->timestart}}</td>
-                                            <td>Menguji pemahaman</td>
-                                        </tr>
-                                        <!-- row 2 -->
-                                        <tr>
-                                            <th>2</th>
-                                            <td>
-                                                <div class="dropdown dropdown-right">
-
                                                     <button class="btn btn-warning">Sudah</button>
-                                                </div>
                                             </td>
-                                            <td>06/04/2023 (11.00 - 12.00)</td>
-                                            <td>Menguji pemahaman</td>
-                                        </tr>
-                                        <!-- row 3 -->
-                                        <tr>
-                                            <th>3</th>
-
+                                            @elseif(Carbon\Carbon::parse($li->tanggal)->setTimeFrom(Carbon\Carbon::parse($li->timeend)) < Carbon\Carbon::now())
                                             <td>
-                                                <div class="dropdown dropdown-right dropdown-end">
-                                                    <label tabindex="0" class="btn btn-info m-1">Isi 🖋</label>
-                                                    <ul tabindex="0"
-                                                        class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-
-                                                        <form action="/presensi" method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="ket" value="hadir">
-                                                            <li class="">
-                                                                <input type="submit" value="Hadir"
-                                                                    class="flex flex-col items-center justify-center hover:bg-success">
-                                                            </li>
-                                                        </form>
-
-                                                        <form action="/presensi" method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="ket" value="ijin">
-                                                            <li>
-                                                                <input type="submit" value="Ijin"
-                                                                    class="flex flex-col items-center justify-center hover:bg-warning">
-                                                            </li>
-                                                        </form>
-
-                                                        <form action="/presensi" method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="ket" value="sakit">
-                                                            <li>
-                                                                <input type="submit" value="Sakit"
-                                                                    class="flex flex-col items-center justify-center hover:bg-warning">
-                                                            </li>
-                                                        </form>
-
-                                                    </ul>
-                                                </div>
+                                                <button class="btn btn-secondary">Terlambat</button>
                                             </td>
-                                            <td>06/04/2023 (11.00 - 12.00)</td>
-                                            <td>Menguji pemahaman</td>
+                                            @elseif(Carbon\Carbon::parse($li->tanggal)->startOfDay() > Carbon\Carbon::now()->startOfDay())
+                                            <td>
+                                                <button class="btn btn-info">Belum Mulai</button>
+                                            </td>
+                                            @else
+                                            <td>
+                                            <div class="dropdown dropdown-right dropdown-end">
+                                                <label tabindex="0" class="btn btn-info m-1">Isi 🖋</label>
+                                                <ul tabindex="0"
+                                                    class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+
+                                                    <form action="/presensi" method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="ket" value="hadir">
+                                                        <li class="">
+                                                            <input type="submit" value="Hadir"
+                                                                class="flex flex-col items-center justify-center hover:bg-success">
+                                                        </li>
+                                                    </form>
+
+                                                    <form action="/presensi" method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="ket" value="ijin">
+                                                        <li>
+                                                            <input type="submit" value="Ijin"
+                                                                class="flex flex-col items-center justify-center hover:bg-warning">
+                                                        </li>
+                                                    </form>
+
+                                                    <form action="/presensi" method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="ket" value="sakit">
+                                                        <li>
+                                                            <input type="submit" value="Sakit"
+                                                                class="flex flex-col items-center justify-center hover:bg-warning">
+                                                        </li>
+                                                    </form>
+
+                                                </ul>
+                                            </div>
+                                            </td>
+                                            @endif
+                                            <td>{{Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString()}}<br>{{'('.$li->timestart.' - '.$li->timeend.')'}}</td>
+                                            <td>{{$li->ket}}</td>
                                         </tr>
+                                        @endforeach
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        @endforeach
                     </div>
                 </div>
                 <div id="second" class="hidden p-4">

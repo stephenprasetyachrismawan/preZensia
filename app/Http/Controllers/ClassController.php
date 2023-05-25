@@ -30,16 +30,13 @@ class ClassController extends Controller
         else if ($kls && $role==2) {
             $list = Presensi::where('class_id', $idk)->get();
             $idp = [];
-            $status = [];
             foreach ($list as $li){
                 $idp[] = $li->id;
             }
-            // foreach($idp as $id){
-            //     ListPresensi::where('presensi_id', $id)->where()
-            // }
+            $stat = ListPresensi::whereIn('presensi_id', $idp)->where('murid', Auth::id())->get();
             return view('kelas.home2')->with([
                 'list' => $list,
-                // 'status' => $status
+                'status' => $stat
             ]);
         }
         return redirect()->route('classes');
