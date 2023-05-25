@@ -40,12 +40,12 @@
                                     </thead>
                                     <tbody>
                                         <!-- row 1 -->
+                                            @php $no = 1
+                                            @endphp
                                         @forEach($list as $li)
                                         @forEach($status as $st)
                                         <tr>
-                                            @php $no = 1
-                                            @endphp
-                                            <th>{{$no++}}</th>
+                                            <td>{{$no++}}</td>
                                             @if($li->id == $st->presensi_id)
                                             <td>
                                                     <button class="btn btn-warning">Sudah</button>
