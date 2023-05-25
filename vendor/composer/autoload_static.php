@@ -350,8 +350,8 @@ class ComposerStaticInitc99811e563831c0037b723351583c755
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -547,6 +547,7 @@ class ComposerStaticInitc99811e563831c0037b723351583c755
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\FormPresensi' => __DIR__ . '/../..' . '/app/Http/Controllers/FormPresensi.php',
         'App\\Http\\Controllers\\GoogleController' => __DIR__ . '/../..' . '/app/Http/Controllers/GoogleController.php',
+        'App\\Http\\Controllers\\PresensiController' => __DIR__ . '/../..' . '/app/Http/Controllers/PresensiController.php',
         'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
         'App\\Http\\Controllers\\RealtimeLaporan' => __DIR__ . '/../..' . '/app/Http/Controllers/RealtimeLaporan.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',

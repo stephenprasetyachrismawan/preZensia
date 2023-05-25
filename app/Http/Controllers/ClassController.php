@@ -20,8 +20,11 @@ class ClassController extends Controller
         $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function ($query) {
             $query->where('user_id', Auth::id());
         })->get();
+        $idk = $kls[0]->id;
         $role = ListRole::where('user_id', Auth::id())->value('role_id');
-        if ($kls && $role==1) return view('kelas.home');
+        if ($kls && $role==1) return view('kelas.home')->with([
+            'idk' => $idk
+        ]);
         else if ($kls && $role==2) return view('kelas.home2');
         return redirect()->route('classes');
     }

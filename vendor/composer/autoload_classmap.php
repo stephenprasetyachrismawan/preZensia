@@ -22,6 +22,7 @@ return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\FormPresensi' => $baseDir . '/app/Http/Controllers/FormPresensi.php',
     'App\\Http\\Controllers\\GoogleController' => $baseDir . '/app/Http/Controllers/GoogleController.php',
+    'App\\Http\\Controllers\\PresensiController' => $baseDir . '/app/Http/Controllers/PresensiController.php',
     'App\\Http\\Controllers\\ProfileController' => $baseDir . '/app/Http/Controllers/ProfileController.php',
     'App\\Http\\Controllers\\RealtimeLaporan' => $baseDir . '/app/Http/Controllers/RealtimeLaporan.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
