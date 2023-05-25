@@ -21,14 +21,18 @@
                     Buat Presensi
                     <form action="{{ route('buatpresensi.store') }}" method="post" class="form-control">
                         @csrf
+                        <div>
+                            <label for="tanggal">Tanggal</label>
+                            <input type="date" id="tanggal" name="mulai" value="" required>
+                        </div>
                         <div class="form-group">
 
-                            <label for="datetime">Dimulai</label>
-                            <input type="datetime-local" id="datetime" name="mulai">
+                            <label for="timemulai">Dimulai</label>
+                            <input type="time" id="timemulai" name="jammulai" value="" required>
                         </div>
-                        <div>
-                            <label for="datetime">Diakhiri</label>
-                            <input type="datetime-local" id="datetime" name="akhir">
+                        <div class="form-group">
+                            <label for="timeakhir">Diakhiri</label>
+                            <input type="time" id="timeakhir" name="jamakhir" value="" required>
                         </div>
                         <div>
 
@@ -48,17 +52,17 @@
                             <div id="textDiv" class="hidden">
                                 <div>
                                     <input type="radio" name="setiap" id="hari" class="radio radio-info"
-                                        required value="hari" /><label for="hari">Setiap Hari</label>
+                                         value="hari" /><label for="hari">Setiap Hari</label>
 
                                 </div>
                                 <div>
                                     <input type="radio" id="minggu" name="setiap" class="radio radio-info"
-                                        required value="minggu" /><label for="minggu">Setiap Minggu</label>
+                                         value="minggu" /><label for="minggu">Setiap Minggu</label>
 
                                 </div>
                                 <div>
                                     <input type="radio" name="setiap" id="bulan" class="radio radio-info"
-                                        required value="bulan" /><label for="bulan">Setiap Bulan</label>
+                                         value="bulan" /><label for="bulan">Setiap Bulan</label>
                                 </div>
                             </div>
                             <div class="hidden" id="kalihari"><label for="jumlah">Sampai </label><input
@@ -69,7 +73,8 @@
                         </div>
                         <div>
                             <input type="hidden" name="idkelas" value="{{ $idk }}">
-                            <input type="submit" class="btn btn-primary" name="store" value="Buat">
+                            {{-- <button type="submit">Kirim</button> --}}
+                            <input type="submit" class="btn btn-primary" value="Buat">
                         </div>
                     </form>
 
@@ -132,7 +137,12 @@
     tabTogglers.forEach(function(toggler) {
         toggler.addEventListener("click", function(e) {
             e.preventDefault();
-
+            let harielem = document.getElementById("hari");
+            let mingguelem = document.getElementById("minggu");
+            let bulanelem = document.getElementById("bulan");
+            harielem.toggleAttribute("required");
+            mingguelem.toggleAttribute("required");
+            bulanelem.toggleAttribute("required");
             let tabName = this.getAttribute("href");
 
             let tabContents = document.querySelector("#tab-contents");
