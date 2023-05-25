@@ -1,5 +1,10 @@
 <x-app-layout>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"> --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.material.min.css"> --}}
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/4.0.0/material-components-web.min.css"> --}}
     <div class="container">
         <div class="rounded border grid w-3/4 mx-auto mt-4">
             <!-- Tabs -->
@@ -15,14 +20,14 @@
 
             <!-- Tab Contents -->
             <div id="tab-contents">
-                <div id="first" class="p-4">
+                <div id="first" class="p-1">
                     <div class="container lg:flex lg:flex-col lg:items-center lg:justify-center">
                         <article class="flex flex-col items-center justify-center prose my-3">
                             <h2 class="h1">Daftar Presensi Anda ..⏳</h2>
                         </article>
                         <div class="relative overflow-x-auto flex my-3">
-                            <div class=" overflow-x">
-                                <table class="table table-auto overflow-scroll table-zebra w-full block">
+                            <div class="">
+                                <table id="tabelabsen" class="display table table-auto table-zebra ">
                                     <!-- head -->
                                     <thead>
                                         <tr>
@@ -118,6 +123,14 @@
 
 </x-app-layout>
 
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+{{-- <script src="https://cdn.datatables.net/1.13.4/js/dataTables.material.min.js"></script> --}}
+<script>
+
+    $(document).ready(function () {
+    $('#tabelabsen').DataTable();
+});
+</script>
 <script>
     let tabsContainer = document.querySelector("#tabs");
 
