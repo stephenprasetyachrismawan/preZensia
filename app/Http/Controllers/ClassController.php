@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Kelas;
-use App\Models\ListRole;
+use App\Models\ListPresensi;
 use App\Models\Roles;
+use App\Models\ListRole;
+use App\Models\Presensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -25,7 +27,21 @@ class ClassController extends Controller
         if ($kls && $role==1) return view('kelas.home')->with([
             'idk' => $idk
         ]);
-        else if ($kls && $role==2) return view('kelas.home2');
+        else if ($kls && $role==2) {
+            $list = Presensi::where('class_id', $idk)->get();
+            $idp = [];
+            $status = [];
+            foreach ($list as $li){
+                $idp[] = $li->id;
+            }
+            // foreach($idp as $id){
+            //     ListPresensi::where('presensi_id', $id)->where()
+            // }
+            return view('kelas.home2')->with([
+                'list' => $list,
+                // 'status' => $status
+            ]);
+        }
         return redirect()->route('classes');
     }
     // getkelas is for dashboard classes / home
