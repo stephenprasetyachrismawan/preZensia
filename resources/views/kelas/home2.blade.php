@@ -20,6 +20,7 @@
                         <article class="flex flex-col items-center justify-center prose my-3">
                             <h2 class="h1">Daftar Presensi Anda ..⏳</h2>
                         </article>
+                        @forEach($list as $li)
                         <div class="relative overflow-x-auto flex my-3">
                             <div class=" overflow-x">
                                 <table class="table table-auto overflow-scroll table-zebra w-full block">
@@ -37,12 +38,9 @@
                                         <tr>
                                             <th>1</th>
                                             <td>
-                                                <div class="dropdown dropdown-right">
-
                                                     <button class="btn btn-secondary">Terlambat</button>
-                                                </div>
                                             </td>
-                                            <td>06/04/2023 (11.00 - 12.00)</td>
+                                            <td>{{$li->timestart}}</td>
                                             <td>Menguji pemahaman</td>
                                         </tr>
                                         <!-- row 2 -->
@@ -104,6 +102,7 @@
                                 </table>
                             </div>
                         </div>
+                        @endforeach
                     </div>
                 </div>
                 <div id="second" class="hidden p-4">
