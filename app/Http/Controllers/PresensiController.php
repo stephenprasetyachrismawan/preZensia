@@ -9,6 +9,11 @@ use Illuminate\Support\Carbon;
 class PresensiController extends Controller
 {
     //
+    public function show_murid(){
+        $user_murid = 
+        if()
+    }
+
     public function store(Request $req)
     {
 
