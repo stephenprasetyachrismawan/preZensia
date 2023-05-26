@@ -46,6 +46,31 @@ class ClassController extends Controller
         }
         return redirect()->route('classes');
     }
+    public function linkjoin($id, $kode)
+    {
+        $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->get();
+        if ($kls->isEmpty()) {
+            $clid = Kelas::where('class_code', $kode)->value('id');
+            $rid = Roles::where('role', 'student')->value('id');
+            $uid = Auth::id();
+            $data = [
+                'class_id' => $clid,
+                'role_id' => $rid,
+                'user_id' => $uid
+            ];
+            $join = ListRole::create($data);
+            return redirect()->route('classes.home', $id);
+        }
+        $idk = $kls[0]->id;
+        $role = ListRole::where('user_id', Auth::id())->value('role_id');
+        if ($kls && $role == 1)
+            return redirect()->route('classes.home', $id);
+        else if ($kls && $role == 2) {
+            return redirect()->route('classes.home', $id);
+        }
+    }
     // getkelas is for dashboard classes / home
     public function getkelas()
     {

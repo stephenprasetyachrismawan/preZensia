@@ -29,15 +29,16 @@ Route::middleware('auth')->group(function () {
         Route::get('join', 'join')->name('classes.join');
         Route::post('join', 'check')->name('classes.join.check');
         Route::get('{id}', 'index')->name('classes.home');
+        Route::get('{id}/{cd}', 'linkjoin')->name('classes.linkjoin');
     });
     Route::resource('/buatpresensi', App\Http\Controllers\PresensiController::class);
 });
 
 //Pusher
-Route::post('presensi', [FormPresensi::class, 'simpan'])->middleware(['auth', 'verified']);  //kirim
+Route::post('presensi', [FormPresensi::class, 'simpan'])->middleware(['auth', 'verified']); //kirim
 Route::get('laporan-realtime', function () {
     return view('laporan_presensi');
-})->middleware(['auth', 'verified']);  //terima
+})->middleware(['auth', 'verified']); //terima
 
 //View Isi Presensi
 Route::get(
