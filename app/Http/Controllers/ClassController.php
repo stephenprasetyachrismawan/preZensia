@@ -11,6 +11,7 @@ use App\Models\Presensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use PHPUnit\Framework\Constraint\IsEmpty;
 
 class ClassController extends Controller
 {
@@ -22,15 +23,19 @@ class ClassController extends Controller
         $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function ($query) {
             $query->where('user_id', Auth::id());
         })->get();
+        if ($kls->isEmpty()) {
+            return redirect()->route('classes');
+        }
         $idk = $kls[0]->id;
         $role = ListRole::where('user_id', Auth::id())->value('role_id');
-        if ($kls && $role==1) return view('kelas.home')->with([
-            'idk' => $idk
-        ]);
-        else if ($kls && $role==2) {
+        if ($kls && $role == 1)
+            return view('kelas.home')->with([
+                'idk' => $idk
+            ]);
+        else if ($kls && $role == 2) {
             $list = Presensi::where('class_id', $idk)->get();
             $idp = [];
-            foreach ($list as $li){
+            foreach ($list as $li) {
                 $idp[] = $li->id;
             }
             $stat = ListPresensi::whereIn('presensi_id', $idp)->where('murid', Auth::id())->get();
@@ -116,7 +121,8 @@ class ClassController extends Controller
         $hash = Kelas::where('class_code', $kode)->value('hashcode');
         $cek = Kelas::cekJoin($kode, Auth::id());
 
-        if ($cek == 'noclass') return redirect()->route('classes.join');
+        if ($cek == 'noclass')
+            return redirect()->route('classes.join');
         else if ($cek == 'ajoin') {
             return redirect()->route('classes.home', $hash);
         } else if ($cek) {
