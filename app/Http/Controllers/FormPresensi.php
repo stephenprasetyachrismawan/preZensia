@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 class FormPresensi extends Controller
 {
-    public function simpan()
+    public function simpan(Request $req)
     {
 
-
+        $presensi_id = 
         $dataSend = [
             'nama' => "Stephen",
             'ket' => "Hadir",
