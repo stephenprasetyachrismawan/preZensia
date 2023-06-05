@@ -11,6 +11,7 @@ use App\Models\Presensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use PHPUnit\Framework\Constraint\IsEmpty;
 use App\Http\Controllers\PresensiController;
 
 class ClassController extends Controller
@@ -24,12 +25,8 @@ class ClassController extends Controller
         $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function ($query) {
             $query->where('user_id', Auth::id());
         })->get();
-        
         $idk = $kls[0]->id;
         $role = ListRole::where('user_id', Auth::id())->value('role_id');
-        
-        $Presensi = new PresensiController();
-        // $Presensi->lihat_presensi($idk, $role);
         if ($kls && $role==1) return view('kelas.home')->with([
             'idk' => $idk
         ]);
@@ -37,7 +34,7 @@ class ClassController extends Controller
             $list = Presensi::where('class_id', $idk)->get();
             
             $idp = [];
-            foreach ($list as $li){
+            foreach ($list as $li) {
                 $idp[] = $li->id;
             }
             
@@ -49,6 +46,31 @@ class ClassController extends Controller
             ]);
         }
         return redirect()->route('classes');
+    }
+    public function linkjoin($id, $kode)
+    {
+        $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->get();
+        if ($kls->isEmpty()) {
+            $clid = Kelas::where('class_code', $kode)->value('id');
+            $rid = Roles::where('role', 'student')->value('id');
+            $uid = Auth::id();
+            $data = [
+                'class_id' => $clid,
+                'role_id' => $rid,
+                'user_id' => $uid
+            ];
+            $join = ListRole::create($data);
+            return redirect()->route('classes.home', $id);
+        }
+        $idk = $kls[0]->id;
+        $role = ListRole::where('user_id', Auth::id())->value('role_id');
+        if ($kls && $role == 1)
+            return redirect()->route('classes.home', $id);
+        else if ($kls && $role == 2) {
+            return redirect()->route('classes.home', $id);
+        }
     }
     // getkelas is for dashboard classes / home
     public function getkelas()
@@ -125,7 +147,8 @@ class ClassController extends Controller
         $hash = Kelas::where('class_code', $kode)->value('hashcode');
         $cek = Kelas::cekJoin($kode, Auth::id());
 
-        if ($cek == 'noclass') return redirect()->route('classes.join');
+        if ($cek == 'noclass')
+            return redirect()->route('classes.join');
         else if ($cek == 'ajoin') {
             return redirect()->route('classes.home', $hash);
         } else if ($cek) {

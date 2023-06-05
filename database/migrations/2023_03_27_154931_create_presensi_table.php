@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,8 +13,10 @@ return new class extends Migration
         Schema::create('presensi', function (Blueprint $table) {
             $table->id();
             $table->foreignId('class_id')->constrained('class');
-            $table->dateTime('timestart');
-            $table->dateTime('timeend');
+            $table->date('tanggal');
+            $table->time('timestart');
+            $table->time('timeend');
+            $table->string('ket');
         });
     }
 
