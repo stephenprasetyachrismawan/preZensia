@@ -28,9 +28,13 @@ class ClassController extends Controller
         }
         $idk = $kls[0]->id;
         $role = ListRole::where('user_id', Auth::id())->value('role_id');
+
+        $part = ListRole::where('class_id', Kelas::where('hashcode', $id)->value('id'))->get();
+
         if ($kls && $role == 1)
             return view('kelas.home')->with([
-                'idk' => $idk
+                'idk' => $idk,
+                'part' => $part
             ]);
         else if ($kls && $role == 2) {
             $list = Presensi::where('class_id', $idk)->get();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjaxController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormPresensi;
 use App\Http\Controllers\ClassController;
@@ -48,7 +49,7 @@ Route::get(
     }
 )->middleware(['auth', 'verified']);
 
-
+Route::post('ajax-resp', [AjaxController::class, 'chartReq'])->name('chartReq');
 
 
 
