@@ -12,20 +12,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PHPUnit\Framework\Constraint\IsEmpty;
+use App\Http\Controllers\PresensiController;
 
 class ClassController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index($id)
     {
         $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function ($query) {
             $query->where('user_id', Auth::id());
         })->get();
-        if ($kls->isEmpty()) {
-            return redirect()->route('classes');
-        }
         $idk = $kls[0]->id;
         $role = ListRole::where('user_id', Auth::id())->value('role_id');
 
@@ -38,11 +37,14 @@ class ClassController extends Controller
             ]);
         else if ($kls && $role == 2) {
             $list = Presensi::where('class_id', $idk)->get();
+            
             $idp = [];
             foreach ($list as $li) {
                 $idp[] = $li->id;
             }
-            $stat = ListPresensi::whereIn('presensi_id', $idp)->where('murid', Auth::id())->get();
+            
+            $stat = ListPresensi::whereIn('presensi_id', $idp)->where('murid', Auth::id());
+
             return view('kelas.home2')->with([
                 'list' => $list,
                 'status' => $stat
@@ -167,4 +169,7 @@ class ClassController extends Controller
             return redirect()->route('classes.home', $hash);
         }
     }
+
+    //fungsi lihat presensi oleh murid
+    
 }
