@@ -2,6 +2,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"> --}}
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"> --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.material.min.css"> --}}
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/4.0.0/material-components-web.min.css"> --}}
@@ -26,13 +28,13 @@
                             <h2 class="h1">Daftar Presensi Anda ..⏳</h2>
                         </article>
                         
-                        <div class="relative overflow-x-auto flex my-3">
+                        <div class="relative flex my-3">
                             <div class="">
-                                <table id="tabelabsen" class="display table table-auto table-zebra ">
+                                <table id="tabelabsen" class="stripe" style="width:100%">
                                     <!-- head -->
                                     <thead>
                                         <tr>
-                                            <th></th>
+                                            <th>No.</th>
                                             <th>Presensi</th>
                                             <th>Waktu</th>
                                             <th>Deskripsi</th>
@@ -40,7 +42,114 @@
                                     </thead>
                                     <tbody>
                                         <!-- row 1 -->
-                                            @php $no = 1
+                                        @php
+                                        $no = 1;
+                                        
+                                        
+                                        @endphp
+
+
+                                        @forEach($list as $li)
+                                        @if( Carbon\Carbon::createFromFormat("Y-m-d",$li->tanggal)->format('Y-M-d') == Carbon\Carbon::now()->format('Y-M-d') &&Carbon\Carbon::createFromTimeString($li->timeend)->format("H:i:s") > Carbon\Carbon::now()->format('H:i:s') && Carbon\Carbon::createFromTimeString($li->timestart)->format('H:i:s') < Carbon\Carbon::now()->format('H:i:s'))
+                                        <tr>
+                                            <td>{{$no++}}</td>
+                                            <td>
+                                                <div class="dropdown dropdown-right dropdown-end">
+                                                    <label tabindex="0" class="btn btn-info m-1">Isi 🖋</label>
+                                                    <ul tabindex="0"
+                                                        class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+    
+                                                        <form action="/presensi" method="post">
+                                                            @csrf
+                                                            <input type="hidden" name="ket" value="1">
+                                                            <input type="hidden" name="pres_id" value="{{$li->id}}">
+                                                            <li class="">
+                                                                <input type="submit" value="Hadir"
+                                                                    class="flex flex-col items-center justify-center hover:bg-success">
+                                                            </li>
+                                                        </form>
+    
+                                                        <form action="/presensi" method="post">
+                                                            @csrf
+                                                            <input type="hidden" name="ket" value="3">
+                                                            <li>
+                                                                <input type="submit" value="Ijin"
+                                                                    class="flex flex-col items-center justify-center hover:bg-warning">
+                                                            </li>
+                                                        </form>
+    
+                                                        <form action="/presensi" method="post">
+                                                            @csrf
+                                                            <input type="hidden" name="ket" value="2">
+                                                            <li>
+                                                                <input type="submit" value="Sakit"
+                                                                    class="flex flex-col items-center justify-center hover:bg-warning">
+                                                            </li>
+                                                        </form>
+    
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {{Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString()}}<br>{{'('.$li->timestart.' - '.$li->timeend.')'}}
+                                            </td>
+                                            <td>
+                                                {{$li->ket}}
+                                            </td>
+                                        </tr>
+                                        @endif
+                                        @endforeach
+                                        @forEach($list as $li)
+                                        @if(Carbon\Carbon::parse($li->tanggal)->startOfDay() > Carbon\Carbon::now()->startOfDay())
+                                        <tr>
+                                            <td>{{$no++}}</td>
+                                            <td>
+                                                <button class="btn btn-info">Belum Mulai</button>
+                                            </td>
+                                            <td>
+                                                {{Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString()}}<br>{{'('.$li->timestart.' - '.$li->timeend.')'}}
+                                            </td>
+                                            <td>
+                                                {{$li->ket}}
+                                            </td>
+                                        </tr>
+                                        @endif
+                                        @endforeach
+                                        @forEach($list as $li)
+                                        @forEach($status as $st)
+                                        @if($li->id == $st->presensi_id)
+                                        <tr>
+                                            <td>{{$no++}}</td>
+                                            <td>
+                                                <button class="btn btn-warning">Sudah</button>
+                                            </td>
+                                            <td>
+                                                {{Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString()}}<br>{{'('.$li->timestart.' - '.$li->timeend.')'}}
+                                            </td>
+                                            <td>
+                                                {{$li->ket}}
+                                            </td>
+                                        </tr>
+                                        @endif
+                                        @endforeach
+                                        @endforeach
+                                        @forEach($list as $li)
+                                        @if(Carbon\Carbon::parse($li->tanggal)->setTimeFrom(Carbon\Carbon::parse($li->timeend)) < Carbon\Carbon::now())
+                                        <tr>
+                                            <td>{{$no++}}</td>
+                                            <td>
+                                                <button class="btn btn-secondary">Terlambat</button>
+                                            </td>
+                                            <td>
+                                                {{Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString()}}<br>{{'('.$li->timestart.' - '.$li->timeend.')'}}
+                                            </td>
+                                            <td>
+                                                {{$li->ket}}
+                                            </td>
+                                        </tr>
+                                        @endif
+                                        @endforeach
+                                            {{-- @php $no = 1
                                             @endphp
                                         @forEach($list as $li)
                                         @forEach($status as $st)
@@ -100,7 +209,7 @@
                                             <td>{{$li->ket}}</td>
                                         </tr>
                                         @endforeach
-                                        @endforeach
+                                        @endforeach --}}
                                     </tbody>
                                 </table>
                             </div>
@@ -120,12 +229,20 @@
 </x-app-layout>
 
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+{{-- <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bulma.min.js"></script> --}}
+{{-- <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script> --}}
+
 {{-- <script src="https://cdn.datatables.net/1.13.4/js/dataTables.material.min.js"></script> --}}
 <script>
 
     $(document).ready(function () {
     $('#tabelabsen').DataTable();
 });
+    // Mendapatkan elemen <select> berdasarkan atribut name
+        var selectElement = document.querySelector('select[name="tabelabsen_length"]');
+
+// Mengatur properti style dengan nilai width:50px
+selectElement.style.width = '50px';
 </script>
 <script>
     let tabsContainer = document.querySelector("#tabs");
@@ -157,4 +274,6 @@
                 "bg-white");
         });
     });
+
 </script>
+
