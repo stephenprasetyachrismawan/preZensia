@@ -19,7 +19,6 @@
                     </li>
                     <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#second">Partisipan</a></li>
                     <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#third">Laporan</a></li>
-                    <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#fourth">Pengaturan</a></li>
                 </ul>
             </div>
 
@@ -174,9 +173,6 @@
                 </div>
                 <div id="third" class="hidden p-4">
                     <div id="chart"></div>
-                </div>
-                <div id="fourth" class="hidden p-4">
-                    Fourth tab
                 </div>
             </div>
         </div>
