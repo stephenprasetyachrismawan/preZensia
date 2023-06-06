@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\AjaxController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormPresensi;
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\RealtimeLaporan;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PresensiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +37,7 @@ Route::middleware('auth')->group(function () {
 });
 
 //Pusher
-Route::post('presensi', [FormPresensi::class, 'simpan'])->middleware(['auth', 'verified']); //kirim
+Route::post('presensi', [PresensiController::class, 'simpan'])->middleware(['auth', 'verified']); //kirim
 Route::get('laporan-realtime', function () {
     return view('laporan_presensi');
 })->middleware(['auth', 'verified']); //terima

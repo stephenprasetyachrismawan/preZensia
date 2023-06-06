@@ -37,13 +37,14 @@ class ClassController extends Controller
             ]);
         else if ($kls && $role == 2) {
             $list = Presensi::where('class_id', $idk)->get();
-            
+
             $idp = [];
             foreach ($list as $li) {
                 $idp[] = $li->id;
             }
-            
-            $stat = ListPresensi::whereIn('presensi_id', $idp)->where('murid', Auth::id());
+
+            $stat = ListPresensi::whereIn('presensi_id', $idp)->where('murid', Auth::id())->get();
+
 
             return view('kelas.home2')->with([
                 'list' => $list,
@@ -171,5 +172,5 @@ class ClassController extends Controller
     }
 
     //fungsi lihat presensi oleh murid
-    
+
 }
