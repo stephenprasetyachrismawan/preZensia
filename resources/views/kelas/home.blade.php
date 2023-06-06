@@ -160,8 +160,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php$no = 1;
-                                                                                                                                                                                                                                                            @endphp ?> ?> ?> ?> ?> ?> ?> ?>
+                            @php$no = 1;@endphp
                             @foreach ($part as $par)
                                 <tr>
                                     <td>{{ $no++ }}</td>
