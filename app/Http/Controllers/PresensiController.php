@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class PresensiController extends Controller
 {
     //
+
     public function simpan(Request $req)
     {
         $absen = new ListPresensi;
@@ -43,6 +44,7 @@ class PresensiController extends Controller
         $httpReferer = $req->headers->get('referer');
         $jammulai = $req->jammulai;
         $jamakhir = $req->jamakhir;
+        $ket = $req->ket;
         if ($req->ulangi) {
             if ($req->setiap == "minggu") {
                 $mulai = Carbon::parse($req->mulai)->addDays(-7);
@@ -58,6 +60,7 @@ class PresensiController extends Controller
                     $presensi->timestart = $jammulai;
                     $presensi->timeend =
                         $jamakhir;
+                    $presensi->ket = $ket;
                     $presensi->save();
                     $presensi = null;
                 }
@@ -75,6 +78,7 @@ class PresensiController extends Controller
                     $presensi->timestart = $jammulai;
                     $presensi->timeend =
                         $jamakhir;
+                    $presensi->ket = $ket;
                     $presensi->save();
                     $presensi = null;
                 }
@@ -92,6 +96,7 @@ class PresensiController extends Controller
                     $presensi->timestart = $jammulai;
                     $presensi->timeend =
                         $jamakhir;
+                    $presensi->ket = $ket;
                     $presensi->save();
                     $presensi = null;
                 }
@@ -108,6 +113,7 @@ class PresensiController extends Controller
             $presensi->timestart = $jammulai;
             $presensi->timeend =
                 $jamakhir;
+            $presensi->ket = $ket;
             $presensi->save();
             $presensi = null;
         }
