@@ -30,12 +30,20 @@ class ClassController extends Controller
 
         $part = ListRole::where('class_id', Kelas::where('hashcode', $id)->value('id'))->get();
 
-        if ($kls && $role == 1)
+        if ($kls && $role == 1) {
+            $list = Presensi::where('class_id', $idk)->get()->sortDesc();
+            $idp = [];
+            foreach ($list as $li) {
+                $idp[] = $li->id;
+            }
+            $stat = ListPresensi::whereIn('presensi_id', $idp)->where('murid', Auth::id())->get();
             return view('kelas.home')->with([
                 'idk' => $idk,
-                'part' => $part
+                'part' => $part,
+                'list' => $list,
+                'status' => $stat
             ]);
-        else if ($kls && $role == 2) {
+        } else if ($kls && $role == 2) {
             $list = Presensi::where('class_id', $idk)->get();
 
             $idp = [];

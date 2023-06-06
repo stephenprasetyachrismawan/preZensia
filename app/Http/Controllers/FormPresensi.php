@@ -10,7 +10,7 @@ class FormPresensi extends Controller
     public function simpan(Request $req)
     {
 
-        $presensi_id = 
+
         $dataSend = [
             'nama' => "Stephen",
             'ket' => "Hadir",

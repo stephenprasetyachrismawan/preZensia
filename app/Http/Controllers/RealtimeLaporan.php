@@ -10,6 +10,7 @@ class RealtimeLaporan extends Controller
     //
     public function tesnotif()
     {
+
         event(new Presensi('Latihan Presensi'));
     }
 }
