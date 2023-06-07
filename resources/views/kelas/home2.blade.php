@@ -18,7 +18,7 @@
                         <a id="default-tab" href="#first">Presensi</a>
                     </li>
                     <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#second">Partisipan</a></li>
-                    <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#third">Pengaturan</a></li>
+
                 </ul>
             </div>
 
