@@ -13,11 +13,14 @@
             <!-- Tabs -->
             <div class="justify-self-center ">
                 <ul id="tabs" class="inline-flex pt-2 px-1 w-full border-b">
-                    <li class="bg-white px-4 text-gray-800 font-semibold py-2 rounded-t border-t border-r border-l -mb-px">
+                    <li
+                        class="bg-white px-4 text-gray-800 font-semibold py-2 rounded-t border-t border-r border-l -mb-px">
                         <a id="default-tab" href="#first">Presensi</a>
                     </li>
-                    <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#second" class="tab2">Partisipan</a></li>
-                    <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#third" class="tab3">Laporan</a></li>
+                    <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#second"
+                            class="tab2">Partisipan</a></li>
+                    <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#third"
+                            class="tab3">Laporan</a></li>
                 </ul>
             </div>
 
@@ -41,20 +44,26 @@
                             <input type="time" id="timeakhir" name="jamakhir" value="" required>
                         </div>
                         <div class="m-2">
-                            <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi
+                            <label for="message"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi
                                 Presensi</label>
-                            <textarea id="message" rows="3" name="ket" class="block p-2.5 w-75 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Yang Anda pikirkan..."></textarea>
+                            <textarea id="message" rows="3" name="ket"
+                                class="block p-2.5 w-75 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Yang Anda pikirkan..."></textarea>
 
                         </div>
 
                         <div>
 
                             <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" id="toggle" value="true" class="sr-only peer" name="ulangi">
-                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                                <input type="checkbox" id="toggle" value="true" class="sr-only peer"
+                                    name="ulangi">
+                                <div
+                                    class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
                                 </div>
                                 <div>
-                                    <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 ">Ulangi?</span>
+                                    <span
+                                        class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 ">Ulangi?</span>
 
                                 </div>
 
@@ -62,18 +71,23 @@
 
                             <div id="textDiv" class="hidden">
                                 <div>
-                                    <input type="radio" name="setiap" id="hari" class="radio radio-info" value="hari" /><label for="hari">Setiap Hari</label>
+                                    <input type="radio" name="setiap" id="hari" class="radio radio-info"
+                                        value="hari" /><label for="hari">Setiap Hari</label>
 
                                 </div>
                                 <div>
-                                    <input type="radio" id="minggu" name="setiap" class="radio radio-info" value="minggu" /><label for="minggu">Setiap Minggu</label>
+                                    <input type="radio" id="minggu" name="setiap" class="radio radio-info"
+                                        value="minggu" /><label for="minggu">Setiap Minggu</label>
 
                                 </div>
                                 <div>
-                                    <input type="radio" name="setiap" id="bulan" class="radio radio-info" value="bulan" /><label for="bulan">Setiap Bulan</label>
+                                    <input type="radio" name="setiap" id="bulan" class="radio radio-info"
+                                        value="bulan" /><label for="bulan">Setiap Bulan</label>
                                 </div>
                             </div>
-                            <div class="hidden" id="kalihari"><label for="jumlah">Sampai </label><input type="number" name="jumlah" id="jumlah" value="1" min="1" max="365" width="10px">
+                            <div class="hidden" id="kalihari"><label for="jumlah">Sampai </label><input
+                                    type="number" name="jumlah" id="jumlah" value="1" min="1"
+                                    max="365" width="10px">
                                 <label for="jumlah"> kali</label>
                             </div>
                         </div>
@@ -104,30 +118,40 @@
                                     <tbody>
                                         <!-- row 1 -->
                                         @php
-                                        $no = 1;
-
+                                            $no = 1;
+                                            
                                         @endphp
 
 
                                         @foreach ($list as $li)
-                                        <tr>
-                                            <td>{{ $no++ }}</td>
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
 
-                                            <td>
-                                                {{ Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString() }}<br>{{ '(' . $li->timestart . ' - ' . $li->timeend . ')' }}
-                                            </td>
-                                            <td>
-                                                {{ $li->ket }}
-                                            </td>
-                                            <td>
-                                                <div class="dropdown dropdown-right dropdown-end">
-                                                    <button tabindex="0" data-id={{ $li->id }} data-tanggal="{{ $li->tanggal }}" data-timestart="{{ $li->timestart }}" data-timeend="{{ $li->timeend }}" data-ket="{{ $li->ket }}" class="btn btn-info m-1 edit-btn" data-modal-target="updateModal" data-modal-toggle="updateModal">Edit</button>
-                                                    <button class="btn btn-info m-1 btnhapus" data-id="{{ $li->id }}" data-modal-target="hapus-modal" data-modal-toggle="hapus-modal">Delete</button>
+                                                <td>
+                                                    {{ Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString() }}<br>{{ '(' . $li->timestart . ' - ' . $li->timeend . ')' }}
+                                                </td>
+                                                <td>
+                                                    {{ $li->ket }}
+                                                </td>
+                                                <td>
+                                                    <div class="dropdown dropdown-right dropdown-end">
+                                                        <button tabindex="0" data-id={{ $li->id }}
+                                                            data-tanggal="{{ $li->tanggal }}"
+                                                            data-timestart="{{ $li->timestart }}"
+                                                            data-timeend="{{ $li->timeend }}"
+                                                            data-ket="{{ $li->ket }}"
+                                                            class="btn btn-info m-1 edit-btn"
+                                                            data-modal-target="updateModal"
+                                                            data-modal-toggle="updateModal">Edit</button>
+                                                        <button class="btn btn-info m-1 btnhapus"
+                                                            data-id="{{ $li->id }}"
+                                                            data-modal-target="hapus-modal"
+                                                            data-modal-toggle="hapus-modal">Delete</button>
 
 
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         @endforeach
 
                                     </tbody>
@@ -137,58 +161,64 @@
                     </div>
                 </div>
                 <div id="second" class="hidden p-4">
-                    <p class="mb-4 text-lg leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">Teacher</p>
+                    <p
+                        class="mb-4 text-lg leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
+                        Teacher</p>
                     <hr class="mb-2">
                     <table id="teacher" class="text-center">
                         <tbody>
                             @foreach ($part as $par)
-                            @if($par->roles->role == 'Student')
-                            @php
-                            continue;
-                            @endphp;
-                            @endif
-                            <tr>
-                                <td>
-                                    <div class="avatar mx-3">
-                                        <div class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                            <img src="{{ $par->user->url_photo }}" />
+                                @if ($par->roles->role == 'Student')
+                                    @php
+                                        continue;
+                                    @endphp;
+                                @endif
+                                <tr>
+                                    <td>
+                                        <div class="avatar mx-3">
+                                            <div
+                                                class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                                <img src="{{ $par->user->url_photo }}" />
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>{{ $par->user->name }}</td>
-                                <td></td>
-                            </tr>
+                                    </td>
+                                    <td>{{ $par->user->name }}</td>
+                                    <td></td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
 
-                    <p class="mt-5 mb-4 text-lg leading-none tracking-tight text-gray-600 md:text-3xl lg:text-4xl dark:text-white">Students</p>
+                    <p
+                        class="mt-5 mb-4 text-lg leading-none tracking-tight text-gray-600 md:text-3xl lg:text-4xl dark:text-white">
+                        Students</p>
                     <hr class="mb-5">
                     <table id="students" class="mt-3">
                         <tbody>
                             @foreach ($part as $par)
-                            @if($par->roles->role == 'Teacher')
-                            @php
-                            continue;
-                            @endphp;
-                            @endif
-                            <tr>
-                                <td>
-                                    <div class="avatar mx-3">
-                                        <div class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                            <img src="{{ $par->user->url_photo }}" />
+                                @if ($par->roles->role == 'Teacher')
+                                    @php
+                                        continue;
+                                    @endphp;
+                                @endif
+                                <tr>
+                                    <td>
+                                        <div class="avatar mx-3">
+                                            <div
+                                                class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                                <img src="{{ $par->user->url_photo }}" />
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>{{ $par->user->name }}</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>{{ $no++ }}</td>
-                                <td>{{ $par->user->name }}</td>
-                                <td>{{ $par->roles->role }}</td>
-                                <td></td>
-                            </tr>
+                                    </td>
+                                    <td>{{ $par->user->name }}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>{{ $no++ }}</td>
+                                    <td>{{ $par->user->name }}</td>
+                                    <td>{{ $par->roles->role }}</td>
+                                    <td></td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -206,18 +236,25 @@
     @endcomponent
 
     <!-- Main modal -->
-    <div id="updateModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+    <div id="updateModal" tabindex="-1" aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
         <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
             <!-- Modal content -->
             <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5 modal-content">
                 <!-- Modal header -->
-                <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+                <div
+                    class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                         Update Presensi
                     </h3>
-                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="updateModal">
-                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-toggle="updateModal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
                         </svg>
                         <span class="sr-only">Close modal</span>
                     </button>
@@ -228,27 +265,36 @@
                     <input type="hidden" class="id_pres" name="id_pres">
                     <div class="grid gap-4 mb-4 sm:grid-cols-2">
                         <div>
-                            <label for="tanggal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal</label>
+                            <label for="tanggal"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal</label>
                             <input type="date" name="tanggal" class="tanggal">
                         </div>
                         <div>
 
                         </div>
                         <div>
-                            <label for="start" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dimulai</label>
-                            <input type="time" name="start" class="start bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <label for="start"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dimulai</label>
+                            <input type="time" name="start"
+                                class="start bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                         </div>
                         <div>
-                            <label for="end" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diakhiri</label>
-                            <input type="time" name="end" class="end bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <label for="end"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diakhiri</label>
+                            <input type="time" name="end"
+                                class="end bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                         </div>
                         <div class="sm:col-span-2">
-                            <label for="ket" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
-                            <textarea rows="5" required name="ket" class="kete block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Tulis Deskripsi"></textarea>
+                            <label for="ket"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
+                            <textarea rows="5" required name="ket"
+                                class="kete block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="Tulis Deskripsi"></textarea>
                         </div>
                     </div>
                     <div class="flex items-center space-x-4">
-                        <button type="submit" class="text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                        <button type="submit"
+                            class="text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                             Update Presensi
                         </button>
 
@@ -274,15 +320,14 @@
 
             console.log(id);
             $.ajax({
-                url: '{{ route('
-                presensi.delete ') }}'
-                , type: 'POST'
-                , data: {
-                    '_token': '{{ csrf_token() }}'
-                    , 'id': id,
+                url: '{{ route('presensi.delete') }}',
+                type: 'POST',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'id': id,
 
-                }
-                , success: function(response) {
+                },
+                success: function(response) {
                     if (response.msg == 'success') {
                         Swal.fire('Berhasil dihapus', '', 'success').then(function() {
                             window.location.reload();
@@ -308,8 +353,8 @@
             $('.id_pres').val(id);
 
             $.ajax({
-                url: '/presensi/edit'
-                , type: 'POST',
+                url: '/presensi/edit',
+                type: 'POST',
 
                 success: function(response) {
                     $('#updateModal .modal-content').html(response);
@@ -321,7 +366,6 @@
 
 
     });
-
 </script>
 
 <script>
@@ -379,8 +423,8 @@
 
             for (let i = 0; i < tabContents.children.length; i++) {
 
-                tabTogglers[i].parentElement.classList.remove("border-t", "border-r", "border-l"
-                    , "-mb-px", "bg-white");
+                tabTogglers[i].parentElement.classList.remove("border-t", "border-r", "border-l",
+                    "-mb-px", "bg-white");
                 tabContents.children[i].classList.remove("hidden");
                 if ("#" + tabContents.children[i].id === tabName) {
                     continue;
@@ -388,8 +432,8 @@
                 tabContents.children[i].classList.add("hidden");
 
             }
-            e.target.parentElement.classList.add("border-t", "border-r", "border-l", "-mb-px"
-                , "bg-white");
+            e.target.parentElement.classList.add("border-t", "border-r", "border-l", "-mb-px",
+                "bg-white");
         });
     });
 
@@ -397,15 +441,14 @@
         $('#tabelpartisipan').DataTable();
 
         $.ajax({
-            url: '{{ route('
-            chartReq ') }}'
-            , method: 'POST'
-            , data: {
-                '_token': '{{ csrf_token() }}'
-                , 'cls_id': '{{ $idk }}'
-            }
-            , dataType: 'json'
-            , success: function(resp) {
+            url: '{{ route('chartReq') }}',
+            method: 'POST',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                'cls_id': '{{ $idk }}'
+            },
+            dataType: 'json',
+            success: function(resp) {
                 data = [];
                 cat = [];
                 for (i = 1; i <= resp.count; i++) {
@@ -415,25 +458,24 @@
                 var options = {
                     chart: {
                         type: 'line'
-                    }
-                    , series: [{
-                        name: 'hadir'
-                        , data: data
-                    }]
-                    , xaxis: {
+                    },
+                    series: [{
+                        name: 'hadir',
+                        data: data
+                    }],
+                    xaxis: {
                         categories: cat
                     }
                 };
 
                 var chart = new ApexCharts(document.querySelector("#chart"), options);
                 chart.render();
-            }
-            , error: function(data) {
+            },
+            error: function(data) {
                 console.log("ERROR".concat(data));
             }
         });
     });
-
 </script>
 <script>
     $(document).ready(function() {
@@ -444,7 +486,6 @@
 
     // Mengatur properti style dengan nilai width:50px
     selectElement.style.width = '50px';
-
 </script>
 <script type="text/javascript">
     $('.show_confirm').click(function(event) {
@@ -485,5 +526,4 @@
     })
     let defaultTab = document.querySelector(".default-tab");
     defaultTab.click();
-
 </script>
