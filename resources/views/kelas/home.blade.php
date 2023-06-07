@@ -239,7 +239,7 @@
                         <div class="sm:col-span-2">
                             <label for="ket"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
-                            <textarea rows="5" name="ket"
+                            <textarea rows="5" required name="ket"
                                 class="kete block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 placeholder="Tulis Deskripsi"></textarea>
                         </div>
@@ -411,4 +411,39 @@
 
     // Mengatur properti style dengan nilai width:50px
     selectElement.style.width = '50px';
+</script>
+<script type="text/javascript">
+    $('.show_confirm').click(function(event) {
+
+        var form = $(this).closest("form");
+
+        var name = $(this).data("name");
+        console.log(name);
+        event.preventDefault();
+
+        swal({
+
+                title: `Are you sure you want to delete this record?`,
+
+                text: "If you delete this, it will be gone forever.",
+
+                icon: "warning",
+
+                buttons: true,
+
+                dangerMode: true,
+
+            })
+
+            .then((willDelete) => {
+
+                if (willDelete) {
+
+                    form.submit();
+
+                }
+
+            });
+
+    });
 </script>
