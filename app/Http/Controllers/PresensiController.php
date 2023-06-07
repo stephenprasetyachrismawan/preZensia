@@ -11,10 +11,11 @@ use Illuminate\Support\Facades\Auth;
 class PresensiController extends Controller
 {
     //
-    public function delete($id)
+    public function delete(Request $req)
     {
-        Presensi::find($id)->delete();
-        return back();
+        $cek = Presensi::find($req->id)->delete();
+        if ($cek) $data['msg'] = 'success';
+        return response()->json($data);
     }
     public function update(Request $req)
     {

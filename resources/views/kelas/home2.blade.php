@@ -18,7 +18,7 @@
                         <a id="default-tab" href="#first">Presensi</a>
                     </li>
                     <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#second">Partisipan</a></li>
-                    <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#third">Pengaturan</a></li>
+
                 </ul>
             </div>
 
@@ -146,7 +146,8 @@
                                             @endforeach
                                         @endforeach
                                         @foreach ($list as $li)
-                                            @if (Carbon\Carbon::parse($li->tanggal)->setTimeFrom(Carbon\Carbon::parse($li->timeend)) < Carbon\Carbon::now())
+                                            @if (Carbon\Carbon::parse($li->tanggal)->setTimeFrom(Carbon\Carbon::parse($li->timeend)) < Carbon\Carbon::now() &&
+                                                    $li->status_presensi == 0)
                                                 <tr>
                                                     <td>{{ $no++ }}</td>
                                                     <td>

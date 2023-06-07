@@ -86,7 +86,7 @@ Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 Route::post('/presensi/edit', [PresensiController::class, 'update'])->name('presensi.edit');
-Route::delete('/presensi/delete/{id}', [PresensiController::class, 'delete'])->name('presensi.delete');
+Route::post('presensi/delete', [PresensiController::class, 'delete'])->name('presensi.delete');
 
 
 require __DIR__ . '/auth.php';

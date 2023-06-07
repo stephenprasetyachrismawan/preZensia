@@ -122,6 +122,7 @@
                                             <td>
                                                 <div class="dropdown dropdown-right dropdown-end">
                                                     <button tabindex="0" data-id={{ $li->id }} data-tanggal="{{ $li->tanggal }}" data-timestart="{{ $li->timestart }}" data-timeend="{{ $li->timeend }}" data-ket="{{ $li->ket }}" class="btn btn-info m-1 edit-btn" data-modal-target="updateModal" data-modal-toggle="updateModal">Edit</button>
+                                                    <button class="btn btn-info m-1 btnhapus" data-id="{{ $li->id }}" data-modal-target="hapus-modal" data-modal-toggle="hapus-modal">Delete</button>
 
 
                                                 </div>
@@ -182,6 +183,12 @@
                                 <td>{{ $par->user->name }}</td>
                                 <td></td>
                             </tr>
+                            <tr>
+                                <td>{{ $no++ }}</td>
+                                <td>{{ $par->user->name }}</td>
+                                <td>{{ $par->roles->role }}</td>
+                                <td></td>
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -193,7 +200,10 @@
         </div>
     </div>
 
+    {{-- Modal Hapus --}}
 
+    @component('components.hapus-modal')
+    @endcomponent
 
     <!-- Main modal -->
     <div id="updateModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
@@ -253,6 +263,34 @@
     $(document).ready(function() {
         // Inisialisasi DataTables pada tabel
         $('#tabelabsen').DataTable();
+        $('.btnhapus').click(function() {
+            var id = $(this).data('id');
+            $('#dell').attr('data-id', id);
+            console.log(id);
+
+        })
+        $('#dell').click(function() {
+            var id = $(this).data('id');
+
+            console.log(id);
+            $.ajax({
+                url: '{{ route('
+                presensi.delete ') }}'
+                , type: 'POST'
+                , data: {
+                    '_token': '{{ csrf_token() }}'
+                    , 'id': id,
+
+                }
+                , success: function(response) {
+                    if (response.msg == 'success') {
+                        Swal.fire('Berhasil dihapus', '', 'success').then(function() {
+                            window.location.reload();
+                        });
+                    }
+                }
+            });
+        })
 
         // Menangkap klik tombol Edit dan menampilkan modal
         $('.edit-btn').click(function() {
@@ -359,7 +397,8 @@
         $('#tabelpartisipan').DataTable();
 
         $.ajax({
-            url: '{{ route("chartReq") }}'
+            url: '{{ route('
+            chartReq ') }}'
             , method: 'POST'
             , data: {
                 '_token': '{{ csrf_token() }}'
