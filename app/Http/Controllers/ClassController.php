@@ -204,6 +204,13 @@ class ClassController extends Controller
         return response()->json($data);
     }
 
+    public function unarchive(Request $request){
+        $hashcode = $request->id;
+        Kelas::where('hashcode', $hashcode)->update(['archive'=>0]);
+        $data['msg'] = 'success';
+        return response()->json($data);
+    }
+
     public function get_archive(){
         $list = ListRole::whereIn('user_id', [Auth::user()->id])->get();
         $kelas = [];

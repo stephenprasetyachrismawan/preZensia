@@ -13,7 +13,7 @@
                                         <div class="dropdown dropdown-end">
                                             <label tabindex="0" class="btn m-1"><i class="fa-solid fa-ellipsis-vertical p-0"></i></label>
                                             <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                                                <li><button id='archive' data-id='{{ $d[3] }}' data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button">Archive</button></li>
+                                                <li><button id='unarchive' data-id='{{ $d[3] }}' data-modal-target="unarchive-modal" data-modal-toggle="unarchive-modal" type="button">Unarchive</button></li>
                                                 <li><a>Analisis</a></li>
                                             </ul>
                                         </div>
@@ -43,4 +43,31 @@
             </div>
         </div>
     </div>
+    @component('components.unarchive-modal')
+
+    @endcomponent
+
+    <script>
+        $(document).ready(function() {
+            $('#unarchive').click(function() {
+                var id = $(this).data('id')
+                $('#accUnarch').attr('data-id', id);
+            })
+            $('#accUnarch').click(function() {
+                var id = $(this).data('id');
+                $.ajax({
+                    url: '{{ route("classes.unarchive") }}'
+                    , method: 'POST'
+                    , data: {
+                        '_token': '{{ csrf_token() }}'
+                        , 'id': id
+                    }
+                    , success: function(response) {
+                        if (response.msg == 'success') location.reload()
+                    }
+                })
+            })
+        })
+
+    </script>
 </x-app-layout>
