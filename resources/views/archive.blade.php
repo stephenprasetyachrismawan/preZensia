@@ -63,7 +63,11 @@
                         , 'id': id
                     }
                     , success: function(response) {
-                        if (response.msg == 'success') location.reload()
+                        if (response.msg == 'success') {
+                            Swal.fire('Unarchive Success', '', 'success').then(function() {
+                                window.location.assign('/archive');
+                            });
+                        }
                     }
                 })
             })

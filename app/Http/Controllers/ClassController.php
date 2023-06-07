@@ -199,15 +199,15 @@ class ClassController extends Controller
 
     public function archive(Request $request){
         $hashcode = $request->id;
-        Kelas::where('hashcode', $hashcode)->update(['archive'=>1]);
-        $data['msg'] = 'success';
+        $cek = Kelas::where('hashcode', $hashcode)->update(['archive'=>1]);
+        if($cek) $data['msg'] = 'success';
         return response()->json($data);
     }
 
     public function unarchive(Request $request){
         $hashcode = $request->id;
-        Kelas::where('hashcode', $hashcode)->update(['archive'=>0]);
-        $data['msg'] = 'success';
+        $cek = Kelas::where('hashcode', $hashcode)->update(['archive'=>0]);
+        if($cek) $data['msg'] = 'success';
         return response()->json($data);
     }
 
