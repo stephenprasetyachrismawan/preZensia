@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('listrole', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('class_id')->constrained('class');
-            $table->foreignId('role_id')->constrained('roles');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('class_id')->constrained('class')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('role_id')->constrained('roles')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

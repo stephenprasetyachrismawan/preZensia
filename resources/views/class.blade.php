@@ -70,7 +70,7 @@
                     }
                     , success: function(response) {
                         if (response.msg == 'success') {
-                            Swal.fire('Unarchive Success', '', 'success').then(function() {
+                            Swal.fire('Archive Success', '', 'success').then(function() {
                                 window.location.assign('/classes');
                             });
                         }

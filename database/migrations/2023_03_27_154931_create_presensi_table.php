@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('presensi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('class_id')->constrained('class');
+            $table->foreignId('class_id')->constrained('class')->onDelete('cascade')->onUpdate('cascade');
             $table->date('tanggal');
             $table->time('timestart');
             $table->time('timeend');

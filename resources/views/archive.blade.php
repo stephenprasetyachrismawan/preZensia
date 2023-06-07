@@ -13,27 +13,24 @@
                                         <div class="dropdown dropdown-end">
                                             <label tabindex="0" class="btn m-1"><i class="fa-solid fa-ellipsis-vertical p-0"></i></label>
                                             <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                                                <li><button id='unarchive' data-id='{{ $d[3] }}' data-modal-target="unarchive-modal" data-modal-toggle="unarchive-modal" type="button">Unarchive</button></li>
-                                                <li><a>Analisis</a></li>
+
                                             </ul>
                                         </div>
                                     </div>
-                                    <a href="{{route('classes.home', ['id' => $d[3]])}}">
-                                        <h2 class="card-title">{{ $d[0] }}</h2>
-                                        <p>Teacher :
-                                            @if ($d[1] == 1)
-                                            <span class="badge badge-success">You</span>
-                                            @else
-                                            <span>{{ Str::limit($d[2], 24, '...') }} </span>
-                                            @endif
-                                        </p>
-                                    </a>
+                                    <h2 class="card-title">{{ $d[0] }}</h2>
+                                    <p>Teacher :
+                                        @if ($d[1] == 1)
+                                        <span class="badge badge-success">You</span>
+                                        @else
+                                        <span>{{ Str::limit($d[2], 24, '...') }} </span>
+                                        @endif
+                                    </p>
                                     <div class="card-actions justify-end">
-                                        <button class="btn btn-primary">Buat Presensi</button>
+                                        <button id='unarchive' class="btn btn-primary" data-id='{{ $d[3] }}' data-modal-target="unarchive-modal" data-modal-toggle="unarchive-modal" type="button">Unarchive</button>
                                     </div>
                                 </div>
                             </div>
-                            <img src="https://picsum.photos/id/74/434/290" alt="Image 1" class="w-80  rounded-box" />
+                            <img src="https://picsum.photos/id/44/4272/2848" alt="Image 1" class="w-80  rounded-box" />
                         </div>
                     </div>
                     <br>
