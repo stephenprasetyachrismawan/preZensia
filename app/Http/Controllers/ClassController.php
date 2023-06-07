@@ -181,7 +181,6 @@ class ClassController extends Controller
         $kode = $request->kodeKelas;
         $hash = Kelas::where('class_code', $kode)->value('hashcode');
         $cek = Kelas::cekJoin($kode, Auth::id());
-
         if ($cek == 'noclass')
             return redirect()->route('classes.join');
         else if ($cek == 'ajoin') {

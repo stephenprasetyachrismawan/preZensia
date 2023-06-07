@@ -136,23 +136,50 @@
                     </div>
                 </div>
                 <div id="second" class="hidden p-4">
-                    <table id="tabelpartisipan" class="display table table-auto table-zebra ">
-                        <!-- head -->
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>Nama</th>
-                                <th>Role</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
+                    <p class="mb-4 text-lg leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">Teacher</p>
+                    <hr class="mb-2">
+                    <table id="teacher" class="text-center">
                         <tbody>
-                            @php$no = 1;@endphp
                             @foreach ($part as $par)
+                            @if($par->roles->role == 'Student')
+                            @php
+                            continue;
+                            @endphp;
+                            @endif
                             <tr>
-                                <td>{{ $no++ }}</td>
+                                <td>
+                                    <div class="avatar mx-3">
+                                        <div class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                            <img src="{{ $par->user->url_photo }}" />
+                                        </div>
+                                    </div>
+                                </td>
                                 <td>{{ $par->user->name }}</td>
-                                <td>{{ $par->roles->role }}</td>
+                                <td></td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                    <p class="mt-5 mb-4 text-lg leading-none tracking-tight text-gray-600 md:text-3xl lg:text-4xl dark:text-white">Students</p>
+                    <hr class="mb-5">
+                    <table id="students" class="mt-3">
+                        <tbody>
+                            @foreach ($part as $par)
+                            @if($par->roles->role == 'Teacher')
+                            @php
+                            continue;
+                            @endphp;
+                            @endif
+                            <tr>
+                                <td>
+                                    <div class="avatar mx-3">
+                                        <div class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                            <img src="{{ $par->user->url_photo }}" />
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ $par->user->name }}</td>
                                 <td></td>
                             </tr>
                             @endforeach
