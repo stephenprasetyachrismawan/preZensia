@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Hash;
 use PHPUnit\Framework\Constraint\IsEmpty;
 use App\Http\Controllers\PresensiController;
 
+use function PHPUnit\Framework\isEmpty;
+
 class ClassController extends Controller
 {
     /**
@@ -100,9 +102,10 @@ class ClassController extends Controller
     {
         $list = ListRole::whereIn('user_id', [Auth::user()->id])->get();
         $kelas = [];
+        $data = [];
         foreach ($list as $li) {
 
-            $kelas[] = Kelas::whereIn('id', [$li->class_id])->get();
+            $kelas[] = Kelas::whereIn('id', [$li->class_id])->where('archive', 0)->get();
         }
         // $kelas = Kelas::whereIn('class_id', [$list[0]->class_id])->get();
 
@@ -110,10 +113,16 @@ class ClassController extends Controller
         $nama_kelas = [];
         $guru = [];
         $hashcode = [];
+        //dd($kelas);
+        if(empty($kelas)){
+            return view('class', compact('data'));
+        }
         foreach ($kelas as $ke) {
-
+            if($ke->isEmpty()){
+                continue;
+            }
             $nama_kelas[] = $ke[0]->class_name;
-            $listguru = ListRole::with('user')->whereIn('id', ['1'])->whereIn('class_id', [$ke[0]->id])->get();
+            $listguru = ListRole::with('user')->whereIn('role_id', ['1'])->whereIn('class_id', [$ke[0]->id])->get();
             $guru0 = User::find($listguru[0]->user_id)->get();
             $guru[] = $guru0[0]->name;
             $hashcode[] = $ke[0]->hashcode;
@@ -121,7 +130,7 @@ class ClassController extends Controller
         // 
         $rolekelas = [];
         foreach ($list as $li) {
-            $rolekelas[] = $li->id;
+            $rolekelas[] = $li->role_id;
         }
 
         // dd($userkelas);
@@ -186,6 +195,51 @@ class ClassController extends Controller
             $join = ListRole::create($data);
             return redirect()->route('classes.home', $hash);
         }
+    }
+
+    public function archive(Request $request){
+        $hashcode = $request->id;
+        Kelas::where('hashcode', $hashcode)->update(['archive'=>1]);
+        $data['msg'] = 'success';
+        return response()->json($data);
+    }
+
+    public function get_archive(){
+        $list = ListRole::whereIn('user_id', [Auth::user()->id])->get();
+        $kelas = [];
+        $data = [];
+        foreach ($list as $li) {
+            $kelas[] = Kelas::whereIn('id', [$li->class_id])->where('archive', 1)->get();
+        }
+        // $kelas = Kelas::whereIn('class_id', [$list[0]->class_id])->get();
+        $nama_kelas = [];
+        $guru = [];
+        $hashcode = [];
+        if(empty($kelas)){
+            return view('archive', compact('data'));
+        }
+        foreach ($kelas as $ke) {
+            if($ke->isEmpty()){
+                continue;
+            }
+            $nama_kelas[] = $ke[0]->class_name;
+            $listguru = ListRole::with('user')->whereIn('role_id', ['1'])->whereIn('class_id', [$ke[0]->id])->get();
+            $guru0 = User::find($listguru[0]->user_id)->get();
+            $guru[] = $guru0[0]->name;
+            $hashcode[] = $ke[0]->hashcode;
+        }
+        // 
+        $rolekelas = [];
+        foreach ($list as $li) {
+            $rolekelas[] = $li->role_id;
+        }
+
+        // dd($userkelas);
+        $data = [];
+        for ($i = 0; $i < count($nama_kelas); $i++) {
+            $data[] = [$nama_kelas[$i], $rolekelas[$i], $guru[$i], $hashcode[$i]];
+        }
+        return view('archive', compact('data'));
     }
 
     //fungsi lihat presensi oleh murid
