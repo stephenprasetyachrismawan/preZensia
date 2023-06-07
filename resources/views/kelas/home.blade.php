@@ -15,16 +15,18 @@
                 <ul id="tabs" class="inline-flex pt-2 px-1 w-full border-b">
                     <li
                         class="bg-white px-4 text-gray-800 font-semibold py-2 rounded-t border-t border-r border-l -mb-px">
-                        <a id="default-tab" href="#first">Presensi</a>
+                        <a href="#first" class="tab1">Presensi</a>
                     </li>
-                    <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#second">Partisipan</a></li>
-                    <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#third">Laporan</a></li>
+                    <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#second"
+                            class="tab2">Partisipan</a></li>
+                    <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#third"
+                            class="tab3">Laporan</a></li>
                 </ul>
             </div>
 
             <!-- Tab Contents -->
             <div id="tab-contents">
-                <div id="first" class="p-4">
+                <div id="first" class="p-4 ">
                     Buat Presensi
                     <form action="{{ route('buatpresensi.store') }}" method="post" class="form-control">
                         @csrf
@@ -158,7 +160,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="second" class="hidden p-4">
+                <div id="second" class="hidden p-4 t2 tab">
                     <table id="tabelpartisipan" class="display table table-auto table-zebra ">
                         <!-- head -->
                         <thead>
@@ -182,7 +184,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div id="third" class="hidden p-4">
+                <div id="third" class="hidden p-4 t3 tab">
                     <div id="chart"></div>
                 </div>
             </div>
@@ -480,4 +482,9 @@
             });
 
     });
+    $('.tab1').click(function(event) {
+        $(this).toggleClass('default-tab');
+    })
+    let defaultTab = document.querySelector(".default-tab");
+    defaultTab.click();
 </script>

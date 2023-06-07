@@ -15,7 +15,7 @@
                 <ul id="tabs" class="inline-flex pt-2 px-1 w-full border-b">
                     <li
                         class="bg-white px-4 text-gray-800 font-semibold py-2 rounded-t border-t border-r border-l -mb-px">
-                        <a id="default-tab" href="#first">Presensi</a>
+                        <a id="" href="#first">Presensi</a>
                     </li>
                     <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#second">Partisipan</a></li>
 
