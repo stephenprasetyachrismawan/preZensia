@@ -133,14 +133,14 @@
                                                 </td>
                                                 <td>
                                                     <div class="dropdown dropdown-right dropdown-end">
-                                                        <label tabindex="0" data-id={{ $li->id }}
-                                                            data-tanggal={{ $li->tanggal }}
-                                                            data-timestart={{ $li->timestart }}
-                                                            data-timeend={{ $li->timeend }}
-                                                            data-ket={{ $li->ket }}
+                                                        <button tabindex="0" data-id={{ $li->id }}
+                                                            data-tanggal="{{ $li->tanggal }}"
+                                                            data-timestart="{{ $li->timestart }}"
+                                                            data-timeend="{{ $li->timeend }}"
+                                                            data-ket="{{ $li->ket }}"
                                                             class="btn btn-info m-1 edit-btn"
                                                             data-modal-target="updateModal"
-                                                            data-modal-toggle="updateModal">Edit</label>
+                                                            data-modal-toggle="updateModal">Edit</button>
 
 
                                                     </div>
@@ -212,12 +212,14 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form action="#">
+                <form action="/presensi/edit" method="POST">
+                    @csrf
+                    <input type="hidden"class="id_pres" name="id_pres">
                     <div class="grid gap-4 mb-4 sm:grid-cols-2">
                         <div>
                             <label for="tanggal"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal</label>
-                            <input type="date" name="tanggal" id="tanggal">
+                            <input type="date" name="tanggal" class="tanggal">
                         </div>
                         <div>
 
@@ -225,20 +227,20 @@
                         <div>
                             <label for="start"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dimulai</label>
-                            <input type="time" name="start" id="start"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <input type="time" name="start"
+                                class="start bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                         </div>
                         <div>
                             <label for="end"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diakhiri</label>
-                            <input type="time" name="end" id="end"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <input type="time" name="end"
+                                class="end bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                         </div>
                         <div class="sm:col-span-2">
                             <label for="ket"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
-                            <textarea id="ket" rows="5" name="ket"
-                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            <textarea rows="5" name="ket"
+                                class="kete block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 placeholder="Tulis Deskripsi"></textarea>
                         </div>
                     </div>
@@ -261,16 +263,24 @@
         $('#tabelabsen').DataTable();
 
         // Menangkap klik tombol Edit dan menampilkan modal
-        $(document).on('click', '.edit-btn', function() {
+        $('.edit-btn').click(function() {
             var id = $(this).data('id');
             var tanggal = $(this).data('tanggal');
             var timestart = $(this).data('timestart');
             var timeend = $(this).data('timeend');
             var ket = $(this).data('ket');
+            console.log(timestart);
+            console.log(id);
+            $('.tanggal').val(tanggal);
+            $('.start').val(timestart);
+            $('.end').val(timeend);
+            $('.kete').val(ket);
+            $('.id_pres').val(id);
 
             $.ajax({
                 url: '/presensi/edit',
                 type: 'POST',
+
                 success: function(response) {
                     $('#updateModal .modal-content').html(response);
                     $('#updateModal').modal('show');
@@ -278,35 +288,8 @@
             });
         });
 
-        // Submit form edit data melalui Ajax
-        $(document).on('submit', '#editForm', function(e) {
-            e.preventDefault();
 
-            var form = $(this);
-            var url = form.attr('action');
-            var method = form.attr('method');
-            var data = form.serialize();
 
-            $.ajax({
-                url: url,
-                type: method,
-                data: data,
-                success: function(response) {
-                    // Tutup modal
-                    $('#editModal').modal('hide');
-
-                    // Perbarui tampilan tabel menggunakan DataTables
-                    $('#data-table').DataTable().ajax.reload();
-
-                    // Tampilkan pesan sukses jika diperlukan
-                    alert('Data updated successfully');
-                },
-                error: function(response) {
-                    // Tampilkan pesan error jika diperlukan
-                    alert('Error occurred');
-                }
-            });
-        });
     });
 </script>
 

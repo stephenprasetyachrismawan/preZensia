@@ -54,6 +54,15 @@ class ClassController extends Controller
             }
 
             $stat = ListPresensi::whereIn('presensi_id', $idp)->where('murid', Auth::id())->get();
+            foreach ($list as $li) {
+                $li->status_presensi = 0;
+                foreach ($stat as $st) {
+                    if ($li->id == $st->presensi_id) {
+                        $li->status_presensi = 1;
+                    }
+                }
+            }
+
 
 
             return view('kelas.home2')->with([
