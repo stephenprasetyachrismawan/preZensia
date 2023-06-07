@@ -251,6 +251,11 @@ class ClassController extends Controller
         return view('archive', compact('data'));
     }
 
-    //fungsi lihat presensi oleh murid
-
+    public function unenroll(Request $request){
+        $id = $request->id;
+        $kelas = $request->kelas;
+        $cek = ListRole::where('user_id', $id)->where('class_id', $kelas)->delete();
+        if($cek) $data['msg'] = 'success';
+        return response()->json($data);
+    }
 }

@@ -1,4 +1,5 @@
 <x-app-layout>
+    
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"> --}}
@@ -164,15 +165,15 @@
                     <p
                         class="mb-4 text-lg leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
                         Teacher</p>
-                    <hr class="mb-2">
-                    <table id="teacher" class="text-center">
-                        <tbody>
-                            @foreach ($part as $par)
+                        <table id="teacher" class="text-center">
+                            <tbody>
+                                @foreach ($part as $par)
                                 @if ($par->roles->role == 'Student')
-                                    @php
+                                @php
                                         continue;
-                                    @endphp;
+                                        @endphp;
                                 @endif
+                                <hr class="mb-2">
                                 <tr>
                                     <td>
                                         <div class="avatar mx-3">
@@ -183,7 +184,6 @@
                                         </div>
                                     </td>
                                     <td>{{ $par->user->name }}</td>
-                                    <td></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -192,16 +192,16 @@
                     <p
                         class="mt-5 mb-4 text-lg leading-none tracking-tight text-gray-600 md:text-3xl lg:text-4xl dark:text-white">
                         Students</p>
-                    <hr class="mb-5">
-                    <table id="students" class="mt-3">
-                        <tbody>
-                            @foreach ($part as $par)
+                        <table id="students" class="mt-3">
+                            <tbody>
+                                @foreach ($part as $par)
                                 @if ($par->roles->role == 'Teacher')
-                                    @php
+                                @php
                                         continue;
-                                    @endphp;
+                                        @endphp;
                                 @endif
-                                <tr>
+                                <hr class="mb-5">
+                                <tr data-popover-target="popover-del" data-id="{{ $par->user->id }}" data-name="{{ $par->user->name }}" data-kelas="{{ $par->class_id }}"class="pop-del">
                                     <td>
                                         <div class="avatar mx-3">
                                             <div
@@ -211,13 +211,6 @@
                                         </div>
                                     </td>
                                     <td>{{ $par->user->name }}</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>{{ $no++ }}</td>
-                                    <td>{{ $par->user->name }}</td>
-                                    <td>{{ $par->roles->role }}</td>
-                                    <td></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -303,6 +296,20 @@
             </div>
         </div>
     </div>
+    <div data-popover id="popover-del" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400">
+        <div class="p-3 space-y-2">
+            <h3 class="font-semibold text-gray-900 dark:text-white">Unenroll Student <span class="name"></span></h3>
+            <p></p>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
+                <div class="bg-red-600 h-2.5 rounded-full" style="width: 100%"></div>
+            </div>
+            <button type="button" class="btn btn-secondary unenroll" data-modal-target="unenroll-modal" data-modal-toggle="unenroll-modal">Unenroll <svg class="w-4 h-4 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg></button>
+        </div>
+        <div data-popper-arrow></div>
+    </div>
+    @component('components.unenroll-modal')
+        
+    @endcomponent
 </x-app-layout>
 
 <script>
@@ -363,8 +370,42 @@
             });
         });
 
+        $('.pop-del').hover(function(){
+            var id = $(this).data('id')
+            var kelas = $(this).data('kelas')
+            var name = $(this).data('name')
+            $('.unenroll').attr('data-id', id)
+            $('.unenroll').attr('data-kelas', kelas)
+            $('.name').text(name)
+        })
 
+        $('.unenroll').click(function(){
+            var id = $(this).data('id')
+            var kelas = $(this).data('kelas')
+            $('#accUnen').attr('data-id', id)
+            $('#accUnen').attr('data-kelas', kelas)
+        })
 
+        $('#accUnen').click(function(){
+            var id = $(this).data('id')
+            var kelas = $(this).data('kelas')
+            $.ajax({
+                url: '{{ route('classes.unenroll') }}',
+                type: 'POST',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'id': id,
+                    'kelas': kelas
+                },
+                success: function(response) {
+                    if (response.msg === 'success') {
+                        Swal.fire('Unenroll Success', '', 'success').then(function() {
+                            window.location.reload();
+                        });
+                    }
+                }
+            });
+        })
     });
 </script>
 
