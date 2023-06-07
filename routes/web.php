@@ -81,7 +81,7 @@ Route::middleware('auth')->group(function () {
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
-Route::put('/data/{id}', 'PresensiController@update')->name('data.update');
+Route::post('/presensi/edit', 'PresensiController@update')->name('presensi.edit');
 
 
 
