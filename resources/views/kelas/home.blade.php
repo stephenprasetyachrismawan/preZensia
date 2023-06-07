@@ -212,7 +212,8 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form action="#">
+                <form action="/presensi/edit" method="POST">
+                    @csrf
                     <input type="hidden" id="id_pres">
                     <div class="grid gap-4 mb-4 sm:grid-cols-2">
                         <div>
@@ -278,6 +279,7 @@
             $.ajax({
                 url: '/presensi/edit',
                 type: 'POST',
+
                 success: function(response) {
                     $('#updateModal .modal-content').html(response);
                     $('#updateModal').modal('show');
@@ -285,35 +287,8 @@
             });
         });
 
-        // Submit form edit data melalui Ajax
-        $(document).on('submit', '#editForm', function(e) {
-            e.preventDefault();
 
-            var form = $(this);
-            var url = form.attr('action');
-            var method = form.attr('method');
-            var data = form.serialize();
 
-            $.ajax({
-                url: url,
-                type: method,
-                data: data,
-                success: function(response) {
-                    // Tutup modal
-                    $('#editModal').modal('hide');
-
-                    // Perbarui tampilan tabel menggunakan DataTables
-                    $('#data-table').DataTable().ajax.reload();
-
-                    // Tampilkan pesan sukses jika diperlukan
-                    alert('Data updated successfully');
-                },
-                error: function(response) {
-                    // Tampilkan pesan error jika diperlukan
-                    alert('Error occurred');
-                }
-            });
-        });
     });
 </script>
 
