@@ -133,14 +133,14 @@
                                                 </td>
                                                 <td>
                                                     <div class="dropdown dropdown-right dropdown-end">
-                                                        <label tabindex="0" data-id={{ $li->id }}
-                                                            data-tanggal={{ $li->tanggal }}
-                                                            data-timestart={{ $li->timestart }}
-                                                            data-timeend={{ $li->timeend }}
-                                                            data-ket={{ $li->ket }}
+                                                        <button tabindex="0" data-id={{ $li->id }}
+                                                            data-tanggal="{{ $li->tanggal }}"
+                                                            data-timestart="{{ $li->timestart }}"
+                                                            data-timeend="{{ $li->timeend }}"
+                                                            data-ket="{{ $li->ket }}"
                                                             class="btn btn-info m-1 edit-btn"
                                                             data-modal-target="updateModal"
-                                                            data-modal-toggle="updateModal">Edit</label>
+                                                            data-modal-toggle="updateModal">Edit</button>
 
 
                                                     </div>
