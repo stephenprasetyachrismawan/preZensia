@@ -141,6 +141,10 @@
                                                             class="btn btn-info m-1 edit-btn"
                                                             data-modal-target="updateModal"
                                                             data-modal-toggle="updateModal">Edit</button>
+                                                        <button class="btn btn-info m-1 btnhapus"
+                                                            data-id="{{ $li->id }}"
+                                                            data-modal-target="hapus-modal"
+                                                            data-modal-toggle="hapus-modal">Delete</button>
 
 
                                                     </div>
@@ -185,7 +189,10 @@
         </div>
     </div>
 
+    {{-- Modal Hapus --}}
 
+    @component('components.hapus-modal')
+    @endcomponent
 
     <!-- Main modal -->
     <div id="updateModal" tabindex="-1" aria-hidden="true"
@@ -261,6 +268,33 @@
     $(document).ready(function() {
         // Inisialisasi DataTables pada tabel
         $('#tabelabsen').DataTable();
+        $('.btnhapus').click(function() {
+            var id = $(this).data('id');
+            $('#dell').attr('data-id', id);
+            console.log(id);
+
+        })
+        $('#dell').click(function() {
+            var id = $(this).data('id');
+
+            console.log(id);
+            $.ajax({
+                url: '{{ route('presensi.delete') }}',
+                type: 'POST',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'id': id,
+
+                },
+                success: function(response) {
+                    if (response.msg == 'success') {
+                        Swal.fire('Berhasil dihapus', '', 'success').then(function() {
+                            window.location.reload();
+                        });
+                    }
+                }
+            });
+        })
 
         // Menangkap klik tombol Edit dan menampilkan modal
         $('.edit-btn').click(function() {

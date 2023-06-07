@@ -146,7 +146,8 @@
                                             @endforeach
                                         @endforeach
                                         @foreach ($list as $li)
-                                            @if (Carbon\Carbon::parse($li->tanggal)->setTimeFrom(Carbon\Carbon::parse($li->timeend)) < Carbon\Carbon::now())
+                                            @if (Carbon\Carbon::parse($li->tanggal)->setTimeFrom(Carbon\Carbon::parse($li->timeend)) < Carbon\Carbon::now() &&
+                                                    $li->status_presensi == 0)
                                                 <tr>
                                                     <td>{{ $no++ }}</td>
                                                     <td>
