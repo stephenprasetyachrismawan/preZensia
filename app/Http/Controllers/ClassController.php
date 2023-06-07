@@ -27,6 +27,9 @@ class ClassController extends Controller
         $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function ($query) {
             $query->where('user_id', Auth::id());
         })->get();
+        if($kls[0]->archive==1){
+            return redirect()->route('classes');
+        }
         $idk = $kls[0]->id;
         $role = ListRole::where('user_id', Auth::id())->value('role_id');
 

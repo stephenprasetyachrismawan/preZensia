@@ -221,7 +221,7 @@
                 <!-- Modal body -->
                 <form action="/presensi/edit" method="POST">
                     @csrf
-                    <input type="hidden"class="id_pres" name="id_pres">
+                    <input type="hidden" class="id_pres" name="id_pres">
                     <div class="grid gap-4 mb-4 sm:grid-cols-2">
                         <div>
                             <label for="tanggal"
