@@ -51,69 +51,65 @@
 
 
                                         @foreach ($list as $li)
-                                            @foreach ($status as $st)
-                                                @if ($li->id != $st->presensi_id)
-                                                    @if (Carbon\Carbon::createFromFormat('Y-m-d', $li->tanggal)->format('Y-M-d') == Carbon\Carbon::now()->format('Y-M-d') &&
-                                                            Carbon\Carbon::createFromTimeString($li->timeend)->format('H:i:s') > Carbon\Carbon::now()->format('H:i:s') &&
-                                                            Carbon\Carbon::createFromTimeString($li->timestart)->format('H:i:s') < Carbon\Carbon::now()->format('H:i:s'))
-                                                        <tr>
-                                                            <td>{{ $no++ }}</td>
-                                                            <td>
-                                                                <div class="dropdown dropdown-right dropdown-end">
-                                                                    <label tabindex="0" class="btn btn-info m-1">Isi
-                                                                        🖋</label>
-                                                                    <ul tabindex="0"
-                                                                        class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                                            @if (Carbon\Carbon::createFromFormat('Y-m-d', $li->tanggal)->format('Y-M-d') == Carbon\Carbon::now()->format('Y-M-d') &&
+                                                    Carbon\Carbon::createFromTimeString($li->timeend)->format('H:i:s') > Carbon\Carbon::now()->format('H:i:s') &&
+                                                    Carbon\Carbon::createFromTimeString($li->timestart)->format('H:i:s') < Carbon\Carbon::now()->format('H:i:s') &&
+                                                    $li->status_presensi == 0)
+                                                <tr>
+                                                    <td>{{ $no++ }}</td>
 
-                                                                        <form action="/presensi" method="post">
-                                                                            @csrf
-                                                                            <input type="hidden" name="ket"
-                                                                                value="1">
-                                                                            <input type="hidden" name="pres_id"
-                                                                                value="{{ $li->id }}">
-                                                                            <li class="">
-                                                                                <input type="submit" value="Hadir"
-                                                                                    class="flex flex-col items-center justify-center hover:bg-success">
-                                                                            </li>
-                                                                        </form>
+                                                    <td>
+                                                        <div class="dropdown dropdown-right dropdown-end">
+                                                            <label tabindex="0" class="btn btn-info m-1">Isi
+                                                                🖋</label>
+                                                            <ul tabindex="0"
+                                                                class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
 
-                                                                        <form action="/presensi" method="post">
-                                                                            @csrf
-                                                                            <input type="hidden" name="ket"
-                                                                                value="3">
-                                                                            <input type="hidden" name="pres_id"
-                                                                                value="{{ $li->id }}">
-                                                                            <li>
-                                                                                <input type="submit" value="Ijin"
-                                                                                    class="flex flex-col items-center justify-center hover:bg-warning">
-                                                                            </li>
-                                                                        </form>
+                                                                <form action="/presensi" method="post">
+                                                                    @csrf
+                                                                    <input type="hidden" name="ket" value="1">
+                                                                    <input type="hidden" name="pres_id"
+                                                                        value="{{ $li->id }}">
+                                                                    <li class="">
+                                                                        <input type="submit" value="Hadir"
+                                                                            class="flex flex-col items-center justify-center hover:bg-success">
+                                                                    </li>
+                                                                </form>
 
-                                                                        <form action="/presensi" method="post">
-                                                                            @csrf
-                                                                            <input type="hidden" name="ket"
-                                                                                value="2">
-                                                                            <input type="hidden" name="pres_id"
-                                                                                value="{{ $li->id }}">
-                                                                            <li>
-                                                                                <input type="submit" value="Sakit"
-                                                                                    class="flex flex-col items-center justify-center hover:bg-warning">
-                                                                            </li>
-                                                                        </form>
+                                                                <form action="/presensi" method="post">
+                                                                    @csrf
+                                                                    <input type="hidden" name="ket" value="3">
+                                                                    <input type="hidden" name="pres_id"
+                                                                        value="{{ $li->id }}">
+                                                                    <li>
+                                                                        <input type="submit" value="Ijin"
+                                                                            class="flex flex-col items-center justify-center hover:bg-warning">
+                                                                    </li>
+                                                                </form>
 
-                                                                    </ul>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                {{ Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString() }}<br>{{ '(' . $li->timestart . ' - ' . $li->timeend . ')' }}
-                                                            </td>
-                                                            <td>
-                                                                {{ $li->ket }}
-                                                            </td>
-                                                        </tr>
-                                                    @endif
-                                                @endif
-                                            @endforeach
+                                                                <form action="/presensi" method="post">
+                                                                    @csrf
+                                                                    <input type="hidden" name="ket" value="2">
+                                                                    <input type="hidden" name="pres_id"
+                                                                        value="{{ $li->id }}">
+                                                                    <li>
+                                                                        <input type="submit" value="Sakit"
+                                                                            class="flex flex-col items-center justify-center hover:bg-warning">
+                                                                    </li>
+                                                                </form>
+
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        {{ Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString() }}<br>{{ '(' . $li->timestart . ' - ' . $li->timeend . ')' }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $li->ket }}
+                                                    </td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                         @foreach ($list as $li)
                                             @if (Carbon\Carbon::parse($li->tanggal)->startOfDay() > Carbon\Carbon::now()->startOfDay())

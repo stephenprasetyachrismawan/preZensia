@@ -214,7 +214,7 @@
                 <!-- Modal body -->
                 <form action="/presensi/edit" method="POST">
                     @csrf
-                    <input type="hidden" id="id_pres">
+                    <input type="hidden"class="id_pres" name="id_pres">
                     <div class="grid gap-4 mb-4 sm:grid-cols-2">
                         <div>
                             <label for="tanggal"
@@ -270,11 +270,12 @@
             var timeend = $(this).data('timeend');
             var ket = $(this).data('ket');
             console.log(timestart);
-            console.log(tanggal);
+            console.log(id);
             $('.tanggal').val(tanggal);
             $('.start').val(timestart);
             $('.end').val(timeend);
             $('.kete').val(ket);
+            $('.id_pres').val(id);
 
             $.ajax({
                 url: '/presensi/edit',

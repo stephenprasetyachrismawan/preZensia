@@ -11,7 +11,17 @@ use Illuminate\Support\Facades\Auth;
 class PresensiController extends Controller
 {
     //
+    public function update(Request $req)
+    {
 
+        $baru = Presensi::find($req->id_pres);
+        $baru->tanggal = $req->tanggal;
+        $baru->timestart = $req->start;
+        $baru->timeend = $req->end;
+        $baru->ket = $req->ket;
+        $baru->save();
+        return back();
+    }
     public function simpan(Request $req)
     {
         $absen = new ListPresensi;
