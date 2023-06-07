@@ -4,7 +4,9 @@
         <div class="mx-3 px-1">
             <a href="{{ route('classes.create') }}" class="btn btn-primary">Tambah Kelas</a>
             <a href="{{ route('classes.join') }}" class="btn btn-primary">Join Kelas</a>
+            <a href="{{ route('archive') }}" class="btn btn-primary">Kelas Archive</a>
             <div class="{{-- columns-3 sm:columns-1 md:columns-2 lg:columns-3 --}}grid lg:grid-cols-3 gap-4 md:grid-cols-2 sm:grid-cols-1 ">
+                @if($data)
                 @foreach ($data as $d)
                 <div class="container justify-self-center">
                     <div class="">
@@ -16,7 +18,7 @@
                                         <div class="dropdown dropdown-end">
                                             <label tabindex="0" class="btn m-1"><i class="fa-solid fa-ellipsis-vertical p-0"></i></label>
                                             <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                                                <li><button id='archive' data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button">Archive</button></li>
+                                                <li><button id='archive' data-id='{{ $d[3] }}' data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button">Archive</button></li>
                                                 <li><a>Analisis</a></li>
                                             </ul>
                                         </div>
@@ -42,6 +44,7 @@
                     <br>
                 </div>
                 @endforeach
+                @endif
             </div>
         </div>
 
@@ -59,18 +62,37 @@
                     <svg aria-hidden="true" class="mx-auto mb-4 text-gray-400 w-14 h-14 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this product?</h3>
-                    <button data-modal-hide="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                        Yes, I'm sure
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Apakah anda yakin ingin archive kelas ini?</h3>
+                    <button data-modal-hide="popup-modal" id="accArch" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                        Ya
                     </button>
-                    <button data-modal-hide="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button>
+                    <button data-modal-hide="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Cancel</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-
+        $(document).ready(function() {
+            $('#archive').click(function() {
+                var id = $(this).data('id')
+                $('#accArch').attr('data-id', id);
+            })
+            $('#accArch').click(function() {
+                var id = $(this).data('id');
+                $.ajax({
+                    url: '{{ route("classes.archive") }}'
+                    , method: 'POST'
+                    , data: {
+                        '_token': '{{ csrf_token() }}'
+                        , 'id': id
+                    }
+                    , success: function(response) {
+                        if (response.msg == 'success') location.reload()
+                    }
+                })
+            })
+        })
 
     </script>
 </x-app-layout>

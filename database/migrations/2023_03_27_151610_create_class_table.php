@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('class_code')->unique();
             $table->string('class_subject')->nullable();
             $table->string('class_desc')->nullable();
+            $table->integer('archive')->default(0);
         });
     }
 

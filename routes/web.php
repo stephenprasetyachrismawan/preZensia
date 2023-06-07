@@ -32,9 +32,12 @@ Route::middleware('auth')->group(function () {
         Route::post('join', 'check')->name('classes.join.check');
         Route::get('{id}', 'index')->name('classes.home');
         Route::get('{id}/{cd}', 'linkjoin')->name('classes.linkjoin');
+        Route::post('archive', 'archive')->name('classes.archive');
     });
     Route::resource('/buatpresensi', App\Http\Controllers\PresensiController::class);
 });
+
+Route::get('archive', [ClassController::class, 'get_archive'])->middleware(['auth', 'verified'])->name('archive');
 
 //Pusher
 Route::post('presensi', [PresensiController::class, 'simpan'])->middleware(['auth', 'verified']); //kirim
