@@ -49,6 +49,7 @@ Route::post('presensi', [PresensiController::class, 'simpan'])->middleware(['aut
 
 //Buat route untuk realtime dengan post
 Route::post('realtime', [PresensiController::class, 'lihat_realtime'])->middleware(['auth', 'verified']);
+Route::get('laporan/{id}', [PresensiController::class, 'lihat_laporan'])->middleware(['auth', 'verified'])->name('laporan');
 
 //View Isi Presensi
 Route::get(
@@ -73,7 +74,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [ClassController::class, 'getkelas'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/tes', function(){
+Route::get('/tes', function () {
     return view('tes');
 });
 
@@ -93,6 +94,7 @@ Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallba
 
 Route::post('/presensi/edit', [PresensiController::class, 'update'])->name('presensi.edit');
 Route::post('presensi/delete', [PresensiController::class, 'delete'])->name('presensi.delete');
+Route::post('/listpresensi/edit', [PresensiController::class, 'listedit'])->name('listpresensi.edit');
 
 
 require __DIR__ . '/auth.php';
