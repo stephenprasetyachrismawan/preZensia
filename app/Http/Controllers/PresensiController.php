@@ -15,6 +15,12 @@ use Illuminate\Support\Facades\Auth;
 class PresensiController extends Controller
 {
     //
+    public function lihat_realtime(Request $req)
+    {
+        $idp = $req->id_presensi;
+        $data = ListPresensi::whereIn('presensi_id', [$idp])->get();
+        dd($data);
+    }
     public function delete(Request $req)
     {
         $cek = Presensi::find($req->id)->delete();
