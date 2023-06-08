@@ -10,6 +10,7 @@ use App\Events\Presensia;
 use App\Models\ListPresensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class PresensiController extends Controller
@@ -19,7 +20,24 @@ class PresensiController extends Controller
     {
         $idp = $req->id_presensi;
         $data = ListPresensi::whereIn('presensi_id', [$idp])->get();
-        dd($data);
+        $murid = new Collection();
+
+
+
+        // $data1 = $d->where('murid', $angka);
+        $data->each(function ($model) {
+            $angka = $model->murid;
+            $n = User::find($angka)->name;
+            $attributes = $model->getAttributes(); // Mendapatkan nilai atribut saat ini
+
+            // Tambahkan data pada kolom attributes di sini
+            $attributes['nama'] = $n;
+
+            $model->setRawAttributes($attributes); // Mengatur nilai atribut baru
+        });
+        return view('laporan_presensi')->with([
+            'data' => $data
+        ]);
     }
     public function delete(Request $req)
     {
@@ -53,7 +71,7 @@ class PresensiController extends Controller
         // dd($idenguru[0]);
 
         $dataSend = [
-            'nama' => Auth::getName(),
+            'nama' => Auth::user()->name,
             'ket' => $keterangan->ket,
             'waktu' => Carbon::now(),
             'guru' => $guru[0]->user_id,
