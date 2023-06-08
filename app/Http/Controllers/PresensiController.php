@@ -32,35 +32,39 @@ class PresensiController extends Controller
     }
     public function lihat_laporan($id)
     {
+        $guru = Presensi::find($id)->class->listrole->whereIn('role_id', ['1']);
+        if (Auth::id() == $guru[0]->user_id) {
+            $idp = $id;
+            $data = ListPresensi::whereIn('presensi_id', [$idp])->orderByDesc('time')->get();
+            $murid = new Collection();
 
-        $idp = $id;
-        $data = ListPresensi::whereIn('presensi_id', [$idp])->orderByDesc('time')->get();
-        $murid = new Collection();
 
 
+            // $data1 = $d->where('murid', $angka);
+            $data->each(function ($model) {
+                $angka = $model->murid;
+                $kete = $model->ket_id;
+                $n = User::find($angka)->name;
+                $f = User::find($angka)->url_photo;
+                $e = User::find($angka)->email;
+                $k = Ket::find($kete)->ket;
+                $attributes = $model->getAttributes(); // Mendapatkan nilai atribut saat ini
 
-        // $data1 = $d->where('murid', $angka);
-        $data->each(function ($model) {
-            $angka = $model->murid;
-            $kete = $model->ket_id;
-            $n = User::find($angka)->name;
-            $f = User::find($angka)->url_photo;
-            $e = User::find($angka)->email;
-            $k = Ket::find($kete)->ket;
-            $attributes = $model->getAttributes(); // Mendapatkan nilai atribut saat ini
+                // Tambahkan data pada kolom attributes di sini
+                $attributes['nama'] = $n;
+                $attributes['foto'] = $f;
+                $attributes['email'] = $e;
+                $attributes['keterangan'] = $k;
 
-            // Tambahkan data pada kolom attributes di sini
-            $attributes['nama'] = $n;
-            $attributes['foto'] = $f;
-            $attributes['email'] = $e;
-            $attributes['keterangan'] = $k;
+                $model->setRawAttributes($attributes); // Mengatur nilai atribut baru
+            });
 
-            $model->setRawAttributes($attributes); // Mengatur nilai atribut baru
-        });
-
-        return view('data_laporan_presensi')->with([
-            'data' => $data
-        ]);
+            return view('data_laporan_presensi')->with([
+                'data' => $data
+            ]);
+        } else {
+            return redirect('/');
+        }
     }
     public function lihat_realtime(Request $req)
     {
