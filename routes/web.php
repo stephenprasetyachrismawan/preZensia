@@ -49,6 +49,7 @@ Route::post('presensi', [PresensiController::class, 'simpan'])->middleware(['aut
 
 //Buat route untuk realtime dengan post
 Route::post('realtime', [PresensiController::class, 'lihat_realtime'])->middleware(['auth', 'verified']);
+Route::post('laporan', [PresensiController::class, 'lihat_laporan'])->middleware(['auth', 'verified']);
 
 //View Isi Presensi
 Route::get(
@@ -73,7 +74,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [ClassController::class, 'getkelas'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/tes', function(){
+Route::get('/tes', function () {
     return view('tes');
 });
 

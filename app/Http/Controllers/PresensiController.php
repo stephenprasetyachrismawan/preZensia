@@ -16,6 +16,37 @@ use Illuminate\Support\Facades\Auth;
 class PresensiController extends Controller
 {
     //
+    public function lihat_laporan(Request $req)
+    {
+        $idp = $req->id_presensi;
+        $data = ListPresensi::whereIn('presensi_id', [$idp])->orderByDesc('time')->get();
+        $murid = new Collection();
+
+
+
+        // $data1 = $d->where('murid', $angka);
+        $data->each(function ($model) {
+            $angka = $model->murid;
+            $kete = $model->ket_id;
+            $n = User::find($angka)->name;
+            $f = User::find($angka)->url_photo;
+            $e = User::find($angka)->email;
+            $k = Ket::find($kete)->ket;
+            $attributes = $model->getAttributes(); // Mendapatkan nilai atribut saat ini
+
+            // Tambahkan data pada kolom attributes di sini
+            $attributes['nama'] = $n;
+            $attributes['foto'] = $f;
+            $attributes['email'] = $e;
+            $attributes['keterangan'] = $k;
+
+            $model->setRawAttributes($attributes); // Mengatur nilai atribut baru
+        });
+
+        return view('data_laporan_presensi')->with([
+            'data' => $data
+        ]);
+    }
     public function lihat_realtime(Request $req)
     {
         $idp = $req->id_presensi;
