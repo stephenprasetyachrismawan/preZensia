@@ -2,9 +2,6 @@
 
     <div class="container m-auto my-7">
         <div class="mx-3 px-1">
-            <a href="{{ route('classes.create') }}" class="btn btn-primary">Tambah Kelas</a>
-            <a href="{{ route('classes.join') }}" class="btn btn-primary">Join Kelas</a>
-            <a href="{{ route('archive') }}" class="btn btn-primary">Kelas Archive</a>
             <div class="{{-- columns-3 sm:columns-1 md:columns-2 lg:columns-3 --}}grid lg:grid-cols-3 gap-4 md:grid-cols-2 sm:grid-cols-1 ">
                 @if ($data)
                     @foreach ($data as $d)
@@ -22,7 +19,7 @@
                                                         class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                                                         @if ($d[1]==1)
                                                         <li>
-                                                            <button id='archive' data-id='{{ $d[3] }}'
+                                                            <button class='archive' data-id='{{ $d[3] }}'
                                                                 data-modal-target="archive-modal"
                                                                 data-modal-toggle="archive-modal"
                                                                 type="button">Archive</button></li>
@@ -62,14 +59,13 @@
                 @endif
             </div>
         </div>
-
     </div>
-    @component('components.archive-modal')
-    @endcomponent
-
+    @include('components.classes-dial')
+    @include('components.archive-modal')
+    @include('components.join-modal')
     <script>
         $(document).ready(function() {
-            $('#archive').click(function() {
+            $('.archive').click(function() {
                 var id = $(this).data('id')
                 $('#accArch').attr('data-id', id);
             })
@@ -91,6 +87,7 @@
                     }
                 })
             })
+
         })
     </script>
 </x-app-layout>

@@ -4,7 +4,7 @@
 @vite('resources/css/app.css')
 <script src="https://kit.fontawesome.com/6a27cbb623.js" crossorigin="anonymous"></script>
 
-<nav x-data="{ open: true }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 sticky top-0 z-50">
 
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

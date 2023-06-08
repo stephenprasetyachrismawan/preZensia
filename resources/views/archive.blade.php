@@ -46,9 +46,9 @@
             </div>
         </div>
     </div>
-    @component('components.unarchive-modal')
-
-    @endcomponent
+    @include('components.unarchive-modal')
+    @include('components.classes-dial')
+    @include('components.join-modal')
 
     <script>
         $(document).ready(function() {
