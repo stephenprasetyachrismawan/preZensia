@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
         Route::get('{id}/{cd}', 'linkjoin')->name('classes.linkjoin');
         Route::post('archive', 'archive')->name('classes.archive');
         Route::post('unarchive', 'unarchive')->name('classes.unarchive');
+        Route::post('unenroll', 'unenroll')->name('classes.unenroll');
     });
     Route::resource('/buatpresensi', App\Http\Controllers\PresensiController::class);
 });
