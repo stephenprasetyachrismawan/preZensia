@@ -43,9 +43,12 @@ Route::get('archive', [ClassController::class, 'get_archive'])->middleware(['aut
 
 //Pusher
 Route::post('presensi', [PresensiController::class, 'simpan'])->middleware(['auth', 'verified']); //kirim
-Route::get('laporan-realtime', function () {
-    return view('laporan_presensi');
-})->middleware(['auth', 'verified']); //terima
+// Route::get('laporan-realtime', function () {
+//     return view('laporan_presensi');
+// })->middleware(['auth', 'verified']); //terima
+
+//Buat route untuk realtime dengan post
+Route::post('realtime', [PresensiController::class, 'lihat_realtime'])->middleware(['auth', 'verified']);
 
 //View Isi Presensi
 Route::get(

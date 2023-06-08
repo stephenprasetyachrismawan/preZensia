@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\Presensi;
+use App\Events\Presensia;
 use Illuminate\Http\Request;
 
 class FormPresensi extends Controller
@@ -17,7 +18,7 @@ class FormPresensi extends Controller
             'waktu' => now(),
         ];
 
-        event(new Presensi($dataSend));
+        event(new Presensia($dataSend));
         return redirect('isi-presensi');
     }
 }

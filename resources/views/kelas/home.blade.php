@@ -98,14 +98,14 @@
                             <input type="submit" class="btn btn-primary" value="Buat">
                         </div>
                     </form>
-                    <div class="container lg:flex lg:flex-col lg:items-center lg:justify-center">
+                    <div class="container lg:flex lg:flex-col lg:items-center lg:justify-center ">
                         <article class="flex flex-col items-center justify-center prose my-3">
                             <h2 class="h1">Daftar Presensi Anda ..⏳</h2>
                         </article>
 
-                        <div class="relative overflow-x-auto flex my-3">
-                            <div class="">
-                                <table id="tabelabsen" class="stripe" style="width:100%">
+                        <div class="relative overflow-x-auto flex my-3 w-4/5">
+                            <div class="w-full table-auto">
+                                <table id="tabelabsen" class="stripe w-full table-auto" style="width:100%">
                                     <!-- head -->
                                     <thead>
                                         <tr>
@@ -143,11 +143,25 @@
                                                             data-ket="{{ $li->ket }}"
                                                             class="btn btn-info m-1 edit-btn"
                                                             data-modal-target="updateModal"
-                                                            data-modal-toggle="updateModal">Edit</button>
-                                                        <button class="btn btn-info m-1 btnhapus"
+                                                            data-modal-toggle="updateModal"><i
+                                                                class="fa-solid fa-pen-to-square"></i></button>
+                                                        <button class="btn btn-secondary m-1 btnhapus"
                                                             data-id="{{ $li->id }}"
                                                             data-modal-target="hapus-modal"
-                                                            data-modal-toggle="hapus-modal">Delete</button>
+                                                            data-modal-toggle="hapus-modal">
+                                                            <i class="fa-solid fa-trash-can"
+                                                                style="color: #ffffff;"></i>
+                                                            <form action="/realtime" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="id_presensi"
+                                                                    value="{{ $li->id }}">
+                                                            </form>
+                                                            <button class="btn btn-primary m-1 btnhapus">
+                                                                <i class="fa-solid fa-arrows-rotate"></i>
+                                                            </button>
+
+
+                                                        </button>
 
 
                                                     </div>
@@ -332,7 +346,7 @@
 
             console.log(id);
             $.ajax({
-                url: '{{ route('presensi.delete') }}',
+                url: "{{ route('presensi.delete') }}",
                 type: 'POST',
                 data: {
                     '_token': '{{ csrf_token() }}',
