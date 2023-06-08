@@ -42,6 +42,7 @@ class PresensiController extends Controller
 
             $model->setRawAttributes($attributes); // Mengatur nilai atribut baru
         });
+
         return view('laporan_presensi')->with([
             'data' => $data
         ]);
@@ -80,10 +81,10 @@ class PresensiController extends Controller
         $dataSend = [
             'nama' => Auth::user()->name,
             'ket' => $keterangan->ket,
-            'waktu' => Carbon::now(),
+            'waktu' => Carbon::now()->toDateTimeString(),
             'guru' => $guru[0]->user_id,
-            'email' => $idenguru[0]->email,
-            'foto' => $idenguru[0]->url_photo,
+            'email' => Auth::user()->email,
+            'foto' => Auth::user()->url_photo,
         ];
         event(new Presensia($dataSend));
         return back();

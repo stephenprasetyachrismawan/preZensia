@@ -133,39 +133,46 @@
                                                 <td>
                                                     {{ $li->ket }}
                                                 </td>
-                                                <td>
-                                                    <div class="dropdown dropdown-right dropdown-end">
-                                                        <button tabindex="0" data-id={{ $li->id }}
-                                                            data-tanggal="{{ $li->tanggal }}"
-                                                            data-timestart="{{ $li->timestart }}"
-                                                            data-timeend="{{ $li->timeend }}"
-                                                            data-ket="{{ $li->ket }}"
-                                                            class="btn btn-info m-1 edit-btn"
-                                                            data-modal-target="updateModal"
-                                                            data-modal-toggle="updateModal"><i
-                                                                class="fa-solid fa-pen-to-square"></i></button>
-                                                        <button class="btn btn-secondary m-1 btnhapus"
-                                                            data-id="{{ $li->id }}"
-                                                            data-modal-target="hapus-modal"
-                                                            data-modal-toggle="hapus-modal">
-                                                            <i class="fa-solid fa-trash-can"
-                                                                style="color: #ffffff;"></i>
-                                                            <form action="/realtime" method="post">
-                                                                @csrf
-                                                                <input type="hidden" name="id_presensi"
-                                                                    value="{{ $li->id }}">
-                                                                <button type="submit"
-                                                                    class="btn btn-primary m-1 btnhapus">
-                                                                    <i class="fa-solid fa-arrows-rotate"></i>
-                                                                </button>
-                                                            </form>
+                                                <td class="flex">
+
+                                                    <button tabindex="0" data-id={{ $li->id }}
+                                                        data-tanggal="{{ $li->tanggal }}"
+                                                        data-timestart="{{ $li->timestart }}"
+                                                        data-timeend="{{ $li->timeend }}"
+                                                        data-ket="{{ $li->ket }}"
+                                                        class="btn btn-info m-1 edit-btn"
+                                                        data-modal-target="updateModal"
+                                                        data-modal-toggle="updateModal"><i
+                                                            class="fa-solid fa-pen-to-square"></i></button>
+                                                    <button class="btn btn-secondary m-1 btnhapus"
+                                                        data-id="{{ $li->id }}" data-modal-target="hapus-modal"
+                                                        data-modal-toggle="hapus-modal">
+                                                        <i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
+                                                        <form action="/realtime" method="post">
+                                                            @csrf
+                                                            <input type="hidden" name="id_presensi"
+                                                                value="{{ $li->id }}">
+                                                            <button type="submit"
+                                                                class="btn btn-primary m-1 btnhapus">
+                                                                <i class="fa-solid fa-arrows-rotate fa-spin"></i></i>
+                                                            </button>
+                                                        </form>
+                                                        <form action="/laporan" method="post">
+                                                            @csrf
+                                                            <input type="hidden" name="id_presensi"
+                                                                value="{{ $li->id }}">
+                                                            <button type="submit"
+                                                                class="btn btn-primary m-1 btnhapus">
+                                                                <i class="fa-solid fa-database fa-beat"></i></i></i>
+                                                            </button>
+                                                        </form>
 
 
 
-                                                        </button>
+                                                    </button>
 
 
-                                                    </div>
+
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -334,6 +341,11 @@
                     [5, 10, 25, 50, 100, -1],
                     [5, 10, 25, 50, 100, "All"]
                 ],
+        }{
+            "columnDefs": [{
+                "width": "40%",
+                "targets": 3
+            }]
         });
         $('.btnhapus').click(function() {
             var id = $(this).data('id');
@@ -498,7 +510,9 @@
     });
 
     $(document).ready(function() {
-        $('#tabelpartisipan').DataTable();
+        $('#tabelpartisipan').DataTable({
+
+        });
 
         $.ajax({
             url: '{{ route('chartReq') }}',
