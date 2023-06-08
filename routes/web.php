@@ -68,12 +68,14 @@ Route::post('ajax-resp', [AjaxController::class, 'chartReq'])->name('chartReq');
 
 // ---------------------------------------------------------------------
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
 });
 
 Route::get('/dashboard', [ClassController::class, 'getkelas'])->middleware(['auth', 'verified'])->name('dashboard');
 
-
+Route::get('/tes', function(){
+    return view('tes');
+});
 
 Route::get('/password', function () {
     return view('password');
