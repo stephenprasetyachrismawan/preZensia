@@ -306,8 +306,8 @@
                             </table>
                         @endforeach
                     </div>
-                    <div id="third" class="hidden p-4 t3 tab">
-                        <div id="chart"></div>
+                    <div id="third" class="hidden p-4 t3 tab w-max">
+                        <div id="chart" class=""></div>
                     </div>
                 </div>
             </div>
@@ -529,27 +529,51 @@
                 },
                 dataType: 'json',
                 success: function(resp) {
-                    data = [];
-                    cat = [];
-                    for (i = 1; i <= resp.count; i++) {
-                        data.push(resp['cnt' + i]);
-                        cat.push(resp['tgl' + i]);
-                    }
-                    var options = {
-                        chart: {
-                            type: 'line'
-                        },
-                        series: [{
-                            name: 'hadir',
-                            data: data
-                        }],
-                        xaxis: {
-                            categories: cat
+                    if(resp.count>0){
+                        data = [];
+                        cat = [];
+                        for (i = 1; i <= resp.count; i++) {
+                            data.push(resp['cnt' + i]);
+                            cat.push(resp['tgl' + i]);
                         }
-                    };
+                        var options = {
+                            chart: {
+                                type: 'line'
+                            },
+                            series: [{
+                                name: 'hadir',
+                                data: data
+                            }],
+                            xaxis: {
+                                categories: cat
+                            }
+                        };
+    
+                        var chart = new ApexCharts(document.querySelector("#chart"), options);
+                        chart.render();
+                    }else{
+                        var currentDate = new Date();
+                        var formattedDate = currentDate.toLocaleString();
+                        data = [];
+                        cat = [];
+                        data.push(resp.count)
+                        cat.push(formattedDate)
+                        var options = {
+                            chart: {
+                                type: 'line'
+                            },
+                            series: [{
+                                name: 'hadir',
+                                data: data
+                            }],
+                            xaxis: {
+                                categories: cat
+                            }
+                        };
+                        var chart = new ApexCharts(document.querySelector("#chart"), options);
+                        chart.render();
+                    }
 
-                    var chart = new ApexCharts(document.querySelector("#chart"), options);
-                    chart.render();
                 },
                 error: function(data) {
                     console.log("ERROR".concat(data));
