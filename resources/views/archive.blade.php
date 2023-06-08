@@ -25,9 +25,15 @@
                                         <span>{{ Str::limit($d[2], 24, '...') }} </span>
                                         @endif
                                     </p>
+                                    @if ($d[1]==1)    
                                     <div class="card-actions justify-end">
                                         <button id='unarchive' class="btn btn-primary" data-id='{{ $d[3] }}' data-modal-target="unarchive-modal" data-modal-toggle="unarchive-modal" type="button">Unarchive</button>
                                     </div>
+                                    @else
+                                    <div class="card-actions justify-end">
+                                        <button class="btn btn-primary cursor-not-allowed focus:outline-none" type="button" disabled>Unarchive</button>
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
                             <img src="https://picsum.photos/id/44/4272/2848" alt="Image 1" class="w-80  rounded-box" />

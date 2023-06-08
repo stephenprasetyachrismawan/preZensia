@@ -31,7 +31,7 @@ class ClassController extends Controller
             return redirect()->route('classes');
         }
         $idk = $kls[0]->id;
-        $role = ListRole::where('user_id', Auth::id())->value('role_id');
+        $role = ListRole::where('class_id', Kelas::where('hashcode', $id)->value('id'))->where('user_id', Auth::id())->value('role_id');
 
         $part = ListRole::where('class_id', Kelas::where('hashcode', $id)->value('id'))->get();
 
@@ -65,11 +65,9 @@ class ClassController extends Controller
                     }
                 }
             }
-
-
-
             return view('kelas.home2')->with([
                 'list' => $list,
+                'part' => $part,
                 'status' => $stat
             ]);
         }
@@ -126,22 +124,22 @@ class ClassController extends Controller
             }
             $nama_kelas[] = $ke[0]->class_name;
             $listguru = ListRole::with('user')->whereIn('role_id', ['1'])->whereIn('class_id', [$ke[0]->id])->get();
-            $guru0 = User::find($listguru[0]->user_id)->get();
-            $guru[] = $guru0[0]->name;
+            $guru0 = User::find($listguru[0]->user_id);
+            $guru[] = $guru0->name;
             $hashcode[] = $ke[0]->hashcode;
         }
-        // 
         $rolekelas = [];
         foreach ($list as $li) {
+            if($li->kelas->archive == 1){
+                continue;
+            }
             $rolekelas[] = $li->role_id;
         }
-
         // dd($userkelas);
         $data = [];
         for ($i = 0; $i < count($nama_kelas); $i++) {
             $data[] = [$nama_kelas[$i], $rolekelas[$i], $guru[$i], $hashcode[$i]];
         }
-
         return view('class', compact('data'));
     }
     /**

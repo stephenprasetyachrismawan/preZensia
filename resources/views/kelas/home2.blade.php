@@ -162,62 +162,6 @@
                                                 </tr>
                                             @endif
                                         @endforeach
-                                        {{-- @php $no = 1
-                                            @endphp
-                                        @foreach ($list as $li)
-                                        @foreach ($status as $st)
-                                        <tr>
-                                            <td>{{$no++}}</td>
-                                                    @if ($li->id == $st->presensi_id)
-                                                    <td>
-                                                        <button class="btn btn-warning">Sudah</button>
-                                                    </td>
-                                                    @elseif(Carbon\Carbon::parse($li->tanggal)->setTimeFrom(Carbon\Carbon::parse($li->timeend)) < Carbon\Carbon::now()) <td>
-                                                        <button class="btn btn-secondary">Terlambat</button>
-                                                        </td>
-                                                        @elseif(Carbon\Carbon::parse($li->tanggal)->startOfDay() > Carbon\Carbon::now()->startOfDay())
-                                                        <td>
-                                                            <button class="btn btn-info">Belum Mulai</button>
-                                                        </td>
-                                                        @else
-                                                        <td>
-                                                            <div class="dropdown dropdown-right dropdown-end">
-                                                                <label tabindex="0" class="btn btn-info m-1">Isi 🖋</label>
-                                                                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-
-                                                                    <form action="/presensi" method="post">
-                                                                        @csrf
-                                                                        <input type="hidden" name="ket" value="hadir">
-                                                                        <li class="">
-                                                                            <input type="submit" value="Hadir" class="flex flex-col items-center justify-center hover:bg-success">
-                                                                        </li>
-                                                                    </form>
-
-                                                                    <form action="/presensi" method="post">
-                                                                        @csrf
-                                                                        <input type="hidden" name="ket" value="ijin">
-                                                                        <li>
-                                                                            <input type="submit" value="Ijin" class="flex flex-col items-center justify-center hover:bg-warning">
-                                                                        </li>
-                                                                    </form>
-
-                                                                    <form action="/presensi" method="post">
-                                                                        @csrf
-                                                                        <input type="hidden" name="ket" value="sakit">
-                                                                        <li>
-                                                                            <input type="submit" value="Sakit" class="flex flex-col items-center justify-center hover:bg-warning">
-                                                                        </li>
-                                                                    </form>
-
-                                                                </ul>
-                                                            </div>
-                                                        </td>
-                                                        @endif
-                                                        <td>{{Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString()}}<br>{{'('.$li->timestart.' - '.$li->timeend.')'}}</td>
-                                                        <td>{{$li->ket}}</td>
-                                                        </tr>
-                                                        @endforeach
-                                                        @endforeach --}}
                                     </tbody>
                                 </table>
                             </div>
@@ -225,7 +169,64 @@
                     </div>
                 </div>
                 <div id="second" class="hidden p-4">
+                    <p
+                        class="mb-4 text-lg leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
+                        Teacher</p>
+                        <table id="teacher" class="text-center">
+                            <tbody>
+                                @foreach ($part as $par)
+                                @if ($par->roles->role == 'Student')
+                                @php
+                                        continue;
+                                        @endphp;
+                                @endif
+                                <hr class="mb-2">
+                                <tr>
+                                    <td>
+                                        <div class="avatar mx-3">
+                                            <div
+                                                class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                                <img src="{{ $par->user->url_photo }}" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ $par->user->name }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
 
+                    <p
+                        class="mt-5 mb-4 text-lg leading-none tracking-tight text-gray-600 md:text-3xl lg:text-4xl dark:text-white">
+                        Students</p>
+                        <table id="students" class="mt-3">
+                            <tbody>
+                                @foreach ($part as $par)
+                                @if ($par->roles->role == 'Teacher')
+                                @php
+                                        continue;
+                                        @endphp;
+                                @endif
+                                <hr class="mb-5">
+                                <tr data-popover-target="popover-del" data-id="{{ $par->user->id }}" data-name="{{ $par->user->name }}" data-kelas="{{ $par->class_id }}"class="pop-del">
+                                    <td>
+                                        <div class="avatar mx-3">
+                                            <div
+                                                class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                                <img src="{{ $par->user->url_photo }}" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ $par->user->name }}</td>
+                                    <td>
+                                        @if ($par->user->id==Auth::id())
+                                            <span class="badge badge-success">You</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
                 <div id="third" class="hidden p-4">
 

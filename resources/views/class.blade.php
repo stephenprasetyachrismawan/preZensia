@@ -20,11 +20,14 @@
                                                             class="fa-solid fa-ellipsis-vertical p-0"></i></label>
                                                     <ul tabindex="0"
                                                         class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                                                        <li><button id='archive' data-id='{{ $d[3] }}'
+                                                        @if ($d[1]==1)
+                                                        <li>
+                                                            <button id='archive' data-id='{{ $d[3] }}'
                                                                 data-modal-target="archive-modal"
                                                                 data-modal-toggle="archive-modal"
                                                                 type="button">Archive</button></li>
                                                         <li><a>Analisis</a></li>
+                                                        @endif</li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -39,7 +42,13 @@
                                                 </p>
                                             </a>
                                             <div class="card-actions justify-end">
-                                                <button class="btn btn-primary">Buat Presensi</button>
+                                                <a class="btn btn-primary" href="{{ route('classes.home', ['id' => $d[3]]) }}">
+                                                    @if ($d[1]==1)
+                                                    Buat Presensi
+                                                    @else
+                                                    Lihat Presensi
+                                                    @endif
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

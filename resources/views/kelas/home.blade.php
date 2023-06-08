@@ -184,6 +184,11 @@
                                         </div>
                                     </td>
                                     <td>{{ $par->user->name }}</td>
+                                    <td>
+                                        @if ($par->user->id==Auth::id())
+                                            <span class="badge badge-success">You</span>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
