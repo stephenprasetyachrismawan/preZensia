@@ -87,7 +87,10 @@ return array(
     'Database\\Seeders\\' => array($baseDir . '/database/seeders', $vendorDir . '/laravel/pint/database/seeders'),
     'Database\\Factories\\' => array($baseDir . '/database/factories', $vendorDir . '/laravel/pint/database/factories'),
     'Cron\\' => array($vendorDir . '/dragonmantank/cron-expression/src/Cron'),
+    'Codeat3\\BladeFluentUiSystemIcons\\' => array($vendorDir . '/codeat3/blade-fluentui-system-icons/src'),
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
     'Brick\\Math\\' => array($vendorDir . '/brick/math/src'),
+    'BladeUI\\Icons\\' => array($vendorDir . '/blade-ui-kit/blade-icons/src'),
+    'BladeUIKit\\' => array($vendorDir . '/blade-ui-kit/blade-ui-kit/src'),
     'App\\' => array($baseDir . '/app', $vendorDir . '/laravel/pint/app'),
 );

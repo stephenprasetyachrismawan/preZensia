@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ket;
+use App\Models\User;
+use App\Models\ListRole;
 use App\Models\Presensi;
+use App\Events\Presensia;
+use App\Models\ListPresensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use App\Models\ListPresensi;
 use Illuminate\Support\Facades\Auth;
 
 class PresensiController extends Controller
@@ -36,6 +40,21 @@ class PresensiController extends Controller
         $absen->murid = Auth::id();
         $absen->time = Carbon::now();
         $absen->save();
+        $keterangan = Ket::find($req->ket);
+
+        $guru = Presensi::find($req->pres_id)->class->listrole->whereIn('role_id', ['1']);
+        $idenguru = User::find($guru);
+        // dd($idenguru[0]);
+
+        $dataSend = [
+            'nama' => Auth::getName(),
+            'ket' => $keterangan->ket,
+            'waktu' => Carbon::now(),
+            'guru' => $guru[0]->user_id,
+            'email' => $idenguru[0]->email,
+            'foto' => $idenguru[0]->url_photo,
+        ];
+        event(new Presensia($dataSend));
         return back();
     }
     public function lihat_presensi($idk, $role)

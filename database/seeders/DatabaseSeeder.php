@@ -14,10 +14,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         DB::table('ket')->insert([
-            ['ket' => 'Present'],
-            ['ket' => 'Late'],
-            ['ket' => 'Excused'],
-            ['ket' => 'Absent']
+            ['ket' => 'Hadir'],
+            ['ket' => 'Sakit'],
+            ['ket' => 'Ijin'],
+            ['ket' => 'Absen']
         ]);
 
         DB::table('roles')->insert([
