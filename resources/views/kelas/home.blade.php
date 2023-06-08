@@ -5,6 +5,7 @@
         {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
         {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"> --}}
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
         {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.material.min.css"> --}}
         {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/4.0.0/material-components-web.min.css"> --}}
 
@@ -27,76 +28,133 @@
                 <!-- Tab Contents -->
                 <div id="tab-contents">
                     <div id="first" class="p-4 ">
-                        Buat Presensi
-                        <form action="{{ route('buatpresensi.store') }}" method="post" class="form-control">
+
+                        <form action="{{ route('buatpresensi.store') }}" method="post" class="form-control hidden"
+                            id="formbuat">
                             @csrf
-                            <div>
-                                <label for="tanggal">Tanggal</label>
-                                <input type="date" id="tanggal" name="mulai" value="" required>
-                            </div>
-                            <div class="form-group">
+                            <div class="grid place-items-center">
 
-                                <label for="timemulai">Dimulai</label>
-                                <input type="time" id="timemulai" name="jammulai" value="" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="timeakhir">Diakhiri</label>
-                                <input type="time" id="timeakhir" name="jamakhir" value="" required>
-                            </div>
-                            <div class="m-2">
-                                <label for="message"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi
-                                    Presensi</label>
-                                <textarea id="message" rows="3" name="ket"
-                                    class="block p-2.5 w-75 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Yang Anda pikirkan..."></textarea>
+                                <div
+                                    class="w-full max-w-lg  p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 ">
+                                    <form class="space-y-6" action="#">
+                                        <h5 class="text-xl font-medium text-gray-900 dark:text-white m-3">Buat Presensi
+                                            Baru
+                                        </h5>
+                                        <div>
+                                            <label for="tanggal"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal</label>
 
-                            </div>
+                                            <div class="relative max-w-sm">
+                                                <div
+                                                    class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                                    <svg aria-hidden="true"
+                                                        class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                                        fill="currentColor" viewBox="0 0 20 20"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd"
+                                                            d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>
+                                                </div>
+                                                <input datepicker type="date" id="tanggal" name="mulai"
+                                                    value="" required
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    placeholder="Tanggal">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="timemulai"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dimulai</label>
+                                            <input type="time" id="timemulai" name="jammulai" value=""
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/5 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                required>
+                                        </div>
+                                        <div>
+                                            <label for="timeakhir"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diakhiri</label>
+                                            <input type="time" id="timeakhir" name="jamakhir" value=""
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/5 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                required>
+                                        </div>
+                                        <div>
+                                            <label for="message"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
+                                            <textarea id="message" rows="3" required name="ket"
+                                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="Yang Anda pikirkan..."></textarea>
+                                        </div>
+                                        <div>
 
-                            <div>
+                                            <label class="relative inline-flex items-center cursor-pointer m-3 ">
+                                                <input type="checkbox" id="toggle" value="true"
+                                                    class="sr-only peer" name="ulangi">
+                                                <div
+                                                    class=" w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                                                </div>
+                                                <div>
+                                                    <span
+                                                        class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 ">Ulangi?</span>
 
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="toggle" value="true" class="sr-only peer"
-                                        name="ulangi">
-                                    <div
-                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-                                    </div>
-                                    <div>
-                                        <span
-                                            class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 ">Ulangi?</span>
+                                                </div>
 
-                                    </div>
+                                            </label>
 
-                                </label>
+                                            <div id="textDiv" class="hidden">
+                                                <div>
+                                                    <input type="radio" name="setiap" id="hari"
+                                                        class="radio radio-info" value="hari" /><label
+                                                        for="hari">Setiap Hari</label>
 
-                                <div id="textDiv" class="hidden">
-                                    <div>
-                                        <input type="radio" name="setiap" id="hari" class="radio radio-info"
-                                            value="hari" /><label for="hari">Setiap Hari</label>
+                                                </div>
+                                                <div>
+                                                    <input type="radio" id="minggu" name="setiap"
+                                                        class="radio radio-info" value="minggu" /><label
+                                                        for="minggu">Setiap Minggu</label>
 
-                                    </div>
-                                    <div>
-                                        <input type="radio" id="minggu" name="setiap" class="radio radio-info"
-                                            value="minggu" /><label for="minggu">Setiap Minggu</label>
-
-                                    </div>
-                                    <div>
-                                        <input type="radio" name="setiap" id="bulan" class="radio radio-info"
-                                            value="bulan" /><label for="bulan">Setiap Bulan</label>
-                                    </div>
+                                                </div>
+                                                <div>
+                                                    <input type="radio" name="setiap" id="bulan"
+                                                        class="radio radio-info" value="bulan" /><label
+                                                        for="bulan">Setiap Bulan</label>
+                                                </div>
+                                            </div>
+                                            <div class="hidden" id="kalihari"><label for="jumlah">Sampai
+                                                </label><input type="number" name="jumlah" id="jumlah"
+                                                    value="1" min="1" max="365" width="10px"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-1/5 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <label for="jumlah"> kali</label>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="idkelas" value="{{ $idk }}">
+                                        {{-- <button type="submit">Kirim</button> --}}
+                                        <input type="submit" class="btn btn-primary" value="Buat">
+                                    </form>
                                 </div>
-                                <div class="hidden" id="kalihari"><label for="jumlah">Sampai </label><input
-                                        type="number" name="jumlah" id="jumlah" value="1" min="1"
-                                        max="365" width="10px">
-                                    <label for="jumlah"> kali</label>
-                                </div>
+
+
+
+
+
                             </div>
-                            <div>
-                                <input type="hidden" name="idkelas" value="{{ $idk }}">
-                                {{-- <button type="submit">Kirim</button> --}}
-                                <input type="submit" class="btn btn-primary" value="Buat">
-                            </div>
+
+
+
                         </form>
+                        <div class="container w-4/5 mx-24">
+                            <label class="relative inline-flex items-center cursor-pointer m-3 ">
+                                <input type="checkbox" id="tambah" value="true" class="sr-only peer"
+                                    name="ulangi">
+                                <div
+                                    class=" w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                                </div>
+                                <div>
+                                    <span
+                                        class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 ">Tambah?</span>
+
+                                </div>
+
+                            </label>
+                        </div>
                         <div class="container lg:flex lg:flex-col lg:items-center lg:justify-center ">
                             <article class="flex flex-col items-center justify-center prose my-3">
                                 <h2 class="h1">Daftar Presensi Anda ..⏳</h2>
@@ -268,6 +326,7 @@
 
     <script>
         $(document).ready(function() {
+
             // Inisialisasi DataTables pada tabel
             $('#tabelabsen').DataTable({
                 buttons: ['copy', 'csv', 'print', 'excel', 'pdf', 'colvis'],
@@ -378,6 +437,16 @@
     </script>
 
     <script>
+        const tambah = document.getElementById("tambah");
+        const formbuat = document.getElementById("formbuat");
+
+        tambah.addEventListener("click", () => {
+            if (tambah.checked) {
+                formbuat.style.display = "block";
+            } else {
+                formbuat.style.display = "none";
+            }
+        });
         const toggle = document.getElementById("toggle");
         const text = document.getElementById("textDiv");
         const kali = document.getElementById("kalihari");
@@ -537,4 +606,6 @@
         })
         let defaultTab = document.querySelector(".default-tab");
         defaultTab.click();
+        var element = document.querySelector(".trix-editor")
+        element.editor // is a Trix.Editor instance
     </script>
