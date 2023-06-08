@@ -16,9 +16,24 @@ use Illuminate\Support\Facades\Auth;
 class PresensiController extends Controller
 {
     //
-    public function lihat_laporan(Request $req)
+    public function listedit(Request $req)
     {
+        $idp = $req->pres_id;
+        $absen = ListPresensi::find($req->pres_id);
+        $absen->ket_id = $req->ket;
+        $absen->time = Carbon::now();
+        $absen->save();
         $idp = $req->id_presensi;
+        $data = ListPresensi::whereIn('presensi_id', [$idp])->orderByDesc('time')->get();
+        $murid = new Collection();
+
+
+        return back();
+    }
+    public function lihat_laporan($id)
+    {
+
+        $idp = $id;
         $data = ListPresensi::whereIn('presensi_id', [$idp])->orderByDesc('time')->get();
         $murid = new Collection();
 
