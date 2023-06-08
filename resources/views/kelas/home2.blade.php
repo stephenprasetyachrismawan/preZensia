@@ -1,5 +1,4 @@
 <x-app-layout>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"> --}}
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
@@ -199,16 +198,20 @@
                     <p
                         class="mt-5 mb-4 text-lg leading-none tracking-tight text-gray-600 md:text-3xl lg:text-4xl dark:text-white">
                         Students</p>
-                        <table id="students" class="mt-3">
+                        @foreach ($part as $par)
+                        @if ($par->roles->role == 'Teacher')
+                        @php
+                                continue;
+                                @endphp;
+                        @endif
+                        <hr class="mb-5">
+                        <table id="students" class="mt-3 mb-5 pop-del" 
+                        @if ($par->user->id==Auth::id())
+                            data-popover-target="popover-del" data-id="{{ $par->user->id }}" data-name="{{ $par->user->name }}" data-kelas="{{ $par->class_id }}"
+                        @endif
+                        >
                             <tbody>
-                                @foreach ($part as $par)
-                                @if ($par->roles->role == 'Teacher')
-                                @php
-                                        continue;
-                                        @endphp;
-                                @endif
-                                <hr class="mb-5">
-                                <tr data-popover-target="popover-del" data-id="{{ $par->user->id }}" data-name="{{ $par->user->name }}" data-kelas="{{ $par->class_id }}"class="pop-del">
+                                <tr>
                                     <td>
                                         <div class="avatar mx-3">
                                             <div
@@ -217,16 +220,16 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>{{ $par->user->name }}</td>
+                                    <td><span class="uppersize">{{ $par->user->name }}</span></td>
                                     <td>
                                         @if ($par->user->id==Auth::id())
                                             <span class="badge badge-success">You</span>
                                         @endif
                                     </td>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                        @endforeach
                 </div>
                 <div id="third" class="hidden p-4">
 
@@ -234,11 +237,49 @@
             </div>
         </div>
     </div>
-
+@include('components.unenroll-popover')
+@include('components.unenroll-modal')
 </x-app-layout>
 <script>
     $(document).ready(function() {
         $('#tabelabsen').DataTable();
+
+        $('.pop-del').hover(function(){
+            var id = $(this).data('id')
+            var kelas = $(this).data('kelas')
+            var name = $(this).data('name')
+            $('.unenroll').attr('data-id', id)
+            $('.unenroll').attr('data-kelas', kelas)
+            $('.name').text(name)
+        })
+
+        $('.unenroll').click(function(){
+            var id = $(this).data('id')
+            var kelas = $(this).data('kelas')
+            $('#accUnen').attr('data-id', id)
+            $('#accUnen').attr('data-kelas', kelas)
+        })
+
+        $('#accUnen').click(function(){
+            var id = $(this).data('id')
+            var kelas = $(this).data('kelas')
+            $.ajax({
+                url: '{{ route('classes.unenroll') }}',
+                type: 'POST',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'id': id,
+                    'kelas': kelas
+                },
+                success: function(response) {
+                    if (response.msg === 'success') {
+                        Swal.fire('Unenroll Success', '', 'success').then(function() {
+                            window.location.reload();
+                        });
+                    }
+                }
+            });
+        })
     });
     // Mendapatkan elemen <select> berdasarkan atribut name
     var selectElement = document.querySelector('select[name="tabelabsen_length"]');

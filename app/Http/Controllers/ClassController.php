@@ -27,7 +27,7 @@ class ClassController extends Controller
         $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function ($query) {
             $query->where('user_id', Auth::id());
         })->get();
-        if($kls[0]->archive==1){
+        if($kls->isEmpty() || $kls[0]->archive==1){
             return redirect()->route('classes');
         }
         $idk = $kls[0]->id;
@@ -75,6 +75,9 @@ class ClassController extends Controller
     }
     public function linkjoin($id, $kode)
     {
+        if(Kelas::where('class_code', $kode)->value('archive')==1){
+            redirect()->route('classes');
+        }
         $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function ($query) {
             $query->where('user_id', Auth::id());
         })->get();
@@ -177,6 +180,9 @@ class ClassController extends Controller
     public function check(Request $request)
     {
         $kode = $request->kodeKelas;
+        if(Kelas::where('class_code', $kode)->value('archive')){
+            return redirect()->route('classes');
+        }
         $hash = Kelas::where('class_code', $kode)->value('hashcode');
         $cek = Kelas::cekJoin($kode, Auth::id());
         if ($cek == 'noclass')
