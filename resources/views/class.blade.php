@@ -29,7 +29,7 @@
                                                 </div>
                                             </div>
                                             <a href="{{ route('classes.home', ['id' => $d[3]]) }}">
-                                                <h2 class="card-title">{{ $d[0] }}</h2>
+                                                <h2 class="card-title">{{ $d[4] }} <span class="underline underline-offset-1">{{ $d[0] }}</span></h2>
                                                 <p>Teacher :
                                                     @if ($d[1] == 1)
                                                         <span class="badge badge-success">You</span>
