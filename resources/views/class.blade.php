@@ -23,7 +23,7 @@
                                                                 data-modal-target="archive-modal"
                                                                 data-modal-toggle="archive-modal"
                                                                 type="button">Archive</button></li>
-                                                        <li><a>Analisis</a></li>
+                                                        <li><a class="analisis" href="{{ route('classes.home', ['id' => $d[3]]) }}">Analisis</a></li>
                                                         @endif</li>
                                                     </ul>
                                                 </div>
@@ -98,6 +98,10 @@
                 })
             })
 
+        })
+        localStorage.removeItem('activeTab');
+        $('.analisis').click(function(){
+            localStorage.setItem('activeTab', 'laporan-tab')
         })
     </script>
 </x-app-layout>
