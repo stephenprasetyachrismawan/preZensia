@@ -23,6 +23,7 @@
 
 
 <x-app-layout>
+    @slot('title', 'Report')
     <div class="drawer drawer-mobile ">
         <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
 

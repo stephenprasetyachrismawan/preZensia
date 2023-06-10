@@ -77,7 +77,7 @@
                 </a>
             @endif
             <br>
-            <button class="btn btn-primary" type="submit">Login</button>
+            <x-primary-button>{{ __('Login') }}</x-primary-button>    
         </div>
 
     </form>

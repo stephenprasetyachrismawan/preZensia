@@ -1,4 +1,5 @@
 <x-app-layout>
+    @slot('title', 'Class')
     <div class="m-auto my-7 grid place-items-center">
         <div class="mx-3 px-1 w-1/2 max-w-7xl bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div class="mx-5 my-5">
