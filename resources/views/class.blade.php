@@ -1,9 +1,9 @@
 <x-app-layout>
-
-    <div class="container m-auto my-7">
+    @slot('title', 'Classes')
+    <div class="container m-auto my-7 max-[640]:m-0">
         <div class="mx-3 px-1">
+            @if ($data)
             <div class="{{-- columns-3 sm:columns-1 md:columns-2 lg:columns-3 --}}grid lg:grid-cols-3 gap-4 md:grid-cols-2 sm:grid-cols-1 ">
-                @if ($data)
                     @foreach ($data as $d)
                         <div class="container justify-self-center">
                             <div class="">
@@ -23,7 +23,7 @@
                                                                 data-modal-target="archive-modal"
                                                                 data-modal-toggle="archive-modal"
                                                                 type="button">Archive</button></li>
-                                                        <li><a>Analisis</a></li>
+                                                        <li><a class="analisis" href="{{ route('classes.home', ['id' => $d[3]]) }}">Analisis</a></li>
                                                         @endif</li>
                                                     </ul>
                                                 </div>
@@ -56,8 +56,18 @@
                             <br>
                         </div>
                     @endforeach
+                </div>
+                @else
+                <div class="flex justify-center">
+                    <x-emptyStateHome></x-emptyStateHome>
+                </div>
+                <div class="flex justify-end mt-10 md:mt-10 max-[640]:mt-0">
+                    <div class="flex flex-col">
+                        <span>No Class? Create or Join Here!</span>
+                        <x-arrowState></x-arrowState>
+                    </div>
+                </div>
                 @endif
-            </div>
         </div>
     </div>
     @include('components.classes-dial')
@@ -88,6 +98,10 @@
                 })
             })
 
+        })
+        localStorage.removeItem('activeTab');
+        $('.analisis').click(function(){
+            localStorage.setItem('activeTab', 'laporan-tab')
         })
     </script>
 </x-app-layout>

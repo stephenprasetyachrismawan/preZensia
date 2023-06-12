@@ -1,8 +1,9 @@
 <x-app-layout>
-    <div class="container m-auto my-7">
+    @slot('title', 'Archive')
+    <div class="container m-auto my-7 max-[640]:m-0">
         <div class="mx-3 px-1">
+            @if($data)
             <div class="{{-- columns-3 sm:columns-1 md:columns-2 lg:columns-3 --}}grid lg:grid-cols-3 gap-4 md:grid-cols-2 sm:grid-cols-1 ">
-                @if($data)
                 @foreach ($data as $d)
                 <div class="container justify-self-center">
                     <div class="">
@@ -17,7 +18,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <h2 class="card-title">{{ $d[0] }}</h2>
+                                    <h2 class="card-title">{{ $d[4] }} <span class="underline underline-offset-1">{{ $d[0] }}</h2>
                                     <p>Teacher :
                                         @if ($d[1] == 1)
                                         <span class="badge badge-success">You</span>
@@ -27,7 +28,7 @@
                                     </p>
                                     @if ($d[1]==1)    
                                     <div class="card-actions justify-end">
-                                        <button id='unarchive' class="btn btn-primary" data-id='{{ $d[3] }}' data-modal-target="unarchive-modal" data-modal-toggle="unarchive-modal" type="button">Unarchive</button>
+                                        <button class="unarchive btn btn-primary" data-id='{{ $d[3] }}' data-modal-target="unarchive-modal" data-modal-toggle="unarchive-modal" type="button">Unarchive</button>
                                     </div>
                                     @else
                                     <div class="card-actions justify-end">
@@ -42,8 +43,18 @@
                     <br>
                 </div>
                 @endforeach
-                @endif
             </div>
+            @else
+            <div class="flex justify-center">
+                <x-emptyStateArchive class=""></x-emptyStateArchive>
+            </div>
+            <div class="flex justify-end mt-10 md:mt-10 max-[640]:mt-0">
+                <div class="flex flex-col">
+                    <span>No Class? Create or Join Here!</span>
+                    <x-arrowState></x-arrowState>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
     @include('components.unarchive-modal')
@@ -52,7 +63,7 @@
 
     <script>
         $(document).ready(function() {
-            $('#unarchive').click(function() {
+            $('.unarchive').click(function() {
                 var id = $(this).data('id')
                 $('#accUnarch').attr('data-id', id);
             })

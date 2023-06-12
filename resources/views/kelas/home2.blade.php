@@ -1,4 +1,5 @@
 <x-app-layout>
+    @slot('title', 'Class')
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"> --}}
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
@@ -10,27 +11,27 @@
     <div class="container">
         <div class="rounded border grid w-3/4 mx-auto mt-4">
             <!-- Tabs -->
-            <div class="justify-self-center ">
-                <ul id="tabs" class="inline-flex pt-2 px-1 w-full border-b">
-                    <li
-                        class="bg-white px-4 text-gray-800 font-semibold py-2 rounded-t border-t border-r border-l -mb-px">
-                        <a id="" href="#first">Presensi</a>
+            <div class="justify-self-center mb-4 border-b">
+                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+                    <li class="mr-2" role="presentation">
+                        <button class="tab-button inline-block p-4 border-b-2 rounded-t-lg" id="presensi-tab" data-tabs-target="#presensi" type="button" role="tab" aria-controls="presensi" aria-selected="false">Presensi</button>
                     </li>
-                    <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#second">Partisipan</a></li>
-
+                    <li class="mr-2" role="presentation">
+                        <button class="tab-button inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="partisipan-tab" data-tabs-target="#partisipan" type="button" role="tab" aria-controls="partisipan" aria-selected="false">Partisipan</button>
+                    </li>
                 </ul>
             </div>
 
             <!-- Tab Contents -->
-            <div id="tab-contents">
-                <div id="first" class="p-1">
+            <div id="myTabContent">
+                <div class="tab-content hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="presensi" role="tabpanel" aria-labelledby="presensi-tab">
                     <div class="container lg:flex lg:flex-col lg:items-center lg:justify-center">
                         <article class="flex flex-col items-center justify-center prose my-3">
                             <h2 class="h1">Daftar Presensi Anda ..⏳</h2>
                         </article>
 
-                        <div class="relative overflow-x-auto flex my-3">
-                            <div class="">
+                        <div class="relative overflow-x-auto flex my-3 w-4/5">
+                            <div class="w-full table-auto">
                                 <table id="tabelabsen" class="stripe" style="width:100%">
                                     <!-- head -->
                                     <thead>
@@ -167,7 +168,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="second" class="hidden p-4">
+                <div class="tab-content hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="partisipan" role="tabpanel" aria-labelledby="partisipan-tab">
                     <p
                         class="mb-4 text-lg leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
                         Teacher</p>
@@ -231,16 +232,60 @@
                         </table>
                         @endforeach
                 </div>
-                <div id="third" class="hidden p-4">
-
-                </div>
             </div>
         </div>
     </div>
 @include('components.unenroll-popover')
 @include('components.unenroll-modal')
-</x-app-layout>
 <script>
+    // Get all tab buttons
+    const tabButtons = document.querySelectorAll('.tab-button');
+
+    // Add event listener to each tab button
+    tabButtons.forEach((button) => {
+        button.addEventListener('click', function () {
+            // Remove the 'border-transparent' class from all tab buttons
+            tabButtons.forEach((btn) => {
+                btn.classList.add('border-transparent');
+            });
+
+            // Remove the 'selected' class from all tab buttons
+            tabButtons.forEach((btn) => {
+                btn.setAttribute('aria-selected', 'false');
+            });
+
+            // Add the 'border-transparent' class and 'selected' class to the clicked tab button
+            this.classList.remove('border-transparent');
+            this.setAttribute('aria-selected', 'true');
+
+            // Store the ID of the active tab in localStorage
+            localStorage.setItem('activeTab', this.id);
+
+            // Show the corresponding tab content
+            const tabContentId = this.getAttribute('data-tabs-target');
+            const tabContent = document.querySelector(tabContentId);
+            if (tabContent) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach((content) => {
+                content.style.display = 'none';
+            });
+
+            // Show the selected tab content
+            tabContent.style.display = 'block';
+            }
+        });
+    });
+
+    // Retrieve the active tab ID from localStorage
+    const activeTab = localStorage.getItem('activeTab');
+
+    // If there's an active tab, click on it to trigger the event
+    if (activeTab) {
+        const activeTabButton = document.getElementById(activeTab);
+        if (activeTabButton) {
+            activeTabButton.click();
+        }
+    }
     $(document).ready(function() {
         $('#tabelabsen').DataTable();
 
@@ -287,36 +332,4 @@
     // Mengatur properti style dengan nilai width:50px
     selectElement.style.width = '50px';
 </script>
-<script>
-    let tabsContainer = document.querySelector("#tabs");
-
-    let tabTogglers = tabsContainer.querySelectorAll("#tabs a");
-
-    console.log(tabTogglers);
-
-    tabTogglers.forEach(function(toggler) {
-        toggler.addEventListener("click", function(e) {
-            e.preventDefault();
-
-            let tabName = this.getAttribute("href");
-
-            let tabContents = document.querySelector("#tab-contents");
-
-            for (let i = 0; i < tabContents.children.length; i++) {
-
-                tabTogglers[i].parentElement.classList.remove("border-t", "border-r", "border-l",
-                    "-mb-px", "bg-white");
-                tabContents.children[i].classList.remove("hidden");
-                if ("#" + tabContents.children[i].id === tabName) {
-                    continue;
-                }
-                tabContents.children[i].classList.add("hidden");
-
-            }
-            e.target.parentElement.classList.add("border-t", "border-r", "border-l", "-mb-px",
-                "bg-white");
-        });
-    });
-    let defaultTab = document.querySelector("#default-tab");
-    defaultTab.click();
-</script>
+</x-app-layout>

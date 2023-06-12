@@ -1,5 +1,5 @@
     <x-app-layout>
-
+        @slot('title', 'Class')
         {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
         {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"> --}}
         {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
@@ -11,24 +11,39 @@
 
         <div class="container">
             <div class="rounded border grid w-3/4 mx-auto mt-4">
+                
+                
+                
                 <!-- Tabs -->
-                <div class="justify-self-center ">
-                    <ul id="tabs" class="inline-flex pt-2 px-1 w-full border-b">
-                        <li
-                            class="bg-white px-4 text-gray-800 font-semibold py-2 rounded-t border-t border-r border-l -mb-px">
-                            <a id="default-tab" href="#first">Presensi</a>
+                <div class="justify-self-center mb-4 border-b">
+                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+                        <li class="mr-2" role="presentation">
+                            <button class="tab-button inline-block p-4 border-b-2 rounded-t-lg" id="presensi-tab" data-tabs-target="#presensi" type="button" role="tab" aria-controls="presensi" aria-selected="false">Presensi</button>
                         </li>
-                        <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#second"
-                                class="tab2">Partisipan</a></li>
-                        <li class="px-4 text-gray-800 font-semibold py-2 rounded-t"><a href="#third"
-                                class="tab3">Laporan</a></li>
+                        <li class="mr-2" role="presentation">
+                            <button class="tab-button inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="partisipan-tab" data-tabs-target="#partisipan" type="button" role="tab" aria-controls="partisipan" aria-selected="false">Partisipan</button>
+                        </li>
+                        <li class="mr-2" role="presentation">
+                            <button class="tab-button inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="laporan-tab" data-tabs-target="#laporan" type="button" role="tab" aria-controls="laporan" aria-selected="false">Laporan</button>
+                        </li>
                     </ul>
                 </div>
-
                 <!-- Tab Contents -->
-                <div id="tab-contents">
-                    <div id="first" class="p-4 ">
-
+                <div id="myTabContent">
+                    <div class="tab-content hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="presensi" role="tabpanel" aria-labelledby="presensi-tab">
+                        <div class="container w-4/5 mx-24">
+                            <label class="relative inline-flex items-center cursor-pointer m-3 ">
+                                <input type="checkbox" id="tambah" value="true" class="sr-only peer"
+                                    name="ulangi">
+                                <div
+                                    class=" w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                                </div>
+                                <div>
+                                    <span
+                                        class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 ">Tambah?</span>
+                                </div>
+                            </label>
+                        </div>
                         <form action="{{ route('buatpresensi.store') }}" method="post" class="form-control hidden"
                             id="formbuat">
                             @csrf
@@ -66,14 +81,14 @@
                                             <label for="timemulai"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dimulai</label>
                                             <input type="time" id="timemulai" name="jammulai" value=""
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/5 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 required>
                                         </div>
                                         <div>
                                             <label for="timeakhir"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diakhiri</label>
                                             <input type="time" id="timeakhir" name="jamakhir" value=""
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/5 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 required>
                                         </div>
                                         <div>
@@ -130,31 +145,8 @@
                                         <input type="submit" class="btn btn-primary" value="Buat">
                                     </form>
                                 </div>
-
-
-
-
-
                             </div>
-
-
-
                         </form>
-                        <div class="container w-4/5 mx-24">
-                            <label class="relative inline-flex items-center cursor-pointer m-3 ">
-                                <input type="checkbox" id="tambah" value="true" class="sr-only peer"
-                                    name="ulangi">
-                                <div
-                                    class=" w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-                                </div>
-                                <div>
-                                    <span
-                                        class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 ">Tambah?</span>
-
-                                </div>
-
-                            </label>
-                        </div>
                         <div class="container lg:flex lg:flex-col lg:items-center lg:justify-center ">
                             <article class="flex flex-col items-center justify-center prose my-3">
                                 <h2 class="h1">Daftar Presensi Anda ..⏳</h2>
@@ -218,8 +210,6 @@
                                                                         class="fa-solid fa-arrows-rotate fa-spin"></i></i>
                                                                 </button>
                                                             </form>
-
-
                                                             <a href="{{ route('laporan', $li->id) }}"><button
                                                                     type="submit"
                                                                     class="btn btn-primary m-1 btnhapus">
@@ -228,12 +218,6 @@
 
                                                                 </button>
                                                             </a>
-
-
-
-
-
-
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -244,7 +228,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="second" class="hidden p-4">
+                    <div class="tab-content hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="partisipan" role="tabpanel" aria-labelledby="partisipan-tab">
                         <p
                             class="mb-4 text-lg leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
                             Teacher</p>
@@ -306,9 +290,8 @@
                             </table>
                         @endforeach
                     </div>
-                    <div id="third" class="hidden p-4 t3 tab w-max">
+                    <div class="tab-content hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="laporan" role="tabpanel" aria-labelledby="laporan-tab">
                         <div id="chart" class=""></div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -625,11 +608,55 @@
                 });
 
         });
-        $('.tab1').click(function(event) {
-            $(this).toggleClass('default-tab');
-        })
-        let defaultTab = document.querySelector(".default-tab");
-        defaultTab.click();
+        // Get all tab buttons
+        const tabButtons = document.querySelectorAll('.tab-button');
+
+        // Add event listener to each tab button
+        tabButtons.forEach((button) => {
+            button.addEventListener('click', function () {
+                // Remove the 'border-transparent' class from all tab buttons
+                tabButtons.forEach((btn) => {
+                    btn.classList.add('border-transparent');
+                });
+
+                // Remove the 'selected' class from all tab buttons
+                tabButtons.forEach((btn) => {
+                    btn.setAttribute('aria-selected', 'false');
+                });
+
+                // Add the 'border-transparent' class and 'selected' class to the clicked tab button
+                this.classList.remove('border-transparent');
+                this.setAttribute('aria-selected', 'true');
+
+                // Store the ID of the active tab in localStorage
+                localStorage.setItem('activeTab', this.id);
+
+                // Show the corresponding tab content
+                const tabContentId = this.getAttribute('data-tabs-target');
+                const tabContent = document.querySelector(tabContentId);
+                if (tabContent) {
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach((content) => {
+                    content.style.display = 'none';
+                });
+
+                // Show the selected tab content
+                tabContent.style.display = 'block';
+                }
+            });
+        });
+
+        // Retrieve the active tab ID from localStorage
+        const activeTab = localStorage.getItem('activeTab');
+
+        // If there's an active tab, click on it to trigger the event
+        if (activeTab) {
+            const activeTabButton = document.getElementById(activeTab);
+            if (activeTabButton) {
+                activeTabButton.click();
+            }
+        }
+
         var element = document.querySelector(".trix-editor")
         element.editor // is a Trix.Editor instance
     </script>
