@@ -24,8 +24,7 @@ class PresensiController extends Controller
         $absen->time = Carbon::now();
         $absen->save();
         $idp = $req->id_presensi;
-        $data = ListPresensi::whereIn('presensi_id', [$idp])->orderByDesc('time')->get();
-        $murid = new Collection();
+
 
 
         return back();

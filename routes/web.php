@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormPresensi;
-use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\RealtimeLaporan;
 use App\Http\Controllers\GoogleController;
@@ -59,7 +59,7 @@ Route::get(
     }
 )->middleware(['auth', 'verified']);
 
-Route::post('ajax-resp', [AjaxController::class, 'chartReq'])->name('chartReq');
+Route::post('ajax-resp', [LaporanController::class, 'chartReq'])->name('chartReq');
 
 
 
