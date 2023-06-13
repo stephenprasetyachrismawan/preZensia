@@ -1,5 +1,5 @@
     <x-app-layout>
-        @slot('title', 'Class')
+        @slot('title', $part[0]->kelas->class_name.' - '.$part[0]->kelas->class_subject)
         {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
         {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"> --}}
         {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
@@ -11,9 +11,23 @@
 
         <div class="container">
             <div class="rounded border grid w-3/4 mx-auto mt-4">
-                
-                
-                
+                <div id="infoKelas" data-accordion="collapse" data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
+                    <h2 id="infoKelasHead">
+                    <button type="button" class="flex items-left justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800" data-accordion-target="#infoKelasBody" aria-expanded="false" aria-controls="infoKelasBody">
+                        <span class="flex items-center"><svg class="w-5 h-5 mr-2 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
+                            Info Kelas</span>
+                        <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"></path></svg>
+                    </button>
+                    </h2>
+                    <div id="infoKelasBody" class="hidden" aria-labelledby="infoKelasHead">
+                    <div class="p-5 bg-white border border-b-0 border-white-200 dark:border-white-700 dark:bg-white-900">
+                        <x-info-kelas class="kode" data-kode="{{ $kls[0]->class_code }}" data-hashkode="{{ $kls[0]->hashcode }}">{{ __('Kode Kelas') }}@slot('text', $kls[0]->class_code)</x-info-kelas>
+                        <x-info-kelas>{{ __('Nama Kelas') }}@slot('text', $kls[0]->class_name)</x-info-kelas>
+                        <x-info-kelas>{{ __('Subyek Kelas') }}@slot('text', $kls[0]->class_subject)</x-info-kelas>
+                        <x-info-kelas>{{ __('Deskripsi Kelas') }}@slot('text', $kls[0]->class_desc)</x-info-kelas>
+                    </div>
+                    </div>
+                </div>
                 <!-- Tabs -->
                 <div class="justify-self-center mb-4 border-b">
                     <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
@@ -305,10 +319,83 @@
         @include('components.update-modal')
         @include('components.unenroll-popover')
         @include('components.unenroll-modal')
+        @include('components.fullScreen-modal')
     </x-app-layout>
 
     <script>
         $(document).ready(function() {
+
+            var kode = $('.kode').data('kode')
+            var hashkode = $('.kode').data('hashkode')
+            var link = 'https://prezensia.visit-indonesia.id/c/' + hashkode + '/' + kode + '/' 
+            
+            $('.kodeF').text(kode)
+            var copyK = document.getElementById('copyK')
+            var copyL = document.getElementById('copyL')
+
+            copyK.addEventListener('click', function() {
+            navigator.clipboard.writeText(kode)
+                .then(function() {
+                var toastContainer = document.getElementById('toast-container');
+                var toastTemplate = `
+                    <div id="toast-success" class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+                    <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Check icon</span>
+                    </div>
+                    <div class="ml-3 text-sm font-normal">Code Copied</div>
+                    <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
+                        <span class="sr-only">Close</span>
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    </div>`;
+
+                toastContainer.insertAdjacentHTML('beforeend', toastTemplate);
+
+                setTimeout(function() {
+                    toastContainer.innerHTML = '';
+                }, 3000);
+                })
+                .catch(function(error) {
+                console.error("Error copying text: ", error);
+                });
+            });
+
+            copyL.addEventListener('click', function() {
+            navigator.clipboard.writeText(link)
+                .then(function() {
+                var toastContainer = document.getElementById('toast-container');
+                var toastTemplate = `
+                    <div id="toast-success" class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+                    <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Check icon</span>
+                    </div>
+                    <div class="ml-3 text-sm font-normal">Link Copied</div>
+                    <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
+                        <span class="sr-only">Close</span>
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    </div>`;
+
+                toastContainer.insertAdjacentHTML('beforeend', toastTemplate);
+
+                setTimeout(function() {
+                    toastContainer.innerHTML = '';
+                }, 3000);
+                })
+                .catch(function(error) {
+                console.error("Error copying text: ", error);
+                });
+            });
 
             // Inisialisasi DataTables pada tabel
             $('#tabelabsen').DataTable({
