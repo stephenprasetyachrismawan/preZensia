@@ -28,10 +28,8 @@ Route::get(
     }
 )->middleware(['auth', 'verified']);
 
-Route::get('/classes', [ClassController::class, 'getkelas'])->middleware(['auth', 'verified'])->name('classes');
-
 Route::middleware('auth')->group(function () {
-    Route::controller(ClassController::class)->prefix('classes')->group(function () {
+    Route::controller(ClassController::class)->prefix('c')->group(function () {
         Route::get('create', 'create')->name('classes.create');
         Route::post('create', 'store')->name('classes.create.store');
         Route::get('join', 'join')->name('classes.join');

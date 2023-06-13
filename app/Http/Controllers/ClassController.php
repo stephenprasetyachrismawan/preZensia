@@ -117,6 +117,7 @@ class ClassController extends Controller
         $nama_kelas = [];
         $guru = [];
         $hashcode = [];
+        $id_kelas = [];
         //dd($kelas);
         if (empty($kelas)) {
             return view('class', compact('data'));
@@ -125,6 +126,7 @@ class ClassController extends Controller
             if ($ke->isEmpty()) {
                 continue;
             }
+            $id_kelas[] = $ke[0]->id;
             $subjek_kelas[] = $ke[0]->class_subject;
             $nama_kelas[] = $ke[0]->class_name;
             $listguru = ListRole::with('user')->whereIn('role_id', ['1'])->whereIn('class_id', [$ke[0]->id])->get();
@@ -142,7 +144,7 @@ class ClassController extends Controller
         // dd($userkelas);
         $data = [];
         for ($i = 0; $i < count($nama_kelas); $i++) {
-            $data[] = [$nama_kelas[$i], $rolekelas[$i], $guru[$i], $hashcode[$i], $subjek_kelas[$i]];
+            $data[] = [$nama_kelas[$i], $rolekelas[$i], $guru[$i], $hashcode[$i], $subjek_kelas[$i], $id_kelas[$i]];
         }
         return view('class', compact('data'));
     }
@@ -235,6 +237,7 @@ class ClassController extends Controller
         $nama_kelas = [];
         $guru = [];
         $hashcode = [];
+        $id_kelas = [];
         //dd($kelas);
         if (empty($kelas)) {
             return view('archive', compact('data'));
@@ -243,6 +246,7 @@ class ClassController extends Controller
             if ($ke->isEmpty()) {
                 continue;
             }
+            $id_kelas[] = $ke[0]->id;
             $subjek_kelas[] = $ke[0]->class_subject;
             $nama_kelas[] = $ke[0]->class_name;
             $listguru = ListRole::with('user')->whereIn('role_id', ['1'])->whereIn('class_id', [$ke[0]->id])->get();
@@ -260,7 +264,7 @@ class ClassController extends Controller
         // dd($userkelas);
         $data = [];
         for ($i = 0; $i < count($nama_kelas); $i++) {
-            $data[] = [$nama_kelas[$i], $rolekelas[$i], $guru[$i], $hashcode[$i], $subjek_kelas[$i]];
+            $data[] = [$nama_kelas[$i], $rolekelas[$i], $guru[$i], $hashcode[$i], $subjek_kelas[$i], $id_kelas[$i]];
         }
         return view('archive', compact('data'));
     }
