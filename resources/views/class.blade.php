@@ -1,5 +1,5 @@
 <x-app-layout>
-    @slot('title', 'Classes')
+    @slot('title', 'Dashboard')
     @slot('header', 'Classes')
     <div class="container m-auto my-7 max-[640]:m-0">
         <div class="mx-3 px-1">
@@ -98,7 +98,7 @@
                     success: function(response) {
                         if (response.msg == 'success') {
                             Swal.fire('Archive Success', '', 'success').then(function() {
-                                window.location.assign('/classes');
+                                window.location.assign('/dashboard');
                             });
                         }
                     }
