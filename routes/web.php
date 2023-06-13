@@ -21,6 +21,12 @@ use App\Http\Controllers\PresensiController;
 */
 
 // ------------------------------------------------------------------
+Route::get(
+    'cobasidebar',
+    function () {
+        return view('sidebar');
+    }
+)->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::controller(ClassController::class)->prefix('c')->group(function () {

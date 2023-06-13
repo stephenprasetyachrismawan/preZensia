@@ -119,11 +119,11 @@ class ClassController extends Controller
         $hashcode = [];
         $id_kelas = [];
         //dd($kelas);
-        if(empty($kelas)){
+        if (empty($kelas)) {
             return view('class', compact('data'));
         }
         foreach ($kelas as $ke) {
-            if($ke->isEmpty()){
+            if ($ke->isEmpty()) {
                 continue;
             }
             $id_kelas[] = $ke[0]->id;
@@ -136,7 +136,7 @@ class ClassController extends Controller
         }
         $rolekelas = [];
         foreach ($list as $li) {
-            if($li->kelas->archive == 1){
+            if ($li->kelas->archive == 1) {
                 continue;
             }
             $rolekelas[] = $li->role_id;
@@ -206,21 +206,24 @@ class ClassController extends Controller
         }
     }
 
-    public function archive(Request $request){
+    public function archive(Request $request)
+    {
         $hashcode = $request->id;
-        $cek = Kelas::where('hashcode', $hashcode)->update(['archive'=>1]);
-        if($cek) $data['msg'] = 'success';
+        $cek = Kelas::where('hashcode', $hashcode)->update(['archive' => 1]);
+        if ($cek) $data['msg'] = 'success';
         return response()->json($data);
     }
 
-    public function unarchive(Request $request){
+    public function unarchive(Request $request)
+    {
         $hashcode = $request->id;
-        $cek = Kelas::where('hashcode', $hashcode)->update(['archive'=>0]);
-        if($cek) $data['msg'] = 'success';
+        $cek = Kelas::where('hashcode', $hashcode)->update(['archive' => 0]);
+        if ($cek) $data['msg'] = 'success';
         return response()->json($data);
     }
 
-    public function get_archive(){
+    public function get_archive()
+    {
         $list = ListRole::whereIn('user_id', [Auth::user()->id])->get();
         $kelas = [];
         $data = [];
@@ -236,11 +239,11 @@ class ClassController extends Controller
         $hashcode = [];
         $id_kelas = [];
         //dd($kelas);
-        if(empty($kelas)){
+        if (empty($kelas)) {
             return view('archive', compact('data'));
         }
         foreach ($kelas as $ke) {
-            if($ke->isEmpty()){
+            if ($ke->isEmpty()) {
                 continue;
             }
             $id_kelas[] = $ke[0]->id;
@@ -253,7 +256,7 @@ class ClassController extends Controller
         }
         $rolekelas = [];
         foreach ($list as $li) {
-            if($li->kelas->archive == 0){
+            if ($li->kelas->archive == 0) {
                 continue;
             }
             $rolekelas[] = $li->role_id;
@@ -266,11 +269,12 @@ class ClassController extends Controller
         return view('archive', compact('data'));
     }
 
-    public function unenroll(Request $request){
+    public function unenroll(Request $request)
+    {
         $id = $request->id;
         $kelas = $request->kelas;
         $cek = ListRole::where('user_id', $id)->where('class_id', $kelas)->delete();
-        if($cek) $data['msg'] = 'success';
+        if ($cek) $data['msg'] = 'success';
         return response()->json($data);
     }
 }
