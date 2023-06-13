@@ -1,5 +1,6 @@
 <x-app-layout>
     @slot('title', 'Archive')
+    @slot('header', 'Archived Classes')
     <div class="container m-auto my-7 max-[640]:m-0">
         <div class="mx-3 px-1">
             @if($data)
@@ -14,7 +15,12 @@
                                         <div class="dropdown dropdown-end">
                                             <label tabindex="0" class="btn m-1"><i class="fa-solid fa-ellipsis-vertical p-0"></i></label>
                                             <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-
+                                                @if ($d[1] == 1)
+                                                <li><button class="unarchive" data-id='{{ $d[3] }}' data-modal-target="unarchive-modal" data-modal-toggle="unarchive-modal" type="button">Unarchive</button></li>
+                                                @else   
+                                                <li><button type="button" class="unenroll" data-modal-target="unenroll-modal" data-modal-toggle="unenroll-modal" data-id="{{ Auth::id() }}"
+                                                    data-kelas="{{ $d[5] }}">Unenroll</button></li>
+                                                @endif
                                             </ul>
                                         </div>
                                     </div>
@@ -51,7 +57,9 @@
             <div class="flex justify-end mt-10 md:mt-10 max-[640]:mt-0">
                 <div class="flex flex-col">
                     <span>No Class? Create or Join Here!</span>
-                    <x-arrowState></x-arrowState>
+                    <div class="flex justify-end">
+                        <x-arrowState></x-arrowState>
+                    </div>
                 </div>
             </div>
             @endif
@@ -60,6 +68,7 @@
     @include('components.unarchive-modal')
     @include('components.classes-dial')
     @include('components.join-modal')
+    @include('components.unenroll-modal')
 
     <script>
         $(document).ready(function() {
@@ -85,6 +94,34 @@
                     }
                 })
             })
+        })
+
+        $('.unenroll').click(function(){
+            var id = $(this).data('id')
+            var kelas = $(this).data('kelas')
+            $('#accUnen').attr('data-id', id)
+            $('#accUnen').attr('data-kelas', kelas)
+        })
+
+        $('#accUnen').click(function(){
+            var id = $(this).data('id')
+            var kelas = $(this).data('kelas')
+            $.ajax({
+                url: '{{ route('classes.unenroll') }}',
+                type: 'POST',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'id': id,
+                    'kelas': kelas
+                },
+                success: function(response) {
+                    if (response.msg === 'success') {
+                        Swal.fire('Unenroll Success', '', 'success').then(function() {
+                            window.location.reload();
+                        });
+                    }
+                }
+            });
         })
 
     </script>
