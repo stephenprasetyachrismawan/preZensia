@@ -21,6 +21,12 @@ use App\Http\Controllers\PresensiController;
 */
 
 // ------------------------------------------------------------------
+Route::get(
+    'cobasidebar',
+    function () {
+        return view('sidebar');
+    }
+)->middleware(['auth', 'verified']);
 
 Route::get('/classes', [ClassController::class, 'getkelas'])->middleware(['auth', 'verified'])->name('classes');
 
