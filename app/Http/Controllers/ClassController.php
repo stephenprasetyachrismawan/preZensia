@@ -75,6 +75,8 @@ class ClassController extends Controller
                 }
             }
             return view('kelas.home2')->with([
+                'listklsguru' => $listklsguru,
+                'listklsmurid' => $listklsmurid,
                 'kls' => $kls,
                 'list' => $list,
                 'part' => $part,
@@ -290,10 +292,11 @@ class ClassController extends Controller
         return response()->json($data);
     }
 
-    public function del(Request $request){
+    public function del(Request $request)
+    {
         $id = $request->id;
         $cek = Kelas::find($id)->delete();
-        if($cek) $data['msg'] = 'success';
+        if ($cek) $data['msg'] = 'success';
         return response()->json($data);
     }
 }
