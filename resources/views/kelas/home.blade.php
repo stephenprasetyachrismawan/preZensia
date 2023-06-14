@@ -427,14 +427,14 @@
                                                                     <input type="hidden" name="id_presensi"
                                                                         value="{{ $li->id }}">
                                                                     <button type="submit"
-                                                                        class="btn btn-primary m-1 btnhapus">
+                                                                        class="btn btn-primary m-1">
                                                                         <i
                                                                             class="fa-solid fa-arrows-rotate fa-spin"></i></i>
                                                                     </button>
                                                                 </form>
                                                                 <a href="{{ route('laporan', $li->id) }}"><button
                                                                         type="submit"
-                                                                        class="btn btn-primary m-1 btnhapus">
+                                                                        class="btn btn-primary m-1">
                                                                         <i
                                                                             class="fa-solid fa-database fa-beat"></i></i></i>
 
@@ -475,7 +475,7 @@
                                                                     style="color: #ffffff;"></i></button>
                                                             <a href="{{ route('laporan', $li->id) }}"><button
                                                                     type="submit"
-                                                                    class="btn btn-primary m-1 btnhapus">
+                                                                    class="btn btn-primary m-1">
                                                                     <i
                                                                         class="fa-solid fa-database fa-beat"></i></i></i>
 
@@ -602,8 +602,7 @@
                 </div>
             </footer>
         </div>
-        @include('components.hapus-modal')
-
+        <x-hapus-modal>{{ __('presensi') }}</x-hapus-modal>
 
         <!-- Main modal -->
         @include('components.update-modal')
@@ -702,7 +701,6 @@
                 var id = $(this).data('id');
                 $('#dell').attr('data-id', id);
                 console.log(id);
-
             })
             $('#dell').click(function() {
                 var id = $(this).data('id');

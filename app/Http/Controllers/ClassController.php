@@ -289,4 +289,11 @@ class ClassController extends Controller
         if ($cek) $data['msg'] = 'success';
         return response()->json($data);
     }
+
+    public function del(Request $request){
+        $id = $request->id;
+        $cek = Kelas::find($id)->delete();
+        if($cek) $data['msg'] = 'success';
+        return response()->json($data);
+    }
 }

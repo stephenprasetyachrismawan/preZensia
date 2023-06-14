@@ -17,6 +17,7 @@
                                             <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                                                 @if ($d[1] == 1)
                                                 <li><button class="unarchive" data-id='{{ $d[3] }}' data-modal-target="unarchive-modal" data-modal-toggle="unarchive-modal" type="button">Unarchive</button></li>
+                                                <li><button class="btnHapus" data-id='{{ $d[5] }}' data-modal-target="hapus-modal" data-modal-toggle="hapus-modal" type="button">Hapus Kelas</button></li>
                                                 @else   
                                                 <li><button type="button" class="unenroll" data-modal-target="unenroll-modal" data-modal-toggle="unenroll-modal" data-id="{{ Auth::id() }}"
                                                     data-kelas="{{ $d[5] }}">Unenroll</button></li>
@@ -69,6 +70,7 @@
     @include('components.classes-dial')
     @include('components.join-modal')
     @include('components.unenroll-modal')
+    <x-hapus-modal>{{ __('kelas') }}</x-hapus-modal>
 
     <script>
         $(document).ready(function() {
@@ -124,5 +126,23 @@
             });
         })
 
+        $('.btnHapus').click(function(){
+            var id = $(this).data('id')
+            $.ajax({
+                url: '{{ route('classes.delete') }}',
+                type: 'POST',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'id': id,
+                },
+                success: function(response) {
+                    if (response.msg === 'success') {
+                        Swal.fire('Delete Success', '', 'success').then(function() {
+                            window.location.reload();
+                        });
+                    }
+                }
+            });
+        })
     </script>
 </x-app-layout>
