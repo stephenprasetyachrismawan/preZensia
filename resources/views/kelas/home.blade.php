@@ -152,8 +152,8 @@
             </div>
         </aside>
 
-        <div class="container">
-            <div class="rounded border grid w-3/4 mx-auto mt-4">
+        <div class="p-0 sm:ml-64">
+            <div class=" grid w-3/4 mx-auto mt-4">
                 <div id="infoKelas" data-accordion="collapse"
                     data-active-classes="bg-purple-100 dark:bg-gray-800 text-purple-600 dark:text-white">
                     <h2 id="infoKelasHead">
@@ -558,6 +558,14 @@
                     </div>
                 </div>
             </div>
+            <footer class="grow-0 bg-white rounded-lg shadow m-4 dark:bg-gray-800">
+                <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+                    <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a
+                            href="https://prezensia.visit-indonesia.id/" class="hover:underline">Prezensia™</a>. All
+                        Rights
+                        Reserved.</span>
+                </div>
+            </footer>
         </div>
         @include('components.hapus-modal')
 
