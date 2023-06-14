@@ -1,5 +1,5 @@
     <x-app-layout>
-        @slot('title', 'Class')
+        @slot('title', $kls[0]->class_name . ' - ' . $kls[0]->class_subject)
         {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
         {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"> --}}
         {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
@@ -152,330 +152,416 @@
             </div>
         </aside>
 
-        <div class="p-1 md:ml-64">
-            <div class="">
-                <div class="rounded border grid w-5/6 mx-auto mt-4">
-
-
-
-                    <!-- Tabs -->
-                    <div class="justify-self-center mb-4 border-b">
-                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab"
-                            data-tabs-toggle="#myTabContent" role="tablist">
-                            <li class="mr-2" role="presentation">
-                                <button class="tab-button inline-block p-4 border-b-2 rounded-t-lg" id="presensi-tab"
-                                    data-tabs-target="#presensi" type="button" role="tab"
-                                    aria-controls="presensi" aria-selected="false">Presensi</button>
-                            </li>
-                            <li class="mr-2" role="presentation">
-                                <button
-                                    class="tab-button inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    id="partisipan-tab" data-tabs-target="#partisipan" type="button" role="tab"
-                                    aria-controls="partisipan" aria-selected="false">Partisipan</button>
-                            </li>
-                            <li class="mr-2" role="presentation">
-                                <button
-                                    class="tab-button inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                                    id="laporan-tab" data-tabs-target="#laporan" type="button" role="tab"
-                                    aria-controls="laporan" aria-selected="false">Laporan</button>
-                            </li>
-                        </ul>
+        <div class="container">
+            <div class="rounded border grid w-3/4 mx-auto mt-4">
+                <div id="infoKelas" data-accordion="collapse"
+                    data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
+                    <h2 id="infoKelasHead">
+                        <button type="button"
+                            class="flex items-left justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800"
+                            data-accordion-target="#infoKelasBody" aria-expanded="false"
+                            aria-controls="infoKelasBody">
+                            <span class="flex items-center"><svg class="w-5 h-5 mr-2 shrink-0" fill="currentColor"
+                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                Info Kelas</span>
+                            <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"></path>
+                            </svg>
+                        </button>
+                    </h2>
+                    <div id="infoKelasBody" class="hidden" aria-labelledby="infoKelasHead">
+                        <div
+                            class="p-5 bg-white border border-b-0 border-white-200 dark:border-white-700 dark:bg-white-900">
+                            <x-info-kelas class="kode" data-kode="{{ $kls[0]->class_code }}"
+                                data-hashkode="{{ $kls[0]->hashcode }}">{{ __('Kode Kelas') }}@slot('text',
+                                $kls[0]->class_code)</x-info-kelas>
+                            <x-info-kelas>{{ __('Nama Kelas') }}@slot('text', $kls[0]->class_name)</x-info-kelas>
+                            <x-info-kelas>{{ __('Subyek Kelas') }}@slot('text', $kls[0]->class_subject)</x-info-kelas>
+                            <x-info-kelas>{{ __('Deskripsi Kelas') }}@slot('text', $kls[0]->class_desc)</x-info-kelas>
+                        </div>
                     </div>
-                    <!-- Tab Contents -->
-                    <div id="myTabContent">
-                        <div class="tab-content hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="presensi"
-                            role="tabpanel" aria-labelledby="presensi-tab">
-                            <div class="container w-4/5 mx-24">
-                                <label class="relative inline-flex items-center cursor-pointer m-3 ">
-                                    <input type="checkbox" id="tambah" value="true" class="sr-only peer"
-                                        name="ulangi">
-                                    <div
-                                        class=" w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-                                    </div>
-                                    <div>
-                                        <span
-                                            class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 ">Tambah?</span>
-                                    </div>
-                                </label>
-                            </div>
-                            <form action="{{ route('buatpresensi.store') }}" method="post"
-                                class="form-control hidden" id="formbuat">
-                                @csrf
-                                <div class="grid place-items-center">
-
-                                    <div
-                                        class="w-full max-w-lg  p-4 bg-white border border-gray-200 rounded-lg shadow md:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 ">
-                                        <form class="space-y-6" action="#">
-                                            <h5 class="text-xl font-medium text-gray-900 dark:text-white m-3">Buat
-                                                Presensi
-                                                Baru
-                                            </h5>
-                                            <div>
-                                                <label for="tanggal"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal</label>
-
-                                                <div class="relative max-w-sm">
-                                                    <div
-                                                        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                                        <svg aria-hidden="true"
-                                                            class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                                            fill="currentColor" viewBox="0 0 20 20"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path fill-rule="evenodd"
-                                                                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                                                clip-rule="evenodd"></path>
-                                                        </svg>
-                                                    </div>
-                                                    <input datepicker type="date" id="tanggal" name="mulai"
-                                                        value="" required
-                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                        placeholder="Tanggal">
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <label for="timemulai"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dimulai</label>
-                                                <input type="time" id="timemulai" name="jammulai" value=""
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                    required>
-                                            </div>
-                                            <div>
-                                                <label for="timeakhir"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diakhiri</label>
-                                                <input type="time" id="timeakhir" name="jamakhir" value=""
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                    required>
-                                            </div>
-                                            <div>
-                                                <label for="message"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
-                                                <textarea id="message" rows="3" required name="ket"
-                                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                    placeholder="Yang Anda pikirkan..."></textarea>
-                                            </div>
-                                            <div>
-
-                                                <label class="relative inline-flex items-center cursor-pointer m-3 ">
-                                                    <input type="checkbox" id="toggle" value="true"
-                                                        class="sr-only peer" name="ulangi">
-                                                    <div
-                                                        class=" w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-                                                    </div>
-                                                    <div>
-                                                        <span
-                                                            class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 ">Ulangi?</span>
-
-                                                    </div>
-
-                                                </label>
-
-                                                <div id="textDiv" class="hidden">
-                                                    <div>
-                                                        <input type="radio" name="setiap" id="hari"
-                                                            class="radio radio-info" value="hari" /><label
-                                                            for="hari">Setiap Hari</label>
-
-                                                    </div>
-                                                    <div>
-                                                        <input type="radio" id="minggu" name="setiap"
-                                                            class="radio radio-info" value="minggu" /><label
-                                                            for="minggu">Setiap Minggu</label>
-
-                                                    </div>
-                                                    <div>
-                                                        <input type="radio" name="setiap" id="bulan"
-                                                            class="radio radio-info" value="bulan" /><label
-                                                            for="bulan">Setiap Bulan</label>
-                                                    </div>
-                                                </div>
-                                                <div class="hidden" id="kalihari"><label for="jumlah">Sampai
-                                                    </label><input type="number" name="jumlah" id="jumlah"
-                                                        value="1" min="1" max="365" width="10px"
-                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-1/5 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                    <label for="jumlah"> kali</label>
-                                                </div>
-                                            </div>
-                                            <input type="hidden" name="idkelas" value="{{ $idk }}">
-                                            {{-- <button type="submit">Kirim</button> --}}
-                                            <input type="submit" class="btn btn-primary" value="Buat">
-                                        </form>
-                                    </div>
+                </div>
+                <!-- Tabs -->
+                <div class="justify-self-center mb-4 border-b">
+                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab"
+                        data-tabs-toggle="#myTabContent" role="tablist">
+                        <li class="mr-2" role="presentation">
+                            <button class="tab-button inline-block p-4 border-b-2 rounded-t-lg" id="presensi-tab"
+                                data-tabs-target="#presensi" type="button" role="tab" aria-controls="presensi"
+                                aria-selected="false">Presensi</button>
+                        </li>
+                        <li class="mr-2" role="presentation">
+                            <button
+                                class="tab-button inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                id="partisipan-tab" data-tabs-target="#partisipan" type="button" role="tab"
+                                aria-controls="partisipan" aria-selected="false">Partisipan</button>
+                        </li>
+                        <li class="mr-2" role="presentation">
+                            <button
+                                class="tab-button inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                id="laporan-tab" data-tabs-target="#laporan" type="button" role="tab"
+                                aria-controls="laporan" aria-selected="false">Laporan</button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Tab Contents -->
+                <div id="myTabContent">
+                    <div class="tab-content hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="presensi"
+                        role="tabpanel" aria-labelledby="presensi-tab">
+                        <div class="container w-4/5 mx-24">
+                            <label class="relative inline-flex items-center cursor-pointer m-3 ">
+                                <input type="checkbox" id="tambah" value="true" class="sr-only peer"
+                                    name="ulangi">
+                                <div
+                                    class=" w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
                                 </div>
-                            </form>
-                            <div class="container lg:flex lg:flex-col lg:items-center lg:justify-center ">
-                                <article class="flex flex-col items-center justify-center prose my-3">
-                                    <h2 class="h1">Daftar Presensi Anda ..⏳</h2>
-                                </article>
+                                <div>
+                                    <span
+                                        class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 ">Tambah?</span>
+                                </div>
+                            </label>
+                        </div>
+                        <form action="{{ route('buatpresensi.store') }}" method="post" class="form-control hidden"
+                            id="formbuat">
+                            @csrf
+                            <div class="grid place-items-center">
 
-                                <div class="relative overflow-x-auto flex my-3 w-4/5">
-                                    <div class="w-full table-auto">
-                                        <table id="tabelabsen" class="stripe w-full table-auto" style="width:100%">
-                                            <!-- head -->
-                                            <thead>
+                                <div
+                                    class="w-full max-w-lg  p-4 bg-white border border-gray-200 rounded-lg shadow md:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 ">
+                                    <form class="space-y-6" action="#">
+                                        <h5 class="text-xl font-medium text-gray-900 dark:text-white m-3">Buat
+                                            Presensi
+                                            Baru
+                                        </h5>
+                                        <div>
+                                            <label for="tanggal"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal</label>
+
+                                            <div class="relative max-w-sm">
+                                                <div
+                                                    class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                                    <svg aria-hidden="true"
+                                                        class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                                        fill="currentColor" viewBox="0 0 20 20"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd"
+                                                            d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>
+                                                </div>
+                                                <input datepicker type="date" id="tanggal" name="mulai"
+                                                    value="" required
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    placeholder="Tanggal">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="timemulai"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dimulai</label>
+                                            <input type="time" id="timemulai" name="jammulai" value=""
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                required>
+                                        </div>
+                                        <div>
+                                            <label for="timeakhir"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diakhiri</label>
+                                            <input type="time" id="timeakhir" name="jamakhir" value=""
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                required>
+                                        </div>
+                                        <div>
+                                            <label for="message"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
+                                            <textarea id="message" rows="3" required name="ket"
+                                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="Yang Anda pikirkan..."></textarea>
+                                        </div>
+                                        <div>
+
+                                            <label class="relative inline-flex items-center cursor-pointer m-3 ">
+                                                <input type="checkbox" id="toggle" value="true"
+                                                    class="sr-only peer" name="ulangi">
+                                                <div
+                                                    class=" w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                                                </div>
+                                                <div>
+                                                    <span
+                                                        class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 ">Ulangi?</span>
+
+                                                </div>
+
+                                            </label>
+
+                                            <div id="textDiv" class="hidden">
+                                                <div>
+                                                    <input type="radio" name="setiap" id="hari"
+                                                        class="radio radio-info" value="hari" /><label
+                                                        for="hari">Setiap Hari</label>
+
+                                                </div>
+                                                <div>
+                                                    <input type="radio" id="minggu" name="setiap"
+                                                        class="radio radio-info" value="minggu" /><label
+                                                        for="minggu">Setiap Minggu</label>
+
+                                                </div>
+                                                <div>
+                                                    <input type="radio" name="setiap" id="bulan"
+                                                        class="radio radio-info" value="bulan" /><label
+                                                        for="bulan">Setiap Bulan</label>
+                                                </div>
+                                            </div>
+                                            <div class="hidden" id="kalihari"><label for="jumlah">Sampai
+                                                </label><input type="number" name="jumlah" id="jumlah"
+                                                    value="1" min="1" max="365" width="10px"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-1/5 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <label for="jumlah"> kali</label>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="idkelas" value="{{ $idk }}">
+                                        {{-- <button type="submit">Kirim</button> --}}
+                                        <input type="submit" class="btn btn-primary" value="Buat">
+                                    </form>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="container lg:flex lg:flex-col lg:items-center lg:justify-center ">
+                            <article class="flex flex-col items-center justify-center prose my-3">
+                                <h2 class="h1">Daftar Presensi Anda ..⏳</h2>
+                            </article>
+
+                            <div class="relative overflow-x-auto flex my-3 w-4/5">
+                                <div class="w-full table-auto">
+                                    <table id="tabelabsen" class="stripe w-full table-auto" style="width:100%">
+                                        <!-- head -->
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+
+                                                <th>Waktu</th>
+                                                <th>Deskripsi</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- row 1 -->
+                                            @php
+                                                $no = 1;
+                                                
+                                            @endphp
+
+
+                                            @foreach ($list as $li)
                                                 <tr>
-                                                    <th>No.</th>
+                                                    <td>{{ $no++ }}</td>
 
-                                                    <th>Waktu</th>
-                                                    <th>Deskripsi</th>
-                                                    <th>Aksi</th>
+                                                    <td>
+                                                        {{ Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString() }}<br>{{ '(' . $li->timestart . ' - ' . $li->timeend . ')' }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $li->ket }}
+                                                    </td>
+                                                    <td class="flex">
+
+                                                        <button tabindex="0" data-id={{ $li->id }}
+                                                            data-tanggal="{{ $li->tanggal }}"
+                                                            data-timestart="{{ $li->timestart }}"
+                                                            data-timeend="{{ $li->timeend }}"
+                                                            data-ket="{{ $li->ket }}"
+                                                            class="btn btn-info m-1 edit-btn"
+                                                            data-modal-target="updateModal"
+                                                            data-modal-toggle="updateModal"><i
+                                                                class="fa-solid fa-pen-to-square"></i></button>
+                                                        <button class="btn btn-secondary m-1 btnhapus"
+                                                            data-id="{{ $li->id }}"
+                                                            data-modal-target="hapus-modal"
+                                                            data-modal-toggle="hapus-modal">
+                                                            <i class="fa-solid fa-trash-can"
+                                                                style="color: #ffffff;"></i>
+                                                            <form action="/realtime" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="id_presensi"
+                                                                    value="{{ $li->id }}">
+                                                                <button type="submit"
+                                                                    class="btn btn-primary m-1 btnhapus">
+                                                                    <i
+                                                                        class="fa-solid fa-arrows-rotate fa-spin"></i></i>
+                                                                </button>
+                                                            </form>
+                                                            <a href="{{ route('laporan', $li->id) }}"><button
+                                                                    type="submit"
+                                                                    class="btn btn-primary m-1 btnhapus">
+                                                                    <i
+                                                                        class="fa-solid fa-database fa-beat"></i></i></i>
+
+                                                                </button>
+                                                            </a>
+                                                    </td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                                <!-- row 1 -->
-                                                @php
-                                                    $no = 1;
-                                                    
-                                                @endphp
+                                            @endforeach
 
-
-                                                @foreach ($list as $li)
-                                                    <tr>
-                                                        <td>{{ $no++ }}</td>
-
-                                                        <td>
-                                                            {{ Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString() }}<br>{{ '(' . $li->timestart . ' - ' . $li->timeend . ')' }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $li->ket }}
-                                                        </td>
-                                                        <td class="flex">
-
-                                                            <button tabindex="0" data-id={{ $li->id }}
-                                                                data-tanggal="{{ $li->tanggal }}"
-                                                                data-timestart="{{ $li->timestart }}"
-                                                                data-timeend="{{ $li->timeend }}"
-                                                                data-ket="{{ $li->ket }}"
-                                                                class="btn btn-info m-1 edit-btn"
-                                                                data-modal-target="updateModal"
-                                                                data-modal-toggle="updateModal"><i
-                                                                    class="fa-solid fa-pen-to-square"></i></button>
-                                                            <button class="btn btn-secondary m-1 btnhapus"
-                                                                data-id="{{ $li->id }}"
-                                                                data-modal-target="hapus-modal"
-                                                                data-modal-toggle="hapus-modal">
-                                                                <i class="fa-solid fa-trash-can"
-                                                                    style="color: #ffffff;"></i>
-                                                                <form action="/realtime" method="post">
-                                                                    @csrf
-                                                                    <input type="hidden" name="id_presensi"
-                                                                        value="{{ $li->id }}">
-                                                                    <button type="submit"
-                                                                        class="btn btn-primary m-1 btnhapus">
-                                                                        <i
-                                                                            class="fa-solid fa-arrows-rotate fa-spin"></i></i>
-                                                                    </button>
-                                                                </form>
-                                                                <a href="{{ route('laporan', $li->id) }}"><button
-                                                                        type="submit"
-                                                                        class="btn btn-primary m-1 btnhapus">
-                                                                        <i
-                                                                            class="fa-solid fa-database fa-beat"></i></i></i>
-
-                                                                    </button>
-                                                                </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-content hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="partisipan"
-                            role="tabpanel" aria-labelledby="partisipan-tab">
-                            <p
-                                class="mb-4 text-lg leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
-                                Teacher</p>
-                            <table id="teacher" class="text-center">
-                                <tbody>
-                                    @foreach ($part as $par)
-                                        @if ($par->roles->role == 'Student')
-                                            @php
-                                                continue;
-                                            @endphp;
-                                        @endif
-                                        <hr class="mb-2">
-                                        <tr>
-                                            <td>
-                                                <div class="avatar mx-3">
-                                                    <div
-                                                        class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                                        <img src="{{ $par->user->url_photo }}" />
-                                                    </div>
+                    </div>
+                    <div class="tab-content hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="partisipan"
+                        role="tabpanel" aria-labelledby="partisipan-tab">
+                        <p
+                            class="mb-4 text-lg leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
+                            Teacher</p>
+                        <table id="teacher" class="text-center">
+                            <tbody>
+                                @foreach ($part as $par)
+                                    @if ($par->roles->role == 'Student')
+                                        @php
+                                            continue;
+                                        @endphp;
+                                    @endif
+                                    <hr class="mb-2">
+                                    <tr>
+                                        <td>
+                                            <div class="avatar mx-3">
+                                                <div
+                                                    class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                                    <img src="{{ $par->user->url_photo }}" />
                                                 </div>
-                                            </td>
-                                            <td>{{ $par->user->name }}</td>
-                                            <td>
-                                                @if ($par->user->id == Auth::id())
-                                                    <span class="badge badge-success">You</span>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                            </div>
+                                        </td>
+                                        <td>{{ $par->user->name }}</td>
+                                        <td>
+                                            @if ($par->user->id == Auth::id())
+                                                <span class="badge badge-success">You</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <p
+                            class="mt-5 mb-4 text-lg leading-none tracking-tight text-gray-600 md:text-3xl lg:text-4xl dark:text-white">
+                            Students</p>
+                        @foreach ($part as $par)
+                            @if ($par->roles->role == 'Teacher')
+                                @php
+                                    continue;
+                                @endphp;
+                            @endif
+                            <hr class="mb-5">
+                            <table id="students" class="mt-3 mb-5">
+                                <tbody>
+                                    <tr class="pop-del" data-popover-target="popover-del"
+                                        data-id="{{ $par->user->id }}" data-name="{{ $par->user->name }}"
+                                        data-kelas="{{ $par->class_id }}">
+                                        <td>
+                                            <div class="avatar mx-3">
+                                                <div
+                                                    class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                                    <img src="{{ $par->user->url_photo }}" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{{ $par->user->name }}</td>
+                                    </tr>
                                 </tbody>
                             </table>
-
-                            <p
-                                class="mt-5 mb-4 text-lg leading-none tracking-tight text-gray-600 md:text-3xl lg:text-4xl dark:text-white">
-                                Students</p>
-                            @foreach ($part as $par)
-                                @if ($par->roles->role == 'Teacher')
-                                    @php
-                                        continue;
-                                    @endphp;
-                                @endif
-                                <hr class="mb-5">
-                                <table id="students" class="mt-3 mb-5">
-                                    <tbody>
-                                        <tr class="pop-del" data-popover-target="popover-del"
-                                            data-id="{{ $par->user->id }}" data-name="{{ $par->user->name }}"
-                                            data-kelas="{{ $par->class_id }}">
-                                            <td>
-                                                <div class="avatar mx-3">
-                                                    <div
-                                                        class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                                        <img src="{{ $par->user->url_photo }}" />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>{{ $par->user->name }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            @endforeach
-                        </div>
-                        <div class="tab-content hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="laporan"
-                            role="tabpanel" aria-labelledby="laporan-tab">
-                            <div id="chart" class=""></div>
-                        </div>
+                        @endforeach
+                    </div>
+                    <div class="tab-content hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="laporan"
+                        role="tabpanel" aria-labelledby="laporan-tab">
+                        <div id="chart" class=""></div>
                     </div>
                 </div>
             </div>
-            @include('components.hapus-modal')
-
-
-            <!-- Main modal -->
-            @include('components.update-modal')
-            @include('components.unenroll-popover')
-            @include('components.unenroll-modal')
-            <footer class="grow-0 bg-white rounded-lg shadow m-4 dark:bg-gray-800">
-                <div class="w-1/2 max-w-screen-xl mx-auto p-4 md:py-8">
-                    <span class="block text-sm text-gray-500 md:text-center dark:text-gray-400">© 2023 <a
-                            href="https://prezensia.visit-indonesia.id/" class="hover:underline">Prezensia™</a>. All
-                        Rights
-                        Reserved.</span>
-                </div>
-            </footer>
         </div>
-        {{-- Modal Hapus --}}
+        @include('components.hapus-modal')
 
 
+        <!-- Main modal -->
+        @include('components.update-modal')
+        @include('components.unenroll-popover')
+        @include('components.unenroll-modal')
+        @include('components.fullScreen-modal')
     </x-app-layout>
 
     <script>
         $(document).ready(function() {
+
+            var kode = $('.kode').data('kode')
+            var hashkode = $('.kode').data('hashkode')
+            var link = @json(route('classes.linkjoin', ['id' => $kls[0]->hashcode, 'cd' => $kls[0]->class_code]));
+
+            $('.kodeF').text(kode)
+            var copyK = document.getElementById('copyK')
+            var copyL = document.getElementById('copyL')
+
+            copyK.addEventListener('click', function() {
+                navigator.clipboard.writeText(kode)
+                    .then(function() {
+                        Swal.fire({
+                            position: 'bottom-start',
+                            icon: 'success',
+                            title: 'Code Copied',
+                            showConfirmButton: false,
+                            timer: 1500,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false,
+                            toast: true,
+                            didOpen: () => {
+                                const modal = document.getElementById('fullScreen-modal');
+                                Swal.getPopup().style.width = `${modal.offsetWidth}px`;
+                                Swal.getPopup().style.left = `${modal.offsetLeft}px`;
+                            },
+                            willClose: () => {
+                                // Reset any changes made to the modal size and position
+                                Swal.getPopup().style.width = null;
+                                Swal.getPopup().style.left = null;
+                            }
+                        });
+                    })
+                    .catch(function(error) {
+                        console.error("Error copying text: ", error);
+                    });
+            });
+
+            copyL.addEventListener('click', function() {
+                navigator.clipboard.writeText(link)
+                    .then(function() {
+                        Swal.fire({
+                            position: 'bottom-start',
+                            icon: 'success',
+                            title: 'Link Copied',
+                            showConfirmButton: false,
+                            timer: 1500,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false,
+                            toast: true,
+                            didOpen: () => {
+                                const modal = document.getElementById('fullScreen-modal');
+                                Swal.getPopup().style.width = `${modal.offsetWidth}px`;
+                                Swal.getPopup().style.left = `${modal.offsetLeft}px`;
+                            },
+                            willClose: () => {
+                                // Reset any changes made to the modal size and position
+                                Swal.getPopup().style.width = null;
+                                Swal.getPopup().style.left = null;
+                            }
+                        });
+                    })
+                    .catch(function(error) {
+                        console.error("Error copying text: ", error);
+                    });
+            });
 
             // Inisialisasi DataTables pada tabel
             $('#tabelabsen').DataTable({

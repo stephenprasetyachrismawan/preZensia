@@ -1,5 +1,5 @@
 <x-app-layout>
-    @slot('title', 'Class')
+    @slot('title', $part[0]->kelas->class_name.' - '.$part[0]->kelas->class_subject)
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"> --}}
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
@@ -10,6 +10,22 @@
 
     <div class="container">
         <div class="rounded border grid w-3/4 mx-auto mt-4">
+            <div id="infoKelas" data-accordion="collapse" data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
+                <h2 id="infoKelasHead">
+                <button type="button" class="flex items-left justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800" data-accordion-target="#infoKelasBody" aria-expanded="false" aria-controls="infoKelasBody">
+                    <span class="flex items-center"><svg class="w-5 h-5 mr-2 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
+                        Info Kelas</span>
+                    <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"></path></svg>
+                </button>
+                </h2>
+                <div id="infoKelasBody" class="hidden" aria-labelledby="infoKelasHead">
+                <div class="p-5 bg-white border border-b-0 border-white-200 dark:border-white-700 dark:bg-white-900">
+                    <x-info-kelas>{{ __('Nama Kelas') }}@slot('text', $kls[0]->class_name)</x-info-kelas>
+                    <x-info-kelas>{{ __('Subyek Kelas') }}@slot('text', $kls[0]->class_subject)</x-info-kelas>
+                    <x-info-kelas>{{ __('Deskripsi Kelas') }}@slot('text', $kls[0]->class_desc)</x-info-kelas>
+                </div>
+                </div>
+            </div>
             <!-- Tabs -->
             <div class="justify-self-center mb-4 border-b">
                 <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">

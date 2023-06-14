@@ -19,6 +19,7 @@
                                                     <ul tabindex="0"
                                                         class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                                                         @if ($d[1]==1)
+                                                        <li><button class="copy-btn" data-link="{{ route('classes.linkjoin', ['id' => $d[3], 'cd' => $d[6]]) }}">Copy Link</button></li>
                                                         <li>
                                                             <button class='archive' data-id='{{ $d[3] }}'
                                                                 data-modal-target="archive-modal"
@@ -82,6 +83,26 @@
     @include('components.unenroll-modal')
     <script>
         $(document).ready(function() {
+            $('.copy-btn').click(function(){
+                var link = $(this).data('link')
+                navigator.clipboard.writeText(link)
+                .then(function() {
+                    Swal.fire({
+                    position: 'bottom-start',
+                    icon: 'success',
+                    title: 'Link Copied',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    toast: true,
+                    });
+                })
+                .catch(function(error) {
+                console.error("Error copying text: ", error);
+                });
+            })
             $('.archive').click(function() {
                 var id = $(this).data('id')
                 $('#accArch').attr('data-id', id);

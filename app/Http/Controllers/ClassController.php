@@ -27,8 +27,8 @@ class ClassController extends Controller
         $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function ($query) {
             $query->where('user_id', Auth::id());
         })->get();
-        if ($kls->isEmpty() || $kls[0]->archive == 1) {
-            return redirect()->route('classes');
+        if($kls->isEmpty() || $kls[0]->archive==1){
+            return redirect()->route('dashboard');
         }
         $idk = $kls[0]->id;
         $role = ListRole::where('class_id', Kelas::where('hashcode', $id)->value('id'))->where('user_id', Auth::id())->value('role_id');
@@ -41,12 +41,11 @@ class ClassController extends Controller
             foreach ($list as $li) {
                 $idp[] = $li->id;
             }
-            $stat = ListPresensi::whereIn('presensi_id', $idp)->where('murid', Auth::id())->get();
             return view('kelas.home')->with([
+                'kls' => $kls,
                 'idk' => $idk,
                 'part' => $part,
                 'list' => $list,
-                'status' => $stat
             ]);
         } else if ($kls && $role == 2) {
             $list = Presensi::where('class_id', $idk)->get();
@@ -66,17 +65,18 @@ class ClassController extends Controller
                 }
             }
             return view('kelas.home2')->with([
+                'kls' => $kls,
                 'list' => $list,
                 'part' => $part,
                 'status' => $stat
             ]);
         }
-        return redirect()->route('classes');
+        return redirect()->route('dashboard');
     }
     public function linkjoin($id, $kode)
     {
-        if (Kelas::where('class_code', $kode)->value('archive')) {
-            return redirect()->route('classes');
+        if(Kelas::where('class_code', $kode)->value('archive')){
+            return redirect()->route('dashboard');
         }
         $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function ($query) {
             $query->where('user_id', Auth::id());
@@ -118,6 +118,7 @@ class ClassController extends Controller
         $guru = [];
         $hashcode = [];
         $id_kelas = [];
+        $kode = [];
         //dd($kelas);
         if (empty($kelas)) {
             return view('class', compact('data'));
@@ -127,6 +128,7 @@ class ClassController extends Controller
                 continue;
             }
             $id_kelas[] = $ke[0]->id;
+            $kode[] = $ke[0]->class_code;
             $subjek_kelas[] = $ke[0]->class_subject;
             $nama_kelas[] = $ke[0]->class_name;
             $listguru = ListRole::with('user')->whereIn('role_id', ['1'])->whereIn('class_id', [$ke[0]->id])->get();
@@ -144,7 +146,7 @@ class ClassController extends Controller
         // dd($userkelas);
         $data = [];
         for ($i = 0; $i < count($nama_kelas); $i++) {
-            $data[] = [$nama_kelas[$i], $rolekelas[$i], $guru[$i], $hashcode[$i], $subjek_kelas[$i], $id_kelas[$i]];
+            $data[] = [$nama_kelas[$i], $rolekelas[$i], $guru[$i], $hashcode[$i], $subjek_kelas[$i], $id_kelas[$i], $kode[$i]];
         }
         return view('class', compact('data'));
     }
@@ -172,7 +174,7 @@ class ClassController extends Controller
 
         $kls = Kelas::create($data);
 
-        return redirect()->route('classes');
+        return redirect()->route('dashboard');
     }
 
     public function join()
@@ -183,13 +185,13 @@ class ClassController extends Controller
     public function check(Request $request)
     {
         $kode = $request->kodeKelas;
-        if (Kelas::where('class_code', $kode)->value('archive')) {
-            return redirect()->route('classes');
+        if(Kelas::where('class_code', $kode)->value('archive')){
+            return redirect()->route('dashboard');
         }
         $hash = Kelas::where('class_code', $kode)->value('hashcode');
         $cek = Kelas::cekJoin($kode, Auth::id());
         if ($cek == 'noclass')
-            return redirect()->route('classes.join');
+            return redirect()->back();
         else if ($cek == 'ajoin') {
             return redirect()->route('classes.home', $hash);
         } else if ($cek) {
