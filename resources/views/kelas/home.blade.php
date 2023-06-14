@@ -310,14 +310,14 @@
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dimulai</label>
                                             <input type="time" id="timemulai" name="jammulai" value=""
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                required>
+                                                required onchange="cekTime()">
                                         </div>
                                         <div>
                                             <label for="timeakhir"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diakhiri</label>
                                             <input type="time" id="timeakhir" name="jamakhir" value=""
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                required>
+                                                required onchange="cekTime()">
                                         </div>
                                         <div>
                                             <label for="message"
@@ -620,6 +620,30 @@
     </x-app-layout>
 
     <script>
+        function cekTime(){
+            var mulai = $('#timemulai').val()
+            var akhir = $('#timeakhir').val()
+            if(akhir==''){
+                akhir.val(mulai)
+            }
+            if(akhir<mulai){
+                Swal.fire({
+                    position: 'bottom-start',
+                    icon: 'error',
+                    title: 'Time Incorrect',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    toast: true,
+                }).then(function(){
+                    $('#timemulai').val('')
+                    $('#timeakhir').val('')
+                });
+            }
+        }
+        
         $(document).ready(function() {
 
             var kode = $('.kode').data('kode')
