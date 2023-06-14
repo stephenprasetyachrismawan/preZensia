@@ -201,13 +201,18 @@
     <div class="p-0 sm:ml-64 h-screen flex flex-col justify-between">
         <div class="grid w-3/4 mx-auto mt-4">
             <article class="m-3 my-10 flex flex-col items-center justify-center">
-                <h2 class="text-3xl">Data Realtime Presensi ..⏳</h2>
+                <h2 class="text-3xl font-bold">Data Realtime Presensi ..⏳</h2>
             </article>
             <div class="m-1 relative overflow-x-auto flex  justify-center">
 
                 <div
                     class="max-w-lg p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 overflow-y-auto w-4/5">
-
+                    <div class="flex justify-end">
+                        <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            href="{{ route('laporan', ['id'=> $idp]) }}">
+                            {{ __("View Report") }}
+                        </a>
+                    </div>
                     <div class="flow-root  items-center mb-4 text-center">
                         <span class="text-xl font-bold">
                             Realtime Report
