@@ -138,7 +138,7 @@
             </ul>
             <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700 mb-10">
                 <li>
-                    <div data-popover-target='popover-top' data-popover-placement='right'
+                    <div data-popover-target='popover-top' data-popover-placement='right' data-popover-trigger="click"
                         class=" flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-primary-700">
                         <div class="avatar mx-3">
                             <div class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
@@ -201,19 +201,17 @@
     <div class="p-0 sm:ml-64 h-screen flex flex-col justify-between">
         <div class="grid w-3/4 mx-auto mt-4">
             <article class="m-3 my-10 flex flex-col items-center justify-center">
-                <h2 class="h1">Data Realtime Presensi ..⏳</h2>
+                <h2 class="text-3xl">Data Realtime Presensi ..⏳</h2>
             </article>
             <div class="m-1 relative overflow-x-auto flex  justify-center">
 
                 <div
                     class="max-w-lg p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 overflow-y-auto w-4/5">
-                    <div class="flex items-center justify-between mb-4 ">
-                        <span class="mx-7 ">
-                            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white mx-7 ">Realtime
-                                Report</h5>
+                    <div class="flex items-center justify-between mb-4 text-center">
+                        <span class="mx-7 flex items-center">
+                            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white mx-7">Realtime Report</h5>
                         </span>
-
-                    </div>
+                    </div>                    
                     <div class="flow-root ">
                         <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700" id="square">
                             @php
@@ -270,5 +268,9 @@
 
 
     </div>
-
+<script>
+    setTimeout(() => {
+       window.stop() 
+    }, 5000);
+</script>
 </x-app-layout>
