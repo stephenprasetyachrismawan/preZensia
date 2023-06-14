@@ -286,4 +286,34 @@ class ClassController extends Controller
         if($cek) $data['msg'] = 'success';
         return response()->json($data);
     }
+    public function edit(Request $request){
+        $id = $request->id_cls;
+        $nama = $request->namaKelas;
+        $subject = $request->namaSubject;
+        $desc = $request->descKelas;
+        $data = [
+            'class_name' => $nama,
+            'class_subject' => $subject,
+            'class_desc' => $desc
+        ];
+        $old = Kelas::find($id);
+        $cek = $old->update($data);
+        return back();
+    }
+
+    public function newCode(Request $request){
+        $id = $request->id;
+        $newKode = Kelas::getCode();
+        $data = [
+            'hashcode' => base64_encode(Kelas::strToNum($newKode)),
+            'class_code' => $newKode
+        ];
+        $kls = Kelas::find($id);
+        $cek = $kls->update($data);
+        if ($cek) {
+            $res['msg'] = 'success';
+            $res['hashcode'] = $data['hashcode'];
+        }
+        return response()->json($res);
+    }
 }

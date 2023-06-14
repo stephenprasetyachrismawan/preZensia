@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function () {
         Route::post('unarchive', 'unarchive')->name('classes.unarchive');
         Route::post('unenroll', 'unenroll')->name('classes.unenroll');
         Route::post('del', 'del')->name('classes.delete');
+        Route::post('edit', 'edit')->name('classes.edit');
+        Route::post('newcode', 'newCode')->name('classes.new_code');
     });
     Route::resource('/buatpresensi', App\Http\Controllers\PresensiController::class);
 });

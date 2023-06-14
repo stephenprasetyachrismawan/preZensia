@@ -178,6 +178,11 @@
                     <div id="infoKelasBody" class="hidden" aria-labelledby="infoKelasHead">
                         <div
                             class="p-5 bg-white border border-b-0 border-white-200 dark:border-white-700 dark:bg-white-900">
+                            <div class="flex justify-end">
+                                <button class="editKls rounded-full bg-purple-200 hover:bg-purple-300 p-2 w-8 h-8 flex justify-center items-center" data-modal-target="editKelas" data-modal-toggle="editKelas" data-id="{{ $kls[0]->id }}" data-code="{{ $kls[0]->class_code }}" data-name="{{ $kls[0]->class_name }}" data-subject="{{ $kls[0]->class_subject }}" data-desc="{{ $kls[0]->class_desc }}">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </button>
+                            </div>                                                                                    
                             <x-info-kelas class="kode" data-kode="{{ $kls[0]->class_code }}"
                                 data-hashkode="{{ $kls[0]->hashcode }}">{{ __('Kode Kelas') }}@slot('text',
                                 $kls[0]->class_code)</x-info-kelas>
@@ -574,6 +579,7 @@
         @include('components.unenroll-popover')
         @include('components.unenroll-modal')
         @include('components.fullScreen-modal')
+        @include('components.edit-kelas-modal')
     </x-app-layout>
 
     <script>
@@ -646,6 +652,49 @@
                         console.error("Error copying text: ", error);
                     });
             });
+
+            $('.editKls').click(function(){
+                var id = $(this).data('id')
+                var code = $(this).data('code')
+                var name = $(this).data('name')
+                var subject = $(this).data('subject')
+                var desc = $(this).data('desc')
+
+                $('#id_cls').val(id)
+                $('#kodeKelas').val(code)
+                $('#namaKelas').val(name)
+                $('#namaSubject').val(subject)
+                $('#descKelas').val(desc)
+                
+            })
+            $('.btn-code').click(function(){
+                Swal.fire({
+                title: 'Apakah anda ingin generate ulang kode kelas?',
+                icon: 'question',
+                showDenyButton: true,
+                confirmButtonText: 'Ya',
+                denyButtonText: `Tidak`,
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    var id = $('.editKls').data('id')
+                    $.ajax({
+                    url: "{{ route('classes.new_code') }}",
+                    type: 'POST',
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        'id': id,
+                    },
+                    success: function(response) {
+                        if (response.msg == 'success') {
+                            Swal.fire('Code Generated', '', 'success').then(function() {
+                                window.location.assign('/c/'+response.hashcode)
+                            });
+                        }
+                    }
+                    });
+                }
+                })
+            })
 
             // Inisialisasi DataTables pada tabel
             $('#tabelabsen').DataTable({
