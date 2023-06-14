@@ -8,303 +8,470 @@
         <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
         {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.material.min.css"> --}}
         {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/4.0.0/material-components-web.min.css"> --}}
+        <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
+            type="button"
+            class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-primary focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-primary-700 dark:focus:ring-gray-600">
+            <span class="sr-only">Open sidebar</span>
+            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path clip-rule="evenodd" fill-rule="evenodd"
+                    d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+                </path>
+            </svg>
+        </button>
 
-        <div class="container">
-            <div class="rounded border grid w-3/4 mx-auto mt-4">
-                
-                
-                
-                <!-- Tabs -->
-                <div class="justify-self-center mb-4 border-b">
-                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
-                        <li class="mr-2" role="presentation">
-                            <button class="tab-button inline-block p-4 border-b-2 rounded-t-lg" id="presensi-tab" data-tabs-target="#presensi" type="button" role="tab" aria-controls="presensi" aria-selected="false">Presensi</button>
-                        </li>
-                        <li class="mr-2" role="presentation">
-                            <button class="tab-button inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="partisipan-tab" data-tabs-target="#partisipan" type="button" role="tab" aria-controls="partisipan" aria-selected="false">Partisipan</button>
-                        </li>
-                        <li class="mr-2" role="presentation">
-                            <button class="tab-button inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="laporan-tab" data-tabs-target="#laporan" type="button" role="tab" aria-controls="laporan" aria-selected="false">Laporan</button>
-                        </li>
-                    </ul>
+        <aside id="logo-sidebar"
+            class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full md:translate-x-0"
+            aria-label="Sidebar">
+            <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+                <div class="flex justify-center items-center">
+                    <a href="{{ route('dashboard') }}" class="">
+                        <img src="{{ asset('prezensia.png') }}" alt="Prezensia" class="" width="150px">
+
+                    </a>
                 </div>
-                <!-- Tab Contents -->
-                <div id="myTabContent">
-                    <div class="tab-content hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="presensi" role="tabpanel" aria-labelledby="presensi-tab">
-                        <div class="container w-4/5 mx-24">
-                            <label class="relative inline-flex items-center cursor-pointer m-3 ">
-                                <input type="checkbox" id="tambah" value="true" class="sr-only peer"
-                                    name="ulangi">
-                                <div
-                                    class=" w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-                                </div>
-                                <div>
-                                    <span
-                                        class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 ">Tambah?</span>
-                                </div>
-                            </label>
-                        </div>
-                        <form action="{{ route('buatpresensi.store') }}" method="post" class="form-control hidden"
-                            id="formbuat">
-                            @csrf
-                            <div class="grid place-items-center">
+                <ul class="space-y-2 font-medium">
+                    <li>
+                        <a href="{{ route('dashboard') }}"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-primary-700">
+                            <svg aria-hidden="true"
+                                class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                            </svg>
+                            <span class="ml-3">Dashboard</span>
+                        </a>
+                    </li>
 
-                                <div
-                                    class="w-full max-w-lg  p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 ">
-                                    <form class="space-y-6" action="#">
-                                        <h5 class="text-xl font-medium text-gray-900 dark:text-white m-3">Buat Presensi
-                                            Baru
-                                        </h5>
-                                        <div>
-                                            <label for="tanggal"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal</label>
+                    <li>
+                        <button type="button"
+                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-primary dark:text-white dark:hover:bg-primary-700"
+                            aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+                            <svg aria-hidden="true"
+                                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                                </path>
+                            </svg>
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Kelas</span>
 
-                                            <div class="relative max-w-sm">
-                                                <div
-                                                    class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                                    <svg aria-hidden="true"
-                                                        class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                                        fill="currentColor" viewBox="0 0 20 20"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path fill-rule="evenodd"
-                                                            d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                                            clip-rule="evenodd"></path>
-                                                    </svg>
-                                                </div>
-                                                <input datepicker type="date" id="tanggal" name="mulai"
-                                                    value="" required
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                    placeholder="Tanggal">
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label for="timemulai"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dimulai</label>
-                                            <input type="time" id="timemulai" name="jammulai" value=""
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                required>
-                                        </div>
-                                        <div>
-                                            <label for="timeakhir"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diakhiri</label>
-                                            <input type="time" id="timeakhir" name="jamakhir" value=""
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                required>
-                                        </div>
-                                        <div>
-                                            <label for="message"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
-                                            <textarea id="message" rows="3" required name="ket"
-                                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Yang Anda pikirkan..."></textarea>
-                                        </div>
-                                        <div>
+                            <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                        <ul id="dropdown-example" class="hidden py-2 space-y-2">
+                            <li>
+                                <a href="#"
+                                    class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-primary dark:text-white dark:hover:bg-primary-700">Products</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-primary dark:text-white dark:hover:bg-primary-700">Billing</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-primary dark:text-white dark:hover:bg-primary-700">Invoice</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-primary-700">
+                            <svg aria-hidden="true"
+                                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z">
+                                </path>
+                                <path
+                                    d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z">
+                                </path>
+                            </svg>
+                            <span class="flex-1 ml-3 whitespace-nowrap">Inbox</span>
+                            <span
+                                class="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-primary-700">
+                            <svg aria-hidden="true"
+                                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-primary-700">
+                            <svg aria-hidden="true"
+                                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="flex-1 ml-3 whitespace-nowrap">Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-primary-700">
+                            <svg aria-hidden="true"
+                                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="flex-1 ml-3 whitespace-nowrap">Sign In</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-primary-700">
+                            <svg aria-hidden="true"
+                                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="flex-1 ml-3 whitespace-nowrap">Sign Up</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
 
-                                            <label class="relative inline-flex items-center cursor-pointer m-3 ">
-                                                <input type="checkbox" id="toggle" value="true"
-                                                    class="sr-only peer" name="ulangi">
-                                                <div
-                                                    class=" w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-                                                </div>
-                                                <div>
-                                                    <span
-                                                        class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 ">Ulangi?</span>
-
-                                                </div>
-
-                                            </label>
-
-                                            <div id="textDiv" class="hidden">
-                                                <div>
-                                                    <input type="radio" name="setiap" id="hari"
-                                                        class="radio radio-info" value="hari" /><label
-                                                        for="hari">Setiap Hari</label>
-
-                                                </div>
-                                                <div>
-                                                    <input type="radio" id="minggu" name="setiap"
-                                                        class="radio radio-info" value="minggu" /><label
-                                                        for="minggu">Setiap Minggu</label>
-
-                                                </div>
-                                                <div>
-                                                    <input type="radio" name="setiap" id="bulan"
-                                                        class="radio radio-info" value="bulan" /><label
-                                                        for="bulan">Setiap Bulan</label>
-                                                </div>
-                                            </div>
-                                            <div class="hidden" id="kalihari"><label for="jumlah">Sampai
-                                                </label><input type="number" name="jumlah" id="jumlah"
-                                                    value="1" min="1" max="365" width="10px"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-1/5 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                <label for="jumlah"> kali</label>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" name="idkelas" value="{{ $idk }}">
-                                        {{-- <button type="submit">Kirim</button> --}}
-                                        <input type="submit" class="btn btn-primary" value="Buat">
-                                    </form>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="container lg:flex lg:flex-col lg:items-center lg:justify-center ">
-                            <article class="flex flex-col items-center justify-center prose my-3">
-                                <h2 class="h1">Daftar Presensi Anda ..⏳</h2>
-                            </article>
-
-                            <div class="relative overflow-x-auto flex my-3 w-4/5">
-                                <div class="w-full table-auto">
-                                    <table id="tabelabsen" class="stripe w-full table-auto" style="width:100%">
-                                        <!-- head -->
-                                        <thead>
-                                            <tr>
-                                                <th>No.</th>
-
-                                                <th>Waktu</th>
-                                                <th>Deskripsi</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <!-- row 1 -->
-                                            @php
-                                                $no = 1;
-                                                
-                                            @endphp
+        <div class="p-1 md:ml-64">
+            <div class="">
+                <div class="rounded border grid w-5/6 mx-auto mt-4">
 
 
-                                            @foreach ($list as $li)
-                                                <tr>
-                                                    <td>{{ $no++ }}</td>
 
-                                                    <td>
-                                                        {{ Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString() }}<br>{{ '(' . $li->timestart . ' - ' . $li->timeend . ')' }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $li->ket }}
-                                                    </td>
-                                                    <td class="flex">
-
-                                                        <button tabindex="0" data-id={{ $li->id }}
-                                                            data-tanggal="{{ $li->tanggal }}"
-                                                            data-timestart="{{ $li->timestart }}"
-                                                            data-timeend="{{ $li->timeend }}"
-                                                            data-ket="{{ $li->ket }}"
-                                                            class="btn btn-info m-1 edit-btn"
-                                                            data-modal-target="updateModal"
-                                                            data-modal-toggle="updateModal"><i
-                                                                class="fa-solid fa-pen-to-square"></i></button>
-                                                        <button class="btn btn-secondary m-1 btnhapus"
-                                                            data-id="{{ $li->id }}"
-                                                            data-modal-target="hapus-modal"
-                                                            data-modal-toggle="hapus-modal">
-                                                            <i class="fa-solid fa-trash-can"
-                                                                style="color: #ffffff;"></i>
-                                                            <form action="/realtime" method="post">
-                                                                @csrf
-                                                                <input type="hidden" name="id_presensi"
-                                                                    value="{{ $li->id }}">
-                                                                <button type="submit"
-                                                                    class="btn btn-primary m-1 btnhapus">
-                                                                    <i
-                                                                        class="fa-solid fa-arrows-rotate fa-spin"></i></i>
-                                                                </button>
-                                                            </form>
-                                                            <a href="{{ route('laporan', $li->id) }}"><button
-                                                                    type="submit"
-                                                                    class="btn btn-primary m-1 btnhapus">
-                                                                    <i
-                                                                        class="fa-solid fa-database fa-beat"></i></i></i>
-
-                                                                </button>
-                                                            </a>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- Tabs -->
+                    <div class="justify-self-center mb-4 border-b">
+                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab"
+                            data-tabs-toggle="#myTabContent" role="tablist">
+                            <li class="mr-2" role="presentation">
+                                <button class="tab-button inline-block p-4 border-b-2 rounded-t-lg" id="presensi-tab"
+                                    data-tabs-target="#presensi" type="button" role="tab"
+                                    aria-controls="presensi" aria-selected="false">Presensi</button>
+                            </li>
+                            <li class="mr-2" role="presentation">
+                                <button
+                                    class="tab-button inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                    id="partisipan-tab" data-tabs-target="#partisipan" type="button" role="tab"
+                                    aria-controls="partisipan" aria-selected="false">Partisipan</button>
+                            </li>
+                            <li class="mr-2" role="presentation">
+                                <button
+                                    class="tab-button inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                                    id="laporan-tab" data-tabs-target="#laporan" type="button" role="tab"
+                                    aria-controls="laporan" aria-selected="false">Laporan</button>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="tab-content hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="partisipan" role="tabpanel" aria-labelledby="partisipan-tab">
-                        <p
-                            class="mb-4 text-lg leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
-                            Teacher</p>
-                        <table id="teacher" class="text-center">
-                            <tbody>
-                                @foreach ($part as $par)
-                                    @if ($par->roles->role == 'Student')
-                                        @php
-                                            continue;
-                                        @endphp;
-                                    @endif
-                                    <hr class="mb-2">
-                                    <tr>
-                                        <td>
-                                            <div class="avatar mx-3">
-                                                <div
-                                                    class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                                    <img src="{{ $par->user->url_photo }}" />
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>{{ $par->user->name }}</td>
-                                        <td>
-                                            @if ($par->user->id == Auth::id())
-                                                <span class="badge badge-success">You</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                    <!-- Tab Contents -->
+                    <div id="myTabContent">
+                        <div class="tab-content hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="presensi"
+                            role="tabpanel" aria-labelledby="presensi-tab">
+                            <div class="container w-4/5 mx-24">
+                                <label class="relative inline-flex items-center cursor-pointer m-3 ">
+                                    <input type="checkbox" id="tambah" value="true" class="sr-only peer"
+                                        name="ulangi">
+                                    <div
+                                        class=" w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                                    </div>
+                                    <div>
+                                        <span
+                                            class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 ">Tambah?</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <form action="{{ route('buatpresensi.store') }}" method="post"
+                                class="form-control hidden" id="formbuat">
+                                @csrf
+                                <div class="grid place-items-center">
 
-                        <p
-                            class="mt-5 mb-4 text-lg leading-none tracking-tight text-gray-600 md:text-3xl lg:text-4xl dark:text-white">
-                            Students</p>
-                        @foreach ($part as $par)
-                            @if ($par->roles->role == 'Teacher')
-                                @php
-                                    continue;
-                                @endphp;
-                            @endif
-                            <hr class="mb-5">
-                            <table id="students" class="mt-3 mb-5">
-                                <tbody>
-                                    <tr class="pop-del" data-popover-target="popover-del" data-id="{{ $par->user->id }}"
-                                        data-name="{{ $par->user->name }}"
-                                        data-kelas="{{ $par->class_id }}">
-                                        <td>
-                                            <div class="avatar mx-3">
-                                                <div
-                                                    class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                                    <img src="{{ $par->user->url_photo }}" />
+                                    <div
+                                        class="w-full max-w-lg  p-4 bg-white border border-gray-200 rounded-lg shadow md:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 ">
+                                        <form class="space-y-6" action="#">
+                                            <h5 class="text-xl font-medium text-gray-900 dark:text-white m-3">Buat
+                                                Presensi
+                                                Baru
+                                            </h5>
+                                            <div>
+                                                <label for="tanggal"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal</label>
+
+                                                <div class="relative max-w-sm">
+                                                    <div
+                                                        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                                        <svg aria-hidden="true"
+                                                            class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                                            fill="currentColor" viewBox="0 0 20 20"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path fill-rule="evenodd"
+                                                                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                                                clip-rule="evenodd"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <input datepicker type="date" id="tanggal" name="mulai"
+                                                        value="" required
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        placeholder="Tanggal">
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td>{{ $par->user->name }}</td>
-                                    </tr>
+                                            <div>
+                                                <label for="timemulai"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dimulai</label>
+                                                <input type="time" id="timemulai" name="jammulai" value=""
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    required>
+                                            </div>
+                                            <div>
+                                                <label for="timeakhir"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diakhiri</label>
+                                                <input type="time" id="timeakhir" name="jamakhir" value=""
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    required>
+                                            </div>
+                                            <div>
+                                                <label for="message"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
+                                                <textarea id="message" rows="3" required name="ket"
+                                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    placeholder="Yang Anda pikirkan..."></textarea>
+                                            </div>
+                                            <div>
+
+                                                <label class="relative inline-flex items-center cursor-pointer m-3 ">
+                                                    <input type="checkbox" id="toggle" value="true"
+                                                        class="sr-only peer" name="ulangi">
+                                                    <div
+                                                        class=" w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                                                    </div>
+                                                    <div>
+                                                        <span
+                                                            class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 ">Ulangi?</span>
+
+                                                    </div>
+
+                                                </label>
+
+                                                <div id="textDiv" class="hidden">
+                                                    <div>
+                                                        <input type="radio" name="setiap" id="hari"
+                                                            class="radio radio-info" value="hari" /><label
+                                                            for="hari">Setiap Hari</label>
+
+                                                    </div>
+                                                    <div>
+                                                        <input type="radio" id="minggu" name="setiap"
+                                                            class="radio radio-info" value="minggu" /><label
+                                                            for="minggu">Setiap Minggu</label>
+
+                                                    </div>
+                                                    <div>
+                                                        <input type="radio" name="setiap" id="bulan"
+                                                            class="radio radio-info" value="bulan" /><label
+                                                            for="bulan">Setiap Bulan</label>
+                                                    </div>
+                                                </div>
+                                                <div class="hidden" id="kalihari"><label for="jumlah">Sampai
+                                                    </label><input type="number" name="jumlah" id="jumlah"
+                                                        value="1" min="1" max="365" width="10px"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-1/5 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                    <label for="jumlah"> kali</label>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="idkelas" value="{{ $idk }}">
+                                            {{-- <button type="submit">Kirim</button> --}}
+                                            <input type="submit" class="btn btn-primary" value="Buat">
+                                        </form>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="container lg:flex lg:flex-col lg:items-center lg:justify-center ">
+                                <article class="flex flex-col items-center justify-center prose my-3">
+                                    <h2 class="h1">Daftar Presensi Anda ..⏳</h2>
+                                </article>
+
+                                <div class="relative overflow-x-auto flex my-3 w-4/5">
+                                    <div class="w-full table-auto">
+                                        <table id="tabelabsen" class="stripe w-full table-auto" style="width:100%">
+                                            <!-- head -->
+                                            <thead>
+                                                <tr>
+                                                    <th>No.</th>
+
+                                                    <th>Waktu</th>
+                                                    <th>Deskripsi</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- row 1 -->
+                                                @php
+                                                    $no = 1;
+                                                    
+                                                @endphp
+
+
+                                                @foreach ($list as $li)
+                                                    <tr>
+                                                        <td>{{ $no++ }}</td>
+
+                                                        <td>
+                                                            {{ Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString() }}<br>{{ '(' . $li->timestart . ' - ' . $li->timeend . ')' }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $li->ket }}
+                                                        </td>
+                                                        <td class="flex">
+
+                                                            <button tabindex="0" data-id={{ $li->id }}
+                                                                data-tanggal="{{ $li->tanggal }}"
+                                                                data-timestart="{{ $li->timestart }}"
+                                                                data-timeend="{{ $li->timeend }}"
+                                                                data-ket="{{ $li->ket }}"
+                                                                class="btn btn-info m-1 edit-btn"
+                                                                data-modal-target="updateModal"
+                                                                data-modal-toggle="updateModal"><i
+                                                                    class="fa-solid fa-pen-to-square"></i></button>
+                                                            <button class="btn btn-secondary m-1 btnhapus"
+                                                                data-id="{{ $li->id }}"
+                                                                data-modal-target="hapus-modal"
+                                                                data-modal-toggle="hapus-modal">
+                                                                <i class="fa-solid fa-trash-can"
+                                                                    style="color: #ffffff;"></i>
+                                                                <form action="/realtime" method="post">
+                                                                    @csrf
+                                                                    <input type="hidden" name="id_presensi"
+                                                                        value="{{ $li->id }}">
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary m-1 btnhapus">
+                                                                        <i
+                                                                            class="fa-solid fa-arrows-rotate fa-spin"></i></i>
+                                                                    </button>
+                                                                </form>
+                                                                <a href="{{ route('laporan', $li->id) }}"><button
+                                                                        type="submit"
+                                                                        class="btn btn-primary m-1 btnhapus">
+                                                                        <i
+                                                                            class="fa-solid fa-database fa-beat"></i></i></i>
+
+                                                                    </button>
+                                                                </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-content hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="partisipan"
+                            role="tabpanel" aria-labelledby="partisipan-tab">
+                            <p
+                                class="mb-4 text-lg leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
+                                Teacher</p>
+                            <table id="teacher" class="text-center">
+                                <tbody>
+                                    @foreach ($part as $par)
+                                        @if ($par->roles->role == 'Student')
+                                            @php
+                                                continue;
+                                            @endphp;
+                                        @endif
+                                        <hr class="mb-2">
+                                        <tr>
+                                            <td>
+                                                <div class="avatar mx-3">
+                                                    <div
+                                                        class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                                        <img src="{{ $par->user->url_photo }}" />
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>{{ $par->user->name }}</td>
+                                            <td>
+                                                @if ($par->user->id == Auth::id())
+                                                    <span class="badge badge-success">You</span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
-                        @endforeach
+
+                            <p
+                                class="mt-5 mb-4 text-lg leading-none tracking-tight text-gray-600 md:text-3xl lg:text-4xl dark:text-white">
+                                Students</p>
+                            @foreach ($part as $par)
+                                @if ($par->roles->role == 'Teacher')
+                                    @php
+                                        continue;
+                                    @endphp;
+                                @endif
+                                <hr class="mb-5">
+                                <table id="students" class="mt-3 mb-5">
+                                    <tbody>
+                                        <tr class="pop-del" data-popover-target="popover-del"
+                                            data-id="{{ $par->user->id }}" data-name="{{ $par->user->name }}"
+                                            data-kelas="{{ $par->class_id }}">
+                                            <td>
+                                                <div class="avatar mx-3">
+                                                    <div
+                                                        class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                                        <img src="{{ $par->user->url_photo }}" />
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>{{ $par->user->name }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            @endforeach
+                        </div>
+                        <div class="tab-content hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="laporan"
+                            role="tabpanel" aria-labelledby="laporan-tab">
+                            <div id="chart" class=""></div>
+                        </div>
                     </div>
-                    <div class="tab-content hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="laporan" role="tabpanel" aria-labelledby="laporan-tab">
-                        <div id="chart" class=""></div>
                 </div>
             </div>
-        </div>
+            @include('components.hapus-modal')
 
+
+            <!-- Main modal -->
+            @include('components.update-modal')
+            @include('components.unenroll-popover')
+            @include('components.unenroll-modal')
+            <footer class="grow-0 bg-white rounded-lg shadow m-4 dark:bg-gray-800">
+                <div class="w-1/2 max-w-screen-xl mx-auto p-4 md:py-8">
+                    <span class="block text-sm text-gray-500 md:text-center dark:text-gray-400">© 2023 <a
+                            href="https://prezensia.visit-indonesia.id/" class="hover:underline">Prezensia™</a>. All
+                        Rights
+                        Reserved.</span>
+                </div>
+            </footer>
+        </div>
         {{-- Modal Hapus --}}
 
-        @include('components.hapus-modal')
 
-
-        <!-- Main modal -->
-        @include('components.update-modal')
-        @include('components.unenroll-popover')
-        @include('components.unenroll-modal')
     </x-app-layout>
 
     <script>
@@ -512,7 +679,7 @@
                 },
                 dataType: 'json',
                 success: function(resp) {
-                    if(resp.count>0){
+                    if (resp.count > 0) {
                         data = [];
                         cat = [];
                         for (i = 1; i <= resp.count; i++) {
@@ -531,10 +698,10 @@
                                 categories: cat
                             }
                         };
-    
+
                         var chart = new ApexCharts(document.querySelector("#chart"), options);
                         chart.render();
-                    }else{
+                    } else {
                         var currentDate = new Date();
                         var formattedDate = currentDate.toLocaleString();
                         data = [];
@@ -613,7 +780,7 @@
 
         // Add event listener to each tab button
         tabButtons.forEach((button) => {
-            button.addEventListener('click', function () {
+            button.addEventListener('click', function() {
                 // Remove the 'border-transparent' class from all tab buttons
                 tabButtons.forEach((btn) => {
                     btn.classList.add('border-transparent');
@@ -635,13 +802,13 @@
                 const tabContentId = this.getAttribute('data-tabs-target');
                 const tabContent = document.querySelector(tabContentId);
                 if (tabContent) {
-                // Hide all tab contents
-                document.querySelectorAll('.tab-content').forEach((content) => {
-                    content.style.display = 'none';
-                });
+                    // Hide all tab contents
+                    document.querySelectorAll('.tab-content').forEach((content) => {
+                        content.style.display = 'none';
+                    });
 
-                // Show the selected tab content
-                tabContent.style.display = 'block';
+                    // Show the selected tab content
+                    tabContent.style.display = 'block';
                 }
             });
         });
