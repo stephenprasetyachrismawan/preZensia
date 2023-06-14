@@ -11,9 +11,9 @@
 
         <div class="container">
             <div class="rounded border grid w-3/4 mx-auto mt-4">
-                <div id="infoKelas" data-accordion="collapse" data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
+                <div id="infoKelas" data-accordion="collapse" data-active-classes="bg-purple-100 dark:bg-gray-800 text-purple-600 dark:text-white">
                     <h2 id="infoKelasHead">
-                    <button type="button" class="flex items-left justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800" data-accordion-target="#infoKelasBody" aria-expanded="false" aria-controls="infoKelasBody">
+                    <button type="button" class="flex items-left justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-purple-200 dark:focus:ring-purple-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800" data-accordion-target="#infoKelasBody" aria-expanded="false" aria-controls="infoKelasBody">
                         <span class="flex items-center"><svg class="w-5 h-5 mr-2 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
                             Info Kelas</span>
                         <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"></path></svg>
@@ -131,19 +131,19 @@
                                             <div id="textDiv" class="hidden">
                                                 <div>
                                                     <input type="radio" name="setiap" id="hari"
-                                                        class="radio radio-info" value="hari" /><label
+                                                        class="radio radio-info" value="hari"/><label
                                                         for="hari">Setiap Hari</label>
 
                                                 </div>
                                                 <div>
                                                     <input type="radio" id="minggu" name="setiap"
-                                                        class="radio radio-info" value="minggu" /><label
+                                                        class="radio radio-info" value="minggu"/><label
                                                         for="minggu">Setiap Minggu</label>
 
                                                 </div>
                                                 <div>
                                                     <input type="radio" name="setiap" id="bulan"
-                                                        class="radio radio-info" value="bulan" /><label
+                                                        class="radio radio-info" value="bulan"/><label
                                                         for="bulan">Setiap Bulan</label>
                                                 </div>
                                             </div>
@@ -188,6 +188,9 @@
 
 
                                             @foreach ($list as $li)
+                                                @if (Carbon\Carbon::createFromFormat('Y-m-d', $li->tanggal)->format('Y-M-d') == Carbon\Carbon::now()->format('Y-M-d') &&
+                                                Carbon\Carbon::createFromTimeString($li->timeend)->format('H:i:s') > Carbon\Carbon::now()->format('H:i:s') &&
+                                                Carbon\Carbon::createFromTimeString($li->timestart)->format('H:i:s') < Carbon\Carbon::now()->format('H:i:s'))
                                                 <tr>
                                                     <td>{{ $no++ }}</td>
 
@@ -234,8 +237,82 @@
                                                             </a>
                                                     </td>
                                                 </tr>
+                                                @endif
                                             @endforeach
 
+                                            @foreach ($list as $li)
+                                            @if (Carbon\Carbon::parse($li->tanggal)->setTimeFrom(Carbon\Carbon::parse($li->timeend)) < Carbon\Carbon::now())
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+
+                                                <td>
+                                                    {{ Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString() }}<br>{{ '(' . $li->timestart . ' - ' . $li->timeend . ')' }}
+                                                </td>
+                                                <td>
+                                                    {{ $li->ket }}
+                                                </td>
+                                                <td class="flex">
+
+                                                    <button tabindex="0" data-id={{ $li->id }}
+                                                        data-tanggal="{{ $li->tanggal }}"
+                                                        data-timestart="{{ $li->timestart }}"
+                                                        data-timeend="{{ $li->timeend }}"
+                                                        data-ket="{{ $li->ket }}"
+                                                        class="btn btn-info m-1 edit-btn"
+                                                        data-modal-target="updateModal"
+                                                        data-modal-toggle="updateModal"><i
+                                                            class="fa-solid fa-pen-to-square"></i></button>
+                                                    <button class="btn btn-secondary m-1 btnhapus"
+                                                        data-id="{{ $li->id }}"
+                                                        data-modal-target="hapus-modal"
+                                                        data-modal-toggle="hapus-modal">
+                                                        <i class="fa-solid fa-trash-can"
+                                                            style="color: #ffffff;"></i></button>
+                                                        <a href="{{ route('laporan', $li->id) }}"><button
+                                                                type="submit"
+                                                                class="btn btn-primary m-1 btnhapus">
+                                                                <i
+                                                                    class="fa-solid fa-database fa-beat"></i></i></i>
+
+                                                            </button>
+                                                        </a>
+                                                </td>
+                                            </tr>
+                                            @endif
+                                            @endforeach
+
+                                            @foreach ($list as $li)
+                                            @if (Carbon\Carbon::parse($li->tanggal)->startOfDay() > Carbon\Carbon::now()->startOfDay())
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+
+                                                <td>
+                                                    {{ Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString() }}<br>{{ '(' . $li->timestart . ' - ' . $li->timeend . ')' }}
+                                                </td>
+                                                <td>
+                                                    {{ $li->ket }}
+                                                </td>
+                                                <td class="flex">
+
+                                                    <button tabindex="0" data-id={{ $li->id }}
+                                                        data-tanggal="{{ $li->tanggal }}"
+                                                        data-timestart="{{ $li->timestart }}"
+                                                        data-timeend="{{ $li->timeend }}"
+                                                        data-ket="{{ $li->ket }}"
+                                                        class="btn btn-info m-1 edit-btn"
+                                                        data-modal-target="updateModal"
+                                                        data-modal-toggle="updateModal"><i
+                                                            class="fa-solid fa-pen-to-square"></i></button>
+                                                    <button class="btn btn-secondary m-1 btnhapus"
+                                                        data-id="{{ $li->id }}"
+                                                        data-modal-target="hapus-modal"
+                                                        data-modal-toggle="hapus-modal">
+                                                        <i class="fa-solid fa-trash-can"
+                                                            style="color: #ffffff;"></i></button>
+                                                </td>
+                                            </tr>
+                                            @endif
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -516,14 +593,23 @@
         const toggle = document.getElementById("toggle");
         const text = document.getElementById("textDiv");
         const kali = document.getElementById("kalihari");
+        const hari = document.getElementById('hari')
+        const minggu = document.getElementById('minggu')
+        const bulan = document.getElementById('bulan')
 
         toggle.addEventListener("click", () => {
             if (toggle.checked) {
                 text.style.display = "block";
                 kali.style.display = "block"
+                hari.required = true;
+                minggu.required = true;
+                bulan.required = true
             } else {
                 text.style.display = "none";
                 kali.style.display = "none";
+                hari.required = false;
+                minggu.required = false;
+                bulan.required = false
             }
         });
         // const toggle2 = document.getElementById("hari");
@@ -546,41 +632,7 @@
         //         text3.style.display = "none";
         //     }
         // });
-        let tabsContainer = document.querySelector("#tabs");
-
-        let tabTogglers = tabsContainer.querySelectorAll("#tabs a");
-
-        console.log(tabTogglers);
-
-        tabTogglers.forEach(function(toggler) {
-            toggler.addEventListener("click", function(e) {
-                e.preventDefault();
-                let harielem = document.getElementById("hari");
-                let mingguelem = document.getElementById("minggu");
-                let bulanelem = document.getElementById("bulan");
-                harielem.toggleAttribute("required");
-                mingguelem.toggleAttribute("required");
-                bulanelem.toggleAttribute("required");
-                let tabName = this.getAttribute("href");
-
-                let tabContents = document.querySelector("#tab-contents");
-
-                for (let i = 0; i < tabContents.children.length; i++) {
-
-                    tabTogglers[i].parentElement.classList.remove("border-t", "border-r", "border-l",
-                        "-mb-px", "bg-white");
-                    tabContents.children[i].classList.remove("hidden");
-                    if ("#" + tabContents.children[i].id === tabName) {
-                        continue;
-                    }
-                    tabContents.children[i].classList.add("hidden");
-
-                }
-                e.target.parentElement.classList.add("border-t", "border-r", "border-l", "-mb-px",
-                    "bg-white");
-            });
-        });
-
+        
         $(document).ready(function() {
             $('#tabelpartisipan').DataTable({
 

@@ -36,7 +36,7 @@ class ClassController extends Controller
         $part = ListRole::where('class_id', Kelas::where('hashcode', $id)->value('id'))->get();
 
         if ($kls && $role == 1) {
-            $list = Presensi::where('class_id', $idk)->get()->sortDesc();
+            $list = Presensi::where('class_id', $idk)->get();
             $idp = [];
             foreach ($list as $li) {
                 $idp[] = $li->id;
