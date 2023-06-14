@@ -42,10 +42,12 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <a href="{{ route('classes.home', ['id' => $d[3]]) }}">
+                                            <a href="{{ route('classes.home', ['id' => $d[3]]) }}"
+                                                data-tooltip-target="tooltip-default{{ $d[3] }}">
                                                 <h2 class="card-title">{{ Str::limit($d[4], 14, '...') }} <span
                                                         class="underline underline-offset-1">{{ Str::limit($d[0], 7, '...') }}</span>
                                                 </h2>
+
                                                 <p>Teacher :
                                                     @if ($d[1] == 1)
                                                         <span class="badge badge-success">You</span>
@@ -54,6 +56,11 @@
                                                     @endif
                                                 </p>
                                             </a>
+                                            <div id="tooltip-default{{ $d[3] }}" role="tooltip"
+                                                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                                {{ $d[4] }}&nbsp;{{ $d[0] }}
+                                                <div class="tooltip-arrow" data-popper-arrow></div>
+                                            </div>
                                             <div class="card-actions justify-end">
                                                 <a class="btn btn-primary"
                                                     href="{{ route('classes.home', ['id' => $d[3]]) }}">
