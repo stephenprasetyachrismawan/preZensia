@@ -24,10 +24,18 @@ class ClassController extends Controller
 
     public function index($id)
     {
+        $listklsguru =
+            Kelas::with('listrole')->whereHas('listrole', function ($query) {
+                $query->where('user_id', Auth::id())->where('role_id', '1');
+            })->where('archive', '0')->get();
+        $listklsmurid =
+            Kelas::with('listrole')->whereHas('listrole', function ($query) {
+                $query->where('user_id', Auth::id())->where('role_id', '2');
+            })->where('archive', '0')->get();
         $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function ($query) {
             $query->where('user_id', Auth::id());
         })->get();
-        if($kls->isEmpty() || $kls[0]->archive==1){
+        if ($kls->isEmpty() || $kls[0]->archive == 1) {
             return redirect()->route('dashboard');
         }
         $idk = $kls[0]->id;
@@ -42,6 +50,8 @@ class ClassController extends Controller
                 $idp[] = $li->id;
             }
             return view('kelas.home')->with([
+                'listklsguru' => $listklsguru,
+                'listklsmurid' => $listklsmurid,
                 'kls' => $kls,
                 'idk' => $idk,
                 'part' => $part,
@@ -75,7 +85,7 @@ class ClassController extends Controller
     }
     public function linkjoin($id, $kode)
     {
-        if(Kelas::where('class_code', $kode)->value('archive')){
+        if (Kelas::where('class_code', $kode)->value('archive')) {
             return redirect()->route('dashboard');
         }
         $kls = Kelas::with('listrole')->whereIn('hashcode', [$id])->whereHas('listrole', function ($query) {
@@ -185,7 +195,7 @@ class ClassController extends Controller
     public function check(Request $request)
     {
         $kode = $request->kodeKelas;
-        if(Kelas::where('class_code', $kode)->value('archive')){
+        if (Kelas::where('class_code', $kode)->value('archive')) {
             return redirect()->route('dashboard');
         }
         $hash = Kelas::where('class_code', $kode)->value('hashcode');
