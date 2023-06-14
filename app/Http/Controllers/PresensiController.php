@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ket;
 use App\Models\User;
-use App\Models\ListRole;
+use App\Models\Kelas;
 use App\Models\Presensi;
 use App\Events\Presensia;
 use App\Models\ListPresensi;
@@ -31,6 +31,14 @@ class PresensiController extends Controller
     }
     public function lihat_laporan($id)
     {
+        $listklsguru =
+            Kelas::with('listrole')->whereHas('listrole', function ($query) {
+                $query->where('user_id', Auth::id())->where('role_id', '1');
+            })->where('archive', '0')->get();
+        $listklsmurid =
+            Kelas::with('listrole')->whereHas('listrole', function ($query) {
+                $query->where('user_id', Auth::id())->where('role_id', '2');
+            })->where('archive', '0')->get();
         $guru = Presensi::find($id)->class->listrole->whereIn('role_id', ['1']);
         if (Auth::id() == $guru[0]->user_id) {
             $idp = $id;
@@ -59,7 +67,9 @@ class PresensiController extends Controller
             });
 
             return view('data_laporan_presensi')->with([
-                'data' => $data
+                'data' => $data,
+                'listklsguru' => $listklsguru,
+                'listklsmurid' => $listklsmurid,
             ]);
         } else {
             return redirect('/');
