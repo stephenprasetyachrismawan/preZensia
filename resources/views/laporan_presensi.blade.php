@@ -207,11 +207,11 @@
 
                 <div
                     class="max-w-lg p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 overflow-y-auto w-4/5">
-                    <div class="flex items-center justify-between mb-4 text-center">
-                        <span class="mx-7 flex items-center">
-                            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white mx-7">Realtime Report</h5>
+                    <div class="flow-root  items-center mb-4 text-center">
+                        <span class="text-xl font-bold">
+                            Realtime Report
                         </span>
-                    </div>                    
+                    </div>
                     <div class="flow-root ">
                         <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700" id="square">
                             @php
@@ -268,9 +268,9 @@
 
 
     </div>
-<script>
-    setTimeout(() => {
-       window.stop() 
-    }, 5000);
-</script>
+    <script>
+        setTimeout(() => {
+            window.stop()
+        }, 5000);
+    </script>
 </x-app-layout>
