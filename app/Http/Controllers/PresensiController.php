@@ -115,7 +115,8 @@ class PresensiController extends Controller
         return view('laporan_presensi')->with([
             'listklsguru' => $listklsguru,
             'listklsmurid' => $listklsmurid,
-            'data' => $data
+            'data' => $data,
+            'idp' => $idp
         ]);
     }
     public function delete(Request $req)

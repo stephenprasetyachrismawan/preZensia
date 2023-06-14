@@ -207,6 +207,7 @@
 
                 <div
                     class="max-w-lg p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 overflow-y-auto w-4/5">
+
                     <div class="flow-root  items-center mb-4 text-center">
                         <span class="text-xl font-bold">
                             Realtime Report
