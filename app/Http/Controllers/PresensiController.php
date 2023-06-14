@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Ket;
 use App\Models\User;
 use App\Models\Kelas;
+use App\Models\ListRole;
 use App\Models\Presensi;
 use App\Events\Presensia;
 use App\Models\ListPresensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class PresensiController extends Controller
@@ -77,6 +79,14 @@ class PresensiController extends Controller
     }
     public function lihat_realtime(Request $req)
     {
+        $listklsguru =
+            Kelas::with('listrole')->whereHas('listrole', function ($query) {
+                $query->where('user_id', Auth::id())->where('role_id', '1');
+            })->where('archive', '0')->get();
+        $listklsmurid =
+            Kelas::with('listrole')->whereHas('listrole', function ($query) {
+                $query->where('user_id', Auth::id())->where('role_id', '2');
+            })->where('archive', '0')->get();
         $idp = $req->id_presensi;
         $data = ListPresensi::whereIn('presensi_id', [$idp])->orderByDesc('time')->get();
         $murid = new Collection();
@@ -103,6 +113,8 @@ class PresensiController extends Controller
         });
 
         return view('laporan_presensi')->with([
+            'listklsguru' => $listklsguru,
+            'listklsmurid' => $listklsmurid,
             'data' => $data
         ]);
     }
