@@ -21,9 +21,9 @@
         </button>
 
         <aside id="logo-sidebar"
-            class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full md:translate-x-0"
+            class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full md:translate-x-0 "
             aria-label="Sidebar">
-            <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+            <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 flex flex-col justify-between">
                 <div class="flex justify-center items-center">
                     <a href="{{ route('dashboard') }}" class="">
                         <img src="{{ asset('prezensia.png') }}" alt="Prezensia" class="" width="150px">
@@ -122,72 +122,70 @@
                         </a>
                     </li>
                 </ul>
-                <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
+                <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700 mb-10">
                     <li>
-                        <a href="#"
-                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-primary-700">
-                            <svg aria-hidden="true"
-                                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
-                        </a>
+                        <div data-popover-target='popover-top' data-popover-placement='right'
+                            class=" flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-primary-700">
+                            <div class="avatar mx-3">
+                                <div class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                    <img src="{{ Auth::user()->url_photo }}" />
+                                </div>
+                            </div>
+                            <div><span class="text-2xl"></span class="flex-1 ml-3 whitespace-nowrap">
+                                {{ Auth::user()->name }}
+                            </div>
+
+                        </div>
+                        <div data-popover id="popover-top" role="tooltip"
+                            class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+
+                            <div class="px-3 py-2">
+                                <div>
+                                    <form method="POST" id="logout-form" action="{{ route('logout') }}">
+
+                                        @csrf
+
+                                        <a href="{{ route('logout') }}"
+                                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-primary-700"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <svg aria-hidden="true"
+                                                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                                fill="currentColor" viewBox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                    d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                            <span class="flex-1 ml-3 whitespace-nowrap">Log out</span></a>
+                                    </form>
+                                </div>
+                                <div>
+                                    <a href="{{ route('profile.edit') }}"
+                                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-primary-700">
+                                        <svg aria-hidden="true"
+                                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                            fill="currentColor" viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+
+
+                                        <span class="flex-1 ml-3 whitespace-nowrap">{{ __('Profile') }}</span>
+
+                                    </a>
+                                </div>
+                            </div>
+                            <div data-popper-arrow></div>
+                        </div>
                     </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-primary-700">
-                            <svg aria-hidden="true"
-                                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="flex-1 ml-3 whitespace-nowrap">Products</span>
-                        </a>
-                    </li>
-                    <li>
 
-
-
-                        <form method="POST" id="logout-form" action="{{ route('logout') }}">
-
-                            @csrf
-
-                            <a href="{{ route('logout') }}"
-                                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-primary-700"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <svg aria-hidden="true"
-                                    class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                                <span class="flex-1 ml-3 whitespace-nowrap">Log out</span></a>
-                        </form>
-
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-primary-700">
-                            <svg aria-hidden="true"
-                                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="flex-1 ml-3 whitespace-nowrap">Sign Up</span>
-                        </a>
-                    </li>
                 </ul>
             </div>
         </aside>
 
-        <div class="p-0 sm:ml-64">
+        <div class="p-0 sm:ml-64 h-screen flex flex-col justify-between">
             <div class=" grid w-3/4 mx-auto mt-4">
                 <div id="infoKelas" data-accordion="collapse"
                     data-active-classes="bg-purple-100 dark:bg-gray-800 text-purple-600 dark:text-white">
@@ -433,8 +431,7 @@
                                                                     </button>
                                                                 </form>
                                                                 <a href="{{ route('laporan', $li->id) }}"><button
-                                                                        type="submit"
-                                                                        class="btn btn-primary m-1">
+                                                                        type="submit" class="btn btn-primary m-1">
                                                                         <i
                                                                             class="fa-solid fa-database fa-beat"></i></i></i>
 
@@ -474,8 +471,7 @@
                                                                 <i class="fa-solid fa-trash-can"
                                                                     style="color: #ffffff;"></i></button>
                                                             <a href="{{ route('laporan', $li->id) }}"><button
-                                                                    type="submit"
-                                                                    class="btn btn-primary m-1">
+                                                                    type="submit" class="btn btn-primary m-1">
                                                                     <i
                                                                         class="fa-solid fa-database fa-beat"></i></i></i>
 
@@ -593,7 +589,7 @@
                     </div>
                 </div>
             </div>
-            <footer class="grow-0 bg-white rounded-lg shadow m-4 dark:bg-gray-800">
+            <footer class="bg-white rounded-lg shadow m-4 dark:bg-gray-800">
                 <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
                     <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a
                             href="https://prezensia.visit-indonesia.id/" class="hover:underline">Prezensia™</a>. All
