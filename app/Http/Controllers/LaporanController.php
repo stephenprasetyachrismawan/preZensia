@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Presensi;
 use App\Models\ListPresensi;
 
-class AjaxController extends Controller
+class LaporanController extends Controller
 {
     public function chartReq(Request $request){
         $pres = Presensi::where('class_id', $request->cls_id)->get();

@@ -155,10 +155,10 @@
         <div class="container">
             <div class="rounded border grid w-3/4 mx-auto mt-4">
                 <div id="infoKelas" data-accordion="collapse"
-                    data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
+                    data-active-classes="bg-purple-100 dark:bg-gray-800 text-purple-600 dark:text-white">
                     <h2 id="infoKelasHead">
                         <button type="button"
-                            class="flex items-left justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800"
+                            class="flex items-left justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-purple-200 dark:focus:ring-purple-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800"
                             data-accordion-target="#infoKelasBody" aria-expanded="false"
                             aria-controls="infoKelasBody">
                             <span class="flex items-center"><svg class="w-5 h-5 mr-2 shrink-0" fill="currentColor"
@@ -358,42 +358,86 @@
 
 
                                             @foreach ($list as $li)
-                                                <tr>
-                                                    <td>{{ $no++ }}</td>
+                                                @if (Carbon\Carbon::createFromFormat('Y-m-d', $li->tanggal)->format('Y-M-d') == Carbon\Carbon::now()->format('Y-M-d') &&
+                                                        Carbon\Carbon::createFromTimeString($li->timeend)->format('H:i:s') > Carbon\Carbon::now()->format('H:i:s') &&
+                                                        Carbon\Carbon::createFromTimeString($li->timestart)->format('H:i:s') < Carbon\Carbon::now()->format('H:i:s'))
+                                                    <tr>
+                                                        <td>{{ $no++ }}</td>
 
-                                                    <td>
-                                                        {{ Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString() }}<br>{{ '(' . $li->timestart . ' - ' . $li->timeend . ')' }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $li->ket }}
-                                                    </td>
-                                                    <td class="flex">
+                                                        <td>
+                                                            {{ Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString() }}<br>{{ '(' . $li->timestart . ' - ' . $li->timeend . ')' }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $li->ket }}
+                                                        </td>
+                                                        <td class="flex">
 
-                                                        <button tabindex="0" data-id={{ $li->id }}
-                                                            data-tanggal="{{ $li->tanggal }}"
-                                                            data-timestart="{{ $li->timestart }}"
-                                                            data-timeend="{{ $li->timeend }}"
-                                                            data-ket="{{ $li->ket }}"
-                                                            class="btn btn-info m-1 edit-btn"
-                                                            data-modal-target="updateModal"
-                                                            data-modal-toggle="updateModal"><i
-                                                                class="fa-solid fa-pen-to-square"></i></button>
-                                                        <button class="btn btn-secondary m-1 btnhapus"
-                                                            data-id="{{ $li->id }}"
-                                                            data-modal-target="hapus-modal"
-                                                            data-modal-toggle="hapus-modal">
-                                                            <i class="fa-solid fa-trash-can"
-                                                                style="color: #ffffff;"></i>
-                                                            <form action="/realtime" method="post">
-                                                                @csrf
-                                                                <input type="hidden" name="id_presensi"
-                                                                    value="{{ $li->id }}">
-                                                                <button type="submit"
-                                                                    class="btn btn-primary m-1 btnhapus">
-                                                                    <i
-                                                                        class="fa-solid fa-arrows-rotate fa-spin"></i></i>
-                                                                </button>
-                                                            </form>
+                                                            <button tabindex="0" data-id={{ $li->id }}
+                                                                data-tanggal="{{ $li->tanggal }}"
+                                                                data-timestart="{{ $li->timestart }}"
+                                                                data-timeend="{{ $li->timeend }}"
+                                                                data-ket="{{ $li->ket }}"
+                                                                class="btn btn-info m-1 edit-btn"
+                                                                data-modal-target="updateModal"
+                                                                data-modal-toggle="updateModal"><i
+                                                                    class="fa-solid fa-pen-to-square"></i></button>
+                                                            <button class="btn btn-secondary m-1 btnhapus"
+                                                                data-id="{{ $li->id }}"
+                                                                data-modal-target="hapus-modal"
+                                                                data-modal-toggle="hapus-modal">
+                                                                <i class="fa-solid fa-trash-can"
+                                                                    style="color: #ffffff;"></i>
+                                                                <form action="/realtime" method="post">
+                                                                    @csrf
+                                                                    <input type="hidden" name="id_presensi"
+                                                                        value="{{ $li->id }}">
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary m-1 btnhapus">
+                                                                        <i
+                                                                            class="fa-solid fa-arrows-rotate fa-spin"></i></i>
+                                                                    </button>
+                                                                </form>
+                                                                <a href="{{ route('laporan', $li->id) }}"><button
+                                                                        type="submit"
+                                                                        class="btn btn-primary m-1 btnhapus">
+                                                                        <i
+                                                                            class="fa-solid fa-database fa-beat"></i></i></i>
+
+                                                                    </button>
+                                                                </a>
+                                                        </td>
+                                                    </tr>
+                                                @endif
+                                            @endforeach
+
+                                            @foreach ($list as $li)
+                                                @if (Carbon\Carbon::parse($li->tanggal)->setTimeFrom(Carbon\Carbon::parse($li->timeend)) < Carbon\Carbon::now())
+                                                    <tr>
+                                                        <td>{{ $no++ }}</td>
+
+                                                        <td>
+                                                            {{ Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString() }}<br>{{ '(' . $li->timestart . ' - ' . $li->timeend . ')' }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $li->ket }}
+                                                        </td>
+                                                        <td class="flex">
+
+                                                            <button tabindex="0" data-id={{ $li->id }}
+                                                                data-tanggal="{{ $li->tanggal }}"
+                                                                data-timestart="{{ $li->timestart }}"
+                                                                data-timeend="{{ $li->timeend }}"
+                                                                data-ket="{{ $li->ket }}"
+                                                                class="btn btn-info m-1 edit-btn"
+                                                                data-modal-target="updateModal"
+                                                                data-modal-toggle="updateModal"><i
+                                                                    class="fa-solid fa-pen-to-square"></i></button>
+                                                            <button class="btn btn-secondary m-1 btnhapus"
+                                                                data-id="{{ $li->id }}"
+                                                                data-modal-target="hapus-modal"
+                                                                data-modal-toggle="hapus-modal">
+                                                                <i class="fa-solid fa-trash-can"
+                                                                    style="color: #ffffff;"></i></button>
                                                             <a href="{{ route('laporan', $li->id) }}"><button
                                                                     type="submit"
                                                                     class="btn btn-primary m-1 btnhapus">
@@ -402,10 +446,43 @@
 
                                                                 </button>
                                                             </a>
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                    </tr>
+                                                @endif
                                             @endforeach
 
+                                            @foreach ($list as $li)
+                                                @if (Carbon\Carbon::parse($li->tanggal)->startOfDay() > Carbon\Carbon::now()->startOfDay())
+                                                    <tr>
+                                                        <td>{{ $no++ }}</td>
+
+                                                        <td>
+                                                            {{ Carbon\Carbon::parse($li->tanggal)->startOfDay()->locale('id')->toFormattedDayDateString() }}<br>{{ '(' . $li->timestart . ' - ' . $li->timeend . ')' }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $li->ket }}
+                                                        </td>
+                                                        <td class="flex">
+
+                                                            <button tabindex="0" data-id={{ $li->id }}
+                                                                data-tanggal="{{ $li->tanggal }}"
+                                                                data-timestart="{{ $li->timestart }}"
+                                                                data-timeend="{{ $li->timeend }}"
+                                                                data-ket="{{ $li->ket }}"
+                                                                class="btn btn-info m-1 edit-btn"
+                                                                data-modal-target="updateModal"
+                                                                data-modal-toggle="updateModal"><i
+                                                                    class="fa-solid fa-pen-to-square"></i></button>
+                                                            <button class="btn btn-secondary m-1 btnhapus"
+                                                                data-id="{{ $li->id }}"
+                                                                data-modal-target="hapus-modal"
+                                                                data-modal-toggle="hapus-modal">
+                                                                <i class="fa-solid fa-trash-can"
+                                                                    style="color: #ffffff;"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                @endif
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -686,14 +763,23 @@
         const toggle = document.getElementById("toggle");
         const text = document.getElementById("textDiv");
         const kali = document.getElementById("kalihari");
+        const hari = document.getElementById('hari')
+        const minggu = document.getElementById('minggu')
+        const bulan = document.getElementById('bulan')
 
         toggle.addEventListener("click", () => {
             if (toggle.checked) {
                 text.style.display = "block";
                 kali.style.display = "block"
+                hari.required = true;
+                minggu.required = true;
+                bulan.required = true
             } else {
                 text.style.display = "none";
                 kali.style.display = "none";
+                hari.required = false;
+                minggu.required = false;
+                bulan.required = false
             }
         });
         // const toggle2 = document.getElementById("hari");
@@ -716,40 +802,6 @@
         //         text3.style.display = "none";
         //     }
         // });
-        let tabsContainer = document.querySelector("#tabs");
-
-        let tabTogglers = tabsContainer.querySelectorAll("#tabs a");
-
-        console.log(tabTogglers);
-
-        tabTogglers.forEach(function(toggler) {
-            toggler.addEventListener("click", function(e) {
-                e.preventDefault();
-                let harielem = document.getElementById("hari");
-                let mingguelem = document.getElementById("minggu");
-                let bulanelem = document.getElementById("bulan");
-                harielem.toggleAttribute("required");
-                mingguelem.toggleAttribute("required");
-                bulanelem.toggleAttribute("required");
-                let tabName = this.getAttribute("href");
-
-                let tabContents = document.querySelector("#tab-contents");
-
-                for (let i = 0; i < tabContents.children.length; i++) {
-
-                    tabTogglers[i].parentElement.classList.remove("border-t", "border-r", "border-l",
-                        "-mb-px", "bg-white");
-                    tabContents.children[i].classList.remove("hidden");
-                    if ("#" + tabContents.children[i].id === tabName) {
-                        continue;
-                    }
-                    tabContents.children[i].classList.add("hidden");
-
-                }
-                e.target.parentElement.classList.add("border-t", "border-r", "border-l", "-mb-px",
-                    "bg-white");
-            });
-        });
 
         $(document).ready(function() {
             $('#tabelpartisipan').DataTable({
