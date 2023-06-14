@@ -18,7 +18,6 @@
                 <x-primary-button id="copyK"><x-copy-icon></x-copy-icon>{{ __('Copy Kode') }}</x-primary-button>
                 <x-primary-button id="copyL"><x-copy-icon></x-copy-icon>{{ __('Copy Link') }}</x-primary-button>
             </div>
-            <div id="toast-container"></div>
         </div>
     </div>
 </div>

@@ -1,5 +1,5 @@
     <x-app-layout>
-        @slot('title', $part[0]->kelas->class_name.' - '.$part[0]->kelas->class_subject)
+        @slot('title', $kls[0]->class_name.' - '.$kls[0]->class_subject)
         {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
         {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"> --}}
         {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
@@ -327,7 +327,7 @@
 
             var kode = $('.kode').data('kode')
             var hashkode = $('.kode').data('hashkode')
-            var link = 'https://prezensia.visit-indonesia.id/c/' + hashkode + '/' + kode + '/' 
+            var link = @json(route('classes.linkjoin', ['id' => $kls[0]->hashcode, 'cd' => $kls[0]->class_code]));
             
             $('.kodeF').text(kode)
             var copyK = document.getElementById('copyK')
@@ -336,29 +336,27 @@
             copyK.addEventListener('click', function() {
             navigator.clipboard.writeText(kode)
                 .then(function() {
-                var toastContainer = document.getElementById('toast-container');
-                var toastTemplate = `
-                    <div id="toast-success" class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
-                    <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
-                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span class="sr-only">Check icon</span>
-                    </div>
-                    <div class="ml-3 text-sm font-normal">Code Copied</div>
-                    <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
-                        <span class="sr-only">Close</span>
-                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                    </div>`;
-
-                toastContainer.insertAdjacentHTML('beforeend', toastTemplate);
-
-                setTimeout(function() {
-                    toastContainer.innerHTML = '';
-                }, 3000);
+                    Swal.fire({
+                    position: 'bottom-start',
+                    icon: 'success',
+                    title: 'Code Copied',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    toast: true,
+                    didOpen: () => {
+                        const modal = document.getElementById('fullScreen-modal');
+                        Swal.getPopup().style.width = `${modal.offsetWidth}px`;
+                        Swal.getPopup().style.left = `${modal.offsetLeft}px`;
+                    },
+                    willClose: () => {
+                        // Reset any changes made to the modal size and position
+                        Swal.getPopup().style.width = null;
+                        Swal.getPopup().style.left = null;
+                    }
+                    });
                 })
                 .catch(function(error) {
                 console.error("Error copying text: ", error);
@@ -368,29 +366,27 @@
             copyL.addEventListener('click', function() {
             navigator.clipboard.writeText(link)
                 .then(function() {
-                var toastContainer = document.getElementById('toast-container');
-                var toastTemplate = `
-                    <div id="toast-success" class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
-                    <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
-                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span class="sr-only">Check icon</span>
-                    </div>
-                    <div class="ml-3 text-sm font-normal">Link Copied</div>
-                    <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
-                        <span class="sr-only">Close</span>
-                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                    </div>`;
-
-                toastContainer.insertAdjacentHTML('beforeend', toastTemplate);
-
-                setTimeout(function() {
-                    toastContainer.innerHTML = '';
-                }, 3000);
+                    Swal.fire({
+                    position: 'bottom-start',
+                    icon: 'success',
+                    title: 'Link Copied',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    toast: true,
+                    didOpen: () => {
+                        const modal = document.getElementById('fullScreen-modal');
+                        Swal.getPopup().style.width = `${modal.offsetWidth}px`;
+                        Swal.getPopup().style.left = `${modal.offsetLeft}px`;
+                    },
+                    willClose: () => {
+                        // Reset any changes made to the modal size and position
+                        Swal.getPopup().style.width = null;
+                        Swal.getPopup().style.left = null;
+                    }
+                    });
                 })
                 .catch(function(error) {
                 console.error("Error copying text: ", error);
