@@ -455,7 +455,7 @@
         </footer>
     </div>
     @include('components.unenroll-popover')
-    @include('components.unenroll-modal')
+    <x-unenroll-modal>{{ __('dari kelas') }}</x-unenroll-modal>
     <script>
         // Get all tab buttons
         const tabButtons = document.querySelectorAll('.tab-button');

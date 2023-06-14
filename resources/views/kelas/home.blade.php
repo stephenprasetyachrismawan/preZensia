@@ -614,9 +614,9 @@
         <!-- Main modal -->
         @include('components.update-modal')
         @include('components.unenroll-popover')
-        @include('components.unenroll-modal')
         @include('components.fullScreen-modal')
         @include('components.edit-kelas-modal')
+        <x-unenroll-modal>{{ __('murid') }}</x-unenroll-modal>
     </x-app-layout>
 
     <script>

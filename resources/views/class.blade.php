@@ -80,7 +80,7 @@
     @include('components.classes-dial')
     @include('components.archive-modal')
     @include('components.join-modal')
-    @include('components.unenroll-modal')
+    <x-unenroll-modal>{{ __('dari kelas') }}</x-unenroll-modal>
     <script>
         $(document).ready(function() {
             $('.copy-btn').click(function(){
