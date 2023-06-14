@@ -33,8 +33,12 @@
 
 <body class="font-sans antialiased">
     <div class="min-h-screen flex flex-col bg-gray-100">
-        @if ($title != 'Class')
 
+        @if ($title != 'Dashboard' && $title != 'Archive' && $title != 'Class' && $title != 'Profile')
+            <main class="grow max-[640]:grow-0">
+                {{ $slot }}
+            </main>
+        @elseif ($title == ('Dashboard' || 'Archive' || 'Class' || 'Profile'))
             @include('layouts.navigation')
             <!-- Page Heading -->
             @if (isset($header))
@@ -57,11 +61,6 @@
                         Reserved.</span>
                 </div>
             </footer>
-        @else
-            <main class="grow max-[640]:grow-0">
-                {{ $slot }}
-            </main>
-
         @endif
 
 
