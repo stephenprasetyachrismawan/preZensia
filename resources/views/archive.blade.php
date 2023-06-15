@@ -90,8 +90,8 @@
     @include('components.unarchive-modal')
     @include('components.classes-dial')
     @include('components.join-modal')
-    @include('components.unenroll-modal')
     <x-hapus-modal>{{ __('kelas') }}</x-hapus-modal>
+    <x-unenroll-modal>{{ __('dari kelas') }}</x-unenroll-modal>
 
     <script>
         $(document).ready(function() {

@@ -308,15 +308,15 @@
                                         <div>
                                             <label for="timemulai"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dimulai</label>
-                                            <input type="time" id="timemulai" name="jammulai" value=""
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            <input type="time" id="" name="jammulai" value=""
+                                                class="timemulai bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 required onchange="cekTime()">
                                         </div>
                                         <div>
                                             <label for="timeakhir"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diakhiri</label>
-                                            <input type="time" id="timeakhir" name="jamakhir" value=""
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            <input type="time" id="" name="jamakhir" value=""
+                                                class="timeakhir bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 px-5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 required onchange="cekTime()">
                                         </div>
                                         <div>
@@ -621,10 +621,10 @@
 
     <script>
         function cekTime(){
-            var mulai = $('#timemulai').val()
-            var akhir = $('#timeakhir').val()
+            var mulai = $('.timemulai').val()
+            var akhir = $('.timeakhir').val()
             if(akhir==''){
-                akhir.val(mulai)
+                akhir = mulai
             }
             if(akhir<mulai){
                 Swal.fire({
@@ -637,14 +637,31 @@
                     allowEscapeKey: false,
                     allowEnterKey: false,
                     toast: true,
+                    didOpen: () => {
+                                const modal = document.getElementById('updateModal');
+                                Swal.getPopup().style.width = `${modal.offsetWidth}px`;
+                                Swal.getPopup().style.left = `${modal.offsetLeft}px`;
+                            },
+                    willClose: () => {
+                        // Reset any changes made to the modal size and position
+                        Swal.getPopup().style.width = null;
+                        Swal.getPopup().style.left = null;
+                    }
                 }).then(function(){
-                    $('#timemulai').val('')
-                    $('#timeakhir').val('')
+                    $('.timemulai').val('')
+                    $('.timeakhir').val('')
                 });
             }
         }
         
         $(document).ready(function() {
+            $('#updateModal').on('change', '.timemulai', function() {
+                cekTime();
+            });
+
+            $('#updateModal').on('change', '.timeakhir', function() {
+                cekTime();
+            });
 
             var kode = $('.kode').data('kode')
             var hashkode = $('.kode').data('hashkode')
